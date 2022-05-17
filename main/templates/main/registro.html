@@ -1,0 +1,16 @@
+
+{% extends "main/principal.html" %}
+
+{% block content %}
+<body bgcolor="" >
+<form action="" method="POST" >
+  {% csrf_token %}
+  {{form}}
+  <button class="btn" type="submit">Registrar!</button>
+
+</form>
+
+si ya tienes una cuenta, ve a <a href ='#'>Entrar </a>
+</body>
+
+{%endblock%}
