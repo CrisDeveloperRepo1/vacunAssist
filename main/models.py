@@ -12,3 +12,14 @@ class Vacunador(models.Model):
 
     def __str__(self):
         return self.vacunador_nombre
+
+class VacuPacientenador(models.Model):
+    paciente_nombre= models.CharField(max_length=200)
+    # paciente_apellido= models.CharField(max_length=20)
+    # paciente_fechaNac= models.DateTimeField("fecha nacimiento")
+    # paciente_zona= models.CharField(max_length=200)
+    # paciente_dni= models.IntegerField()
+    # paciente_email= models.EmailField(max_length=254)
+
+    def __str__(self):
+        return self.paciente_nombre
