@@ -6,6 +6,8 @@
     <!-- Compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+
 
     <title></title>
 
@@ -26,10 +28,17 @@
 
 
   </head>
-  <body bgcolor="#8bc34a">
+  <!-- bgcolor="#8bc34a" -->
+  <body bgcolor="97D077" >
 
-  <img src= "{% static 'Logo.png' % }" alt="VacunAssist" >
-  <img src="{% static 'imagenes/Logo.png' %}" alt="fondo">
+  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+  <div class="container">
+  <!-- Page Content goes here -->
+
+  <div class= "caja-verde">
+   <img src="{% static 'imagenes/Logo.png' %}" alt="fondo" >
+  </div>
+  </div>
 
     <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
