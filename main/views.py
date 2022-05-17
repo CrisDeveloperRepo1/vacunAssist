@@ -7,4 +7,7 @@ def homepage(request):
 
     # a nuestra template le vamos a pasar toda esa cantidad de objteos con la variable vacunadores
 
+def login(request):
+    return render(request, "main/inicio_de_sesión.html")
+
 # Create your views here.
