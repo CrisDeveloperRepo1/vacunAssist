@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en" dir="ltr">
+<<<<<<< HEAD
 <body bgcolor="96cd7a" >
 
     <br>
@@ -34,3 +35,69 @@
     </div>
 
 </html>
+=======
+  <head>
+    <meta charset="utf-8">
+    <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+
+    <title></title>
+    <nav>
+        <div class="nav-wrapper  light-green">
+          <a href="#" class="brand-logo"></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="sass.html">inicio</a></li>
+            <li><a href="badges.html">registro</a></li>
+            <li><a href="collapsible.html">entrar</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
+
+  </head>
+  <!-- bgcolor="#8bc34a" -->
+  <body bgcolor="96cd7a" >
+
+  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+
+  <div class= "left">
+    <p>
+   <img src="{% static 'imagenes/Logo.png' %}"  width="600" height="579">
+    </p>
+  </div>
+
+    <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <div class="right">
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+        <iframe srcdoc=" <form name='formulario' method='post' style='text-align:center'>
+          <!-- Campo de entrada de usuario -->
+          <font face='arial'><h2><strong>DNI</strong></font>
+          <br>
+          <input type='id'name='dni' placeholder='12345678'  />
+          <!-- Campo de entrada de password -->
+          <br>
+          <font face='arial'><strong>Contraseña</strong></font>
+          <br>
+          <input type='password' name='pass' placeholder='Contraseña' />
+          <!-- Campo oculto: Este campo no se verá en el navegador -->
+          <input type='hidden' name='informacion' value='72625' />
+          <br>
+          <br>
+          <!-- Botón de envío del formulario -->
+          <input type='submit' value='Ingresar' />
+        </form>"  align="center"  width="600" height="600" style="border:none;">
+      </iframe>
+    </div>
+  </body>
+</html>
+>>>>>>> 4c66fe36671eada1fef6ffc459bc217a227199a5
