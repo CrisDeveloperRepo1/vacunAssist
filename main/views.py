@@ -7,23 +7,21 @@ def homepage(request):
 
     # a nuestra template le vamos a pasar toda esa cantidad de objteos con la variable vacunadores
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 4c66fe36671eada1fef6ffc459bc217a227199a5
+
+
 def registro(request):
     form =UserCreationForm
     return render(request, "main/registro.html", {"form":form})
 # extenser el formulario para que pida email
-<<<<<<< HEAD
+
 
 def login(request):
     return render(request, "main/inicio_de_sesión.html")
 
 
-=======
 def login(request):
     return render(request, "main/inicio_de_sesión.html")
 
->>>>>>> 4c66fe36671eada1fef6ffc459bc217a227199a5
+
 # Create your views here.
