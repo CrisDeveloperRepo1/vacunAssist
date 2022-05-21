@@ -23,5 +23,10 @@ def login(request):
 def login(request):
     return render(request, "main/inicio_de_sesión.html")
 
+def verificar(request):
+    return render(request, "main/verificación.html")
+
+def inicio_adm(request):
+    return render(request, "main/inicio-admin.html")
 
 # Create your views here.

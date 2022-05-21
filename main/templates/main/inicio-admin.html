@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+
+
+    <title></title>
+
+    <nav>
+        <div class="nav-wrapper  light-green">
+          <a href="#" class="brand-logo"></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/login">inicio</a></li>
+            <li><a href="/registro">registro</a></li>
+            <li><a href="collapsible.html">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
+      <style>
+
+        caja { 
+            border: 20px solid ##888987;
+            }
+        
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 70%;
+        }
+        
+        td, th {
+          border: 1px solid #000000;
+          text-align: left;
+          padding: 2px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #888987;
+        }
+
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #888987;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            margin: 10px 1px;
+            cursor: pointer;
+          }
+
+        </style>
+  </head>
+  <!-- bgcolor="#8bc34a" -->
+  <body bgcolor="E5E5E5">
+
+
+
+  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+  
+  <!-- Page Content goes here -->
+  <input type="button" value="Nuevo Vacunador">
+  <input type="button" value="Eliminar Vacunador">
+  <input type="button" value="Ver Stock">
+  <input type="button" value="Actualizar Stock">
+  
+    <center><div class="container">
+        <table id:"tableUsers" style="background-color:##888987">
+            <caption style="background-color:#fffff"> <h5>Usuarios </h5></caption>
+            <tr>
+                <th>Apellido y Nombre</th>
+                <th>Vacunatorio</th>
+                <th>DNI</th>
+            </tr>
+            <tr>
+                <td>Island Trading</td>
+                <td>Helen Bennett</td>
+                <td>UK</td>
+            </tr>
+            <tr>
+                <td>Laughing Bacchus Winecellars</td>
+                <td>Yoshi Tannamuri</td>
+                <td>Canada</td>
+            </tr>
+        </table>
+        <br>
+
+        <table id="tablaTurnos" style="background-color:#F5FBEE">
+                <caption style="background-color:#fffff"> Turnos Fiebre Amarilla </caption>
+                <tr>
+                <th>Apellido y Nombre</th>
+                <th>DNI</th>
+                <th>Aceptar/Denegar</th>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>Helen Bennett</td>
+                    <td>UK</td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>Yoshi Tannamuri</td>
+                    <td>Canada</td>
+                </tr>
+        </table>
+    </div></center>
+
+    <div class= "left">
+        <p>
+       <img src="{% static 'imagenes/Logo.png' %}"  width="200" height="179">
+        </p>
+      </div>
+
+
+    <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
+
+
+
+</html>
