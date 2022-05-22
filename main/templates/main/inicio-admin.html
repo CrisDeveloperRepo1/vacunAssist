@@ -15,9 +15,11 @@
 
     <nav>
         <div class="nav-wrapper  light-green">
-          <a href="#" class="brand-logo"></a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/login">inicio</a></li>
+          <a href="/" class="brand-logo">
+            <img src="{% static 'imagenes/Logo_VacunAssist_recortado.png' %}" class="img-fluid" width="100" height="66">
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med"></a>
+            <li><a href="inicio">inicio</a></li>
             <li><a href="/registro">registro</a></li>
             <li><a href="collapsible.html">Cerrar Sesión</a></li>
           </ul>
@@ -27,6 +29,13 @@
       <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
       <style>
 
+        .logo-image{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          overflow: ;
+          margin-top: -6px;
+      }
         caja { 
             border: 20px solid ##888987;
             }
@@ -44,38 +53,50 @@
         }
         
         tr:nth-child(even) {
-          background-color: #888987;
+          background-color: #BABCB7;
         }
 
         input[type=button], input[type=submit], input[type=reset] {
             background-color: #888987;
-            border: none;
+            border-color:#86D03A;
+            border-radius: 10px;
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             text-decoration: none;
-            margin: 10px 1px;
+            margin: 20px 1px;
             cursor: pointer;
           }
 
         </style>
   </head>
   <!-- bgcolor="#8bc34a" -->
-  <body bgcolor="E5E5E5">
+  <body bgcolor="FFFFFF">
 
 
 
   <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
-  
+
   <!-- Page Content goes here -->
+  <div class="center">
   <input type="button" value="Nuevo Vacunador">
   <input type="button" value="Eliminar Vacunador">
   <input type="button" value="Ver Stock">
   <input type="button" value="Actualizar Stock">
+  </div>
   
-    <center><div class="container">
-        <table id:"tableUsers" style="background-color:##888987">
-            <caption style="background-color:#fffff"> <h5>Usuarios </h5></caption>
-            <tr>
+        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+            <caption > 
+              <div class="left"><h6> Usuarios </h6></div>
+              <div class="right"> 
+                <select name="opciones">
+                      <option value="dni">DNI</option>
+                      <option value="vacunatorio">Vacunatorio</option>
+                      <option value="apeynom">Apellido</option>
+                      <option value="rol">Rol</option>
+                </select>
+              </div>
+            </caption>
+            <tr style="background-color:#86D03A">
                 <th>Apellido y Nombre</th>
                 <th>Vacunatorio</th>
                 <th>DNI</th>
@@ -92,10 +113,9 @@
             </tr>
         </table>
         <br>
-
-        <table id="tablaTurnos" style="background-color:#F5FBEE">
-                <caption style="background-color:#fffff"> Turnos Fiebre Amarilla </caption>
-                <tr>
+        <table id="tablaTurnos" style="background-color:#D6D8D2;  margin: 0 auto;">
+                <caption > <div class="left"><h6>Turnos Fiebre Amarilla </h6></div>  </caption>
+                <tr style="background-color:#86D03A">
                 <th>Apellido y Nombre</th>
                 <th>DNI</th>
                 <th>Aceptar/Denegar</th>
@@ -111,15 +131,12 @@
                     <td>Canada</td>
                 </tr>
         </table>
-    </div></center>
 
-    <div class= "left">
+    <!--<div class= "left">
         <p>
        <img src="{% static 'imagenes/Logo.png' %}"  width="200" height="179">
         </p>
-      </div>
-
-
+      </div>-->
     <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>

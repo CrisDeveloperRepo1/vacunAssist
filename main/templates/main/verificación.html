@@ -2,12 +2,6 @@
 {% load static %}
 <html lang="en" dir="ltr">
 
-<body bgcolor="96cd7a" >
-
-    
-    <!-- bgcolor="#8bc34a" -->
-    <body bgcolor="96cd7a" >
-
     <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
 
 
@@ -23,12 +17,15 @@
     <title></title>
     <nav>
         <div class="nav-wrapper  light-green">
+          <div class="left"  style="margin: 9px 0px 0px 10px">
+          <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
+          </div>
+          <div class="right"
           <a href="#" class="brand-logo"></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">inicio</a></li>
-            <li><a href="badges.html">registro</a></li>
-            <li><a href="collapsible.html">entrar</a></li>
+            <li><a href="javascript: history.go(-1)">Volver</a></li>
           </ul>
+        </div>
         </div>
       </nav>
 
@@ -36,40 +33,33 @@
 
   </head>
   <!-- bgcolor="#8bc34a" -->
-  <body bgcolor="96cd7a" >
+  <body bgcolor="FFFFFF" >
 
   <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
 
   <div class= "left">
-    <p>
-   <img src="{% static 'imagenes/Logo.png' %}"  width="600" height="579">
-    </p>
+   <img src="{% static 'imagenes/Logo.png' %}"  width="570" height="549" style="margin: 2px 1px">
   </div>
 
     <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <div class="right">
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-        <iframe srcdoc=" <form name='formulario' method='post' style='text-align:center'>
+       
+        <div class="right"  align="center"  style="border: 2px solid #96D041; background:#BCBCBC; margin: 100px 110px;">
+          <font face="Lucida Bright" ><h5>Verificar Código</h5></font>
           <!-- Campo de entrada de password -->
-          <br>
-          <font face='arial'><strong>Código Único</strong></font>
-          <br>
-          <br>
-          <input type='password' name='pass' placeholder='3456' />
-          <!-- Campo oculto: Este campo no se verá en el navegador -->
-          <br>
-          <br>
-          <!-- Botón de envío del formulario -->
-          <input type='submit' value='Verificar'/>
-        </form>"  align="center"  width="600" height="600" style="border:none;">
-      </iframe>
-    </div>
+          <hr>
+          <div class="center" style="background:#BCBCBC; margin: 10px 100px">
+            <form name='formulario' method='post' style='text-align:center'>
+              <font face='arial'><h6><strong>Código Único</strong></h6></font>
+              <input type='password hidden' name='pass' placeholder='Código' />
+              <!-- Campo oculto: Este campo no se verá en el navegador -->
+              <br>
+              <!-- Botón de envío del formulario -->
+              <h6><input type='submit' value='Verificar'/></h6>
+              <hr>
+              <h7>¿Olvidó su código? <a href="/" style="color:#006BB8">Clickee aqui</a> </h7>
+            </form>
+          </div>
+        </div>
   </body>
 </html>

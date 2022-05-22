@@ -2,11 +2,9 @@
 {% load static %}
 <html lang="en" dir="ltr">
 
-<body bgcolor="96cd7a" >
 
     
     <!-- bgcolor="#8bc34a" -->
-    <body bgcolor="96cd7a" >
 
     <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
 
@@ -23,59 +21,57 @@
     <title></title>
     <nav>
         <div class="nav-wrapper  light-green">
-          <a href="#" class="brand-logo"></a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">inicio</a></li>
-            <li><a href="badges.html">registro</a></li>
-            <li><a href="collapsible.html">entrar</a></li>
-          </ul>
+          <div class="left"  style="margin: 9px 0px 0px 10px">
+            <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
+            </div>
+          <div class="right">
+            <a href="#" class="brand-logo"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="sass.html">inicio</a></li>
+              <li><a href="badges.html">registro</a></li>
+              <li><a href="collapsible.html">entrar</a></li>
+            </ul>
+          </div>
         </div>
       </nav>
 
       <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
 
   </head>
+
   <!-- bgcolor="#8bc34a" -->
-  <body bgcolor="96cd7a" >
+  <body bgcolor="FFFFFF" >
 
   <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
 
   <div class= "left">
-    <p>
-   <img src="{% static 'imagenes/Logo.png' %}"  width="600" height="579">
-    </p>
+   <img src="{% static 'imagenes/Logo.png' %}"  width="570" height="549" style="margin: 2px 1px">
   </div>
 
     <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <div class="right">
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-        <iframe srcdoc=" <form name='formulario' method='post' style='text-align:center'>
+      
+        <div class="right"  align="center"  style="border: 2px solid #96D041; background:#BCBCBC; margin: 100px 110px;">
+          <font face="Lucida Bright" ><h5>Inicio de sesión</h5></font>
+          <hr>
+        <div class="center" 
+        style="background:#BCBCBC; margin: 10px 100px"><form name='formulario' method='post' style='text-align:center'>
           <!-- Campo de entrada de usuario -->
-          <font face='arial'><h2><strong>DNI</strong></font>
-          <br>
+          <font face='Verdana'><h6><strong>DNI</strong></h6></font>
           <input type='id'name='dni' placeholder='12345678'  />
           <!-- Campo de entrada de password -->
           <br>
-          <font face='arial'><strong>Contraseña</strong></font>
-          <br>
-          <input type='password' name='pass' placeholder='Contraseña' />
+          <font face='Verdana'><h6><strong>Contraseña</strong></h6></font>
+          <input type='password hidden' name='pass' placeholder='Contraseña' />
           <!-- Campo oculto: Este campo no se verá en el navegador -->
-          <input type='hidden' name='informacion' value='72625' />
-          <br>
           <br>
           <!-- Botón de envío del formulario -->
-           <a href='http://127.0.0.1:8000/verificación/'>
-            <input type='button' value='Ingresar'>
+           <a href='verificación/'>
+            <h6><input type='button' value='Ingresar'></h6>
            </a>
-        </form>"  align="center"  width="600" height="600" style="border:none;">
-      </iframe>
+           <hr>
+           <h7>¿Olvidó su contraseña? <a href="/" style="color:#006BB8">Clickee aqui</a> </h7>
+        </form> </div>
     </div>
   </body>
 </html>
