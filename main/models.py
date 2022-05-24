@@ -5,20 +5,20 @@ from django.db import models
 class Vacunador(models.Model):
 
     vacunador_nombre= models.CharField(max_length=200)
-<<<<<<< HEAD
+
 
     # vacunador_apellido= models.CharField(max_length=20)
     # vacunador_fechaNac= models.DateTimeField("fecha nacimiento")
     # vacunador_zona= models.CharField(max_length=200)
     # vacunador_dni= models.IntegerField()
     # vacunador_email= models.EmailField(max_length=254)
-=======
+
     vacunador_apellido= models.CharField(max_length=20)
     vacunador_fechaNac= models.DateTimeField("fecha nacimiento")
     vacunador_zona= models.CharField(max_length=200)
     vacunador_dni= models.IntegerField()
     vacunador_email= models.EmailField(max_length=254)
->>>>>>> 2c4c22bb9e68980502195e8185b6290b7536ff54
+
 
     def __str__(self):
         return self
@@ -27,10 +27,10 @@ class Paciente(models.Model):
     opciones=((1, 'Si'), (2, 'No'))
     paciente_nombre= models.CharField(max_length=200)
     paciente_apellido= models.CharField(max_length=20)
-<<<<<<< HEAD
 
 
-=======
+
+
     paciente_fechaNac= models.DateTimeField("fecha nacimiento")
     paciente_zona= models.CharField(max_length=200)
     paciente_dni= models.IntegerField()
@@ -47,7 +47,7 @@ class Paciente(models.Model):
     vac_Covid_turno2= models.DateTimeField("turno_2da")
     vac_Covid1era_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Covid2da_asistencia=models.SmallIntegerField(choices=opciones,default=2)
->>>>>>> 2c4c22bb9e68980502195e8185b6290b7536ff54
+
     def __str__(self):
         return self.paciente_nombre
 
@@ -66,7 +66,7 @@ class Administrador(models.Model):
 class Vacuna_Gripe(models.Model):
     vac_gripe_nombre= models.CharField(max_length=100)
     stock_vac_gripe=models.IntegerField()
-    
+
     def __str__(self):
         return self
 class Vacunatorio(models.Model):
@@ -81,7 +81,7 @@ class Vacunatorio(models.Model):
 class Vacuna_Fiebre_Am(models.Model):
     vac_fa_nombre= models.CharField(max_length=100)
     stock_vac_fa=models.IntegerField()
-    
+
     def __str__(self):
         return self
 
