@@ -29,4 +29,6 @@ def inicio_adm(request):
 def recup_contra(request):
     return render(request, "main/recuperar-contraseña.html")
 
+def reg_vac(request):
+    return render(request, "main/registro_vacunador.html")
 # Create your views here.
