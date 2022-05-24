@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+    <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+
+
+</html>
+
+  <head>
+    <meta charset="utf-8">
+    <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+
+    <title></title>
+    <nav>
+        <div class="nav-wrapper  light-green">
+          <div class="left"  style="margin: 9px 0px 0px 10px">
+          <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
+          </div>
+          <div class="right"
+          <a href="#" class="brand-logo"></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="javascript: history.go(-1)">Volver</a></li>
+          </ul>
+        </div>
+        </div>
+      </nav>
+
+      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
+
+  </head>
+  <!-- bgcolor="#8bc34a" -->
+  <body bgcolor="FFFFFF" >
+
+  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+
+  <div class= "left">
+   <img src="{% static 'imagenes/Logo.png' %}"  width="570" height="549" style="margin: 2px 1px">
+  </div>
+
+    <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+       
+        <div class="right"  align="center"  style="border: 2px solid #96D041; background:#BCBCBC; margin: 100px 110px;">
+          <font face="Lucida Bright" ><h5> Recuperar Contraseña</h5></font>
+          <!-- Campo de entrada de password -->
+          <hr>
+          <div class="center" style="background:#BCBCBC; margin: 10px 100px">
+            <form name='formulario' method='post' style='text-align:center'>
+              <font face='arial'><h6><strong>Correo Electronico</strong></h6></font>
+              <input type='email' name='email' placeholder='Correo' />
+              <!-- Campo oculto: Este campo no se verá en el navegador -->
+              <br>
+              <!-- Botón de envío del formulario -->
+              <h6><input type='submit' value='Enviar'/></h6>
+            </form>
+          </div>
+        </div>
+  </body>
+</html>

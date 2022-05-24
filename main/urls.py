@@ -7,5 +7,6 @@ urlpatterns = [
     path('registro/', views.registro , name="registro"),
     path('login/', views.login, name= 'login' ),
     path('login/verificación/' , views.verificar, name= "validar"),
-    path('inicio_admin/' , views.inicio_adm, name= "inicio_adm")
+    path('inicio_admin/' , views.inicio_adm, name= "inicio_adm"),
+    path('login/recuperar_Contraseña/' , views.verificar, name= "recuperar_Cont"),
 ]
