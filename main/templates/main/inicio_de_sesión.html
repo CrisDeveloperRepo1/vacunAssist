@@ -58,11 +58,11 @@
         style="background:#BCBCBC; margin: 10px 100px"><form name='formulario' method='post' style='text-align:center'>
           <!-- Campo de entrada de usuario -->
           <font face='Verdana'><h6><strong>DNI</strong></h6></font>
-          <input type='id'name='dni' placeholder='12345678'  />
+          <input type='id'name='dni' placeholder='12345678' Required />
           <!-- Campo de entrada de password -->
           <br>
           <font face='Verdana'><h6><strong>Contraseña</strong></h6></font>
-          <input type='password hidden' name='pass' placeholder='Contraseña' />
+          <input type='password hidden' name='pass' placeholder='Contraseña' Required />
           <!-- Campo oculto: Este campo no se verá en el navegador -->
           <br>
           <!-- Botón de envío del formulario -->
@@ -70,7 +70,11 @@
             <h6><input type='button' value='Ingresar'></h6>
            </a>
            <hr>
-           <h7>¿Olvidó su contraseña? <a href="/" style="color:#006BB8">Clickee aqui</a> </h7>
+           <h7>¿Olvidó su contraseña? <a href='recuperar_Contraseña/' style="color:#006BB8">Clickee aqui</a> </h7>
+           <hr> 
+           <h7>¿Sos Nuevo? <a href='registro/'><input type='button' value='Registrarse'>
+            </a> </h7>
+
         </form> </div>
     </div>
   </body>

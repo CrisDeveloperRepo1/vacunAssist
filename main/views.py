@@ -22,15 +22,13 @@ def login(request):
     return render(request, "main/inicio_de_sesión.html")
 
 
-def login(request):
-    return render(request, "main/inicio_de_sesión.html")
-
 def verificar(request):
     return render(request, "main/verificación.html")
 
 def inicio_adm(request):
     return render(request, "main/inicio-admin.html")
 
+<<<<<<< HEAD
 def validarCodigo(request):
 
     return render(request, "main/validarCodigo.html",{"administrador": Administrador.objects.all})
@@ -41,4 +39,11 @@ def compararCodigo(request):
 
     return render(request, "main/inicio_de_sesión.html"  )
 
+=======
+def recup_contra(request):
+    return render(request, "main/recuperar-contraseña.html")
+
+def reg_vac(request):
+    return render(request, "main/registro_vacunador.html")
+>>>>>>> 2c4c22bb9e68980502195e8185b6290b7536ff54
 # Create your views here.
