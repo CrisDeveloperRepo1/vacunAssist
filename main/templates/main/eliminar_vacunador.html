@@ -17,16 +17,17 @@ fieldset {
   display: block;
   margin-left: 100px;
   margin-right: 100px;
-  margin-top: 10px;
+  margin-top: 30px;
   border: 2px groove (internal value);
 }
 
 legend {
   background-color: gray;
+  color: white;
 }
 
 input {
-  margin: 5px;
+  margin: 15px;
 }
 </style>
 
@@ -41,7 +42,7 @@ input {
     <title></title>
     <nav>
         <div class="nav-wrapper  light-green">
-           <a href="/" class="brand-logo">
+          <a href="/" class="brand-logo">
             <img src="{% static 'imagenes/Logo_VacunAssist_recortado.png' %}" class="img-fluid" width="100" height="66">
           <div class="right"  style="margin: 9px 0px 0px 10px">
             <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
@@ -62,37 +63,16 @@ input {
 
   <!-- bgcolor="#8bc34a" -->
   <body bgcolor="FFFFFF" >
-  
   <form action="javascript: history.go(-1)">
- <fieldset>
-  <legend style="color:white; padding: 10px 15px">Registro:</legend>
-  <label for="fname">Nombre:</label>
-  <input type="text"  id="fname" name="fname"><br><br>
-  <label for="lname">Apellido:</label>
-  <input type="text" id="lname" name="lname"><br><br>
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email"><br><br>
+    <fieldset>
+    <legend style="color:white; padding: 10px 15px">Eliminar Vacunador</legend>
+    <div class="center">
     <label for="fname">DNI:</label>
-  <input type="number" id="number" name="number"><br><br>
-  <label for="birthday">Fecha de nacimiento:</label>
-  <input type="date" id="birthday" name="birthday"><br><br>
-    <label for="cars">Choose a car:</label>
-  <select name="cars" id="cars">
-    <option value="Cementerio Municipal">Cementerio Municipal</option>
-    <option value="Terminal de Omnibús">Terminal de Omnibús</option>
-    <option value="Municipalidad">Municipalidad</option>
-  </select><br><br>
-        <input type="checkbox" name="vac_gripe" value="gripe">
-        <label for="información"> Vacuna de la gripe</label><br>
-        <input type="checkbox" name="vac_fa" value="fiebre ama">
-        <label for="información"> vacuna de la fiebre amarilla </label><br>
-        <input type="checkbox" name="vac_covid" value="covid1" checked>
-        <label for="información"> vacuna del covid 1era dosis</label><br>
-        <input type="checkbox" name="vac_covid" value="covid1" checked>
-        <label for="información"> vacuna del covid 2da dosis </label><br>
-        <input type="submit" value="Registrarse">
- </fieldset>
-</form>
+    <input type="id" id="number" name="number" Required><br><br>
+    <input type="submit" name="eliminar" value="Eliminar"><br><br>
+    </div>
+    </fieldset>
+  </form>
   
   </body>
 </html>

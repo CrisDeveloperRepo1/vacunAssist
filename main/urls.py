@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('compararCodigo/' , views.compararCodigo, name= "compararCodigo"),
 
+<<<<<<< HEAD
     path('verif/' , views.verif, name= "verif"),
     path('validarUsuario/' , views.validarUsuario, name= "validarUsuario"),
 
@@ -18,4 +19,9 @@ urlpatterns = [
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
     path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
 
+=======
+    path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
+    path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
+    path('inicio_admin/eliminar_vacun/' , views.eliminar_vacunador, name= "eliminar_vacunador")
+>>>>>>> 366198f3055e673ab56e63442417eecf3b4e0e35
 ]

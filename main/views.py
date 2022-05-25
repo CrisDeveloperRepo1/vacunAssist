@@ -192,4 +192,4 @@ def eliminar_vacunador(request):
     context={
         'form': form,
     }
-    return render(request, "main/eliminar_vacunador.html", context)
+    return render(request,  "main/eliminar_vacunador.html", context)
