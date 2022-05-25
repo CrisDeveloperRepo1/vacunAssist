@@ -11,9 +11,7 @@ urlpatterns = [
 
     path('validarCodigo/' , views.validarCodigo, name= "validarCodigo"),
 
-
-
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
-    path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac")
-
+    path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
+    path('inicio_admin/eliminar_vacun/' , views.eliminar_vacunador, name= "eliminar_vacunador")
 ]

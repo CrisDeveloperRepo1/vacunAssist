@@ -17,11 +17,12 @@
         <div class="nav-wrapper  light-green">
           <a href="/" class="brand-logo">
             <img src="{% static 'imagenes/Logo_VacunAssist_recortado.png' %}" class="img-fluid" width="100" height="66">
+          <div class="right"  style="margin: 9px 0px 0px 10px">
+            <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
+            </div>
           </a>
           <ul id="nav-mobile" class="right hide-on-med"></a>
-            <li><a href="inicio">inicio</a></li>
-            <li><a href="/registro">registro</a></li>
-            <li><a href="collapsible.html">Cerrar Sesión</a></li>
+            <li><a href="/login/">Cerrar Sesión</a></li>
           </ul>
         </div>
       </nav>
@@ -81,7 +82,9 @@
     <a href="nuevo_vac/">
   <input type="button" value="Nuevo Vacunador">
     </a>
+    <a href="eliminar_vacun/">
   <input type="button" value="Eliminar Vacunador">
+    </a>
   <input type="button" value="Ver Stock">
   <input type="button" value="Actualizar Stock">
   </div>
