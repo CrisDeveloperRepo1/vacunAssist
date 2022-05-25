@@ -16,6 +16,13 @@
 
     <title></title>
     <nav>
+        <script type = "text/javascript">
+            M.toast({html: 'fgf',
+            classes: 'red rounded',
+            displayLength:2000,
+          })
+
+       </script>
         <div class="nav-wrapper  light-green">
           <div class="left"  style="margin: 9px 0px 0px 10px">
           <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
@@ -23,7 +30,7 @@
           <div class="right"
           <a href="#" class="brand-logo"></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="javascript: history.go(-1)">Volver</a></li>
+            <li><a href="/login/">Volver</a></li>
           </ul>
         </div>
         </div>
@@ -49,9 +56,9 @@
           <!-- Campo de entrada de password -->
           <hr>
           <div class="center" style="background:#BCBCBC; margin: 10px 100px">
-            <form name='formulario' method='post' style='text-align:center'>
+            <form name='formulario' action ="/compararCodigo/" method='GET' style='text-align:center'>
               <font face='arial'><h6><strong>Código Único</strong></h6></font>
-              <input type='password hidden' name='pass' placeholder='Código' />
+              <input type='password' name='pass' />
               <!-- Campo oculto: Este campo no se verá en el navegador -->
               <br>
               <!-- Botón de envío del formulario -->
@@ -61,5 +68,49 @@
             </form>
           </div>
         </div>
+        {% if messages %}
+          {% for message in messages %}
+          <!-- {% if message.tags == 'success' %}
+          <script type = "text/javascript">
+          M.toast({html: '{{message}}',
+          classes: 'green rounded',
+          displayLength:2000,
+        })
+
+      </script>
+      {% endif %} -->
+
+        {% if message.tags == 'error' %}
+          <script type = "text/javascript">
+               M.toast({html: '{{message}}',
+               classes: 'red rounded',
+               displayLength:2000,
+               })
+
+         </script>
+      {% endif %}
+
+
+
+    <!-- <script type = "text/javascript">
+    M.toast({html: '{{message}}',
+    classes: 'red rounded',
+    displayLength:2000,
+  })
+
+  </script> -->
+
+         {% endfor %}
+
+
+
+    {% endif %}
+        <!-- <script type = "text/javascript">
+            M.toast({html: 'fgf',
+            classes: 'red rounded',
+            displayLength:2000,
+          })
+
+       </script> -->
   </body>
 </html>

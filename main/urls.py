@@ -3,17 +3,19 @@ from . import views
 app_name= 'main'
 
 urlpatterns = [
-    path('', views.homepage,name= 'homepage'),
+    path('', views.login,name= 'homepage'),
     path('login/registro/', views.registro , name="registro"),
     path('login/', views.login, name= 'login' ),
-    path('login/verificación/' , views.verificar, name= "validar"),
-    path('inicio_admin/' , views.inicio_adm, name= "inicio_adm"),
+    # path('login/verificación/' , views.verificacion, name= "verificacion"),
+    path('inicio_admin/' , views.inicio_admin, name= "inicio_admin"),
 
-    path('validarCodigo/' , views.validarCodigo, name= "validarCodigo"),
+    path('compararCodigo/' , views.compararCodigo, name= "compararCodigo"),
 
+    path('verif/' , views.verif, name= "verif"),
+    path('validarUsuario/' , views.validarUsuario, name= "validarUsuario"),
 
 
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
-    path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac")
+    path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
 
 ]
