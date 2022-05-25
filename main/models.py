@@ -1,3 +1,5 @@
+from pyexpat import model
+from unicodedata import name
 from django.db import models
 
 # Create your models here.
@@ -21,7 +23,7 @@ class Vacunador(models.Model):
 
 
     def __str__(self):
-        return self
+        return self.vacunador_dni
 
 class Paciente(models.Model):
     opciones=((1, 'Si'), (2, 'No'))
@@ -68,7 +70,8 @@ class Vacuna_Gripe(models.Model):
     stock_vac_gripe=models.IntegerField()
 
     def __str__(self):
-        return self
+        return self.vac_gripe_nombre
+    
 class Vacunatorio(models.Model):
     administrador_nombre= models.CharField(max_length=100)
     stock_vac_fa=models.IntegerField()
@@ -76,18 +79,28 @@ class Vacunatorio(models.Model):
     stock_vac_gripe=models.IntegerField()
 
     def __str__(self):
-        return self
+        return self.administrador_nombre
 
 class Vacuna_Fiebre_Am(models.Model):
     vac_fa_nombre= models.CharField(max_length=100)
     stock_vac_fa=models.IntegerField()
 
     def __str__(self):
-        return self
+        return self.vac_fa_nombre
 
 class Vacuna_Covid(models.Model):
     vac_covid_nombre= models.CharField(max_length=100)
     stock_vac_covid_1era=models.IntegerField()
     stock_vac_covid_2da=models.IntegerField()
     def __str__(self):
-        return self
+        return self.vac_covid_nombre
+    
+class Envio_de_correo (models.Model):
+    name= models.CharField(max_length=250)
+    subject=models.CharField(max_length=250)
+    body= models.TextField(blank=True, null=True)
+    email= models.ManyToManyField(Vacunador)
+    
+    def __str__(self):
+        return self.name
+    
