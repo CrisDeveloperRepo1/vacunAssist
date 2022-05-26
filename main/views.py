@@ -19,7 +19,8 @@ def homepage(request):
 
     # a nuestra template le vamos a pasar toda esa cantidad de objteos con la variable vacunadores
 
-
+def listarModelos(request):
+    return render(request,"main/pruebas.html")
 
 
 def registro(request):
@@ -36,7 +37,18 @@ def verif(request):
     return render(request,"main/verif.html")
 
 def inicio_admin(request):
-    return render(request, "main/inicio_admin.html")
+    administradorList= Administrador.objects.all()
+
+    # vacunadores = Vacunador.objects.all()
+    # data= {
+    #     'vacunadores' : vacunadores
+    # }
+    # administradores = Administrador.objects.all()
+    # data= {
+    #     'administradores' : administradores
+    # }
+
+    return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
 
 
 # def validarCodigo(request):
@@ -44,6 +56,7 @@ def inicio_admin(request):
 #     return render(request, "main/validarCodigo.html",{"administrador": Administrador.objects.all})
 
 def validarUsuario(request):
+
     if request.GET["dni"].isdigit():
         # one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
 
@@ -78,6 +91,8 @@ def validarUsuario(request):
 
 
 def compararCodigo(request):
+        administradorList= Administrador.objects.all()
+        vacunadoresList= Vacunador.objects.all()
     # codigo=request.GET{"pass"}
     # if check_password(codigo,administrador. ) // falta la instancia
         if request.GET["pass"]:
@@ -86,7 +101,7 @@ def compararCodigo(request):
                                 if  int(request.GET["pass"]) == one_entry.administrador_codigo :
                                     #mensaje= request.GET["pass"]
 
-                                    return render(request,"main/inicio_admin.html")
+                                    return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
                                 else:
                                     messages.error(request, "codigo invalido")
                                     return render (request,"main/verif.html")

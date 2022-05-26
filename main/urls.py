@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
     path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
+    path('listarModelos/' , views.listarModelos, name= "listarModelos"),
 
 
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),

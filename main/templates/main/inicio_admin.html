@@ -68,6 +68,22 @@
             cursor: pointer;
           }
 
+                    
+          fieldset {
+            background-color: #eeeeee;
+            display: block;
+            width: 70%;
+            border: 2px groove (internal value);
+          }
+
+          legend {
+            background-color: gray;
+          }
+
+          input {
+            margin: 5px;
+          }
+
         </style>
   </head>
   <!-- bgcolor="#8bc34a" -->
@@ -79,63 +95,137 @@
 
   <!-- Page Content goes here -->
   <div class="center">
-    <a href="nuevo_vac/">
-  <input type="button" value="Nuevo Vacunador">
-    </a>
-    <a href="eliminar_vacun/">
-  <input type="button" value="Eliminar Vacunador">
-    </a>
   <input type="button" value="Ver Stock">
   <input type="button" value="Actualizar Stock">
   </div>
   
         <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
-            <caption > 
-              <div class="left"><h6> Usuarios </h6></div>
-              <div class="right"> 
-                <select name="opciones">
-                      <option value="dni">DNI</option>
-                      <option value="vacunatorio">Vacunatorio</option>
-                      <option value="apeynom">Apellido</option>
-                      <option value="rol">Rol</option>
-                </select>
+          <caption > 
+            <div class="left"><h6> Vacunadores </h6></div>
+            <!--<div class="right"> 
+              <select name="opciones">
+                    <option value="dni">DNI</option>
+                    <option value="vacunatorio">Vacunatorio</option>
+                    <option value="apeynom">Apellido</option>
+                    <option value="rol">Rol</option>
+              </select>
+            </div> -->
+          </caption>
+          <tr style="background-color:#86D03A">
+              <th>Apellido </th>
+              <th>Nombre</th>
+              <th>Vacunatorio</th>
+              <th>DNI</th>
+          </tr>
+        <div class="vacunadores">
+          {% for v in vacunadores %}
+              <div class="Vacunador">
+                <tr style="background-color:#CBCBCB, #B0B0B0">
+                  <th>{{v.vacunador_apellido}} </th>
+                  <th>{{v.vacunador_nombre}}</th>
+                  <th>{{v.vacunador_zona}}</th>
+                  <th>{{v.vacunador_dni}}</th>
+                </tr>
               </div>
-            </caption>
-            <tr style="background-color:#86D03A">
-                <th>Apellido y Nombre</th>
-                <th>Vacunatorio</th>
-                <th>DNI</th>
-            </tr>
-            <tr>
-                <td>Island Trading</td>
-                <td>Helen Bennett</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Laughing Bacchus Winecellars</td>
-                <td>Yoshi Tannamuri</td>
-                <td>Canada</td>
-            </tr>
+          {% endfor %}
+        </div>
+      </table>
+      <br>
+        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+          <caption > 
+            <div class="left"><h6> Administradores </h6></div>
+            <!-- <div class="right"> 
+              <label for="filt_admin">Filtrar por:</label>
+              <select name="filt_admin" id="filt_admin">
+                <option value="Nombre">Nombre</option>
+                <option value="Apellido">Apellido</option>
+                <option value="dni">dni</option>
+              </select>
+            </div> -->
+          </caption>
+          <tr style="background-color:#86D03A">
+              <th>Apellido </th>
+              <th>Nombre</th>
+              <th>DNI</th>
+          </tr>
+          <div class="administradores">
+            {% for a in administradores %}
+            <div class="Administrador">
+              <tr style="background-color:#CBCBCB, #B0B0B0">
+                <td>{{a.administrador_apellido}} </td>
+                <td> {{a.administrador_nombre}}</td>
+                <td>{{a.administrador_dni}}</td>
+             </tr>
+            </div>
+            {% endfor %}
+          </div>
         </table>
         <br>
-        <table id="tablaTurnos" style="background-color:#D6D8D2;  margin: 0 auto;">
-                <caption > <div class="left"><h6>Turnos Fiebre Amarilla </h6></div>  </caption>
-                <tr style="background-color:#86D03A">
-                <th>Apellido y Nombre</th>
-                <th>DNI</th>
-                <th>Aceptar/Denegar</th>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-        </table>
+        <form action="javascript: history.go(-1)">
+          <fieldset  style="margin: 0 auto;">
+            <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
+             <div class="row">
+              <form class="col s6">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input placeholder="Nombre" id="first_name" type="text" class="validate">
+                    <label for="first_name">Nombre</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input placeholder="Apellido" id="last_name" type="text" class="validate">
+                    <label for="last_name">Apellido</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input placeholder="Email" id="email" type="email" class="validate">
+                    <label >Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input placeholder="DNI" id="dni" type="text" class="validate">
+                    <label for="dni">DNI</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <label for="birthday">Fecha de nacimiento:</label>
+                <input placeholder type="date" id="birthday" name="birthday" class="validate">
+                  </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    
+                    <select class="browser-default" Required >
+                      <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
+                      <option value="Cementerio Municipal">Cementerio Municipal</option>
+                      <option value="Terminal de Omnibús">Terminal de Omnibús</option>
+                      <option value="Municipalidad">Municipalidad</option>
+                    </select>
+                   </div>
+               </div>
+              </form>
+            </div>
+                <!--  <input type="checkbox" name="vac_gripe" value="gripe">
+                  <label for="información"> Vacuna de la gripe</label><br>
+                  <input type="checkbox" name="vac_fa" value="fiebre ama">
+                  <label for="información"> vacuna de la fiebre amarilla </label><br>
+                  <input type="checkbox" name="vac_covid" value="covid1" checked>
+                  <label for="información"> vacuna del covid 1era dosis</label><br>
+                  <input type="checkbox" name="vac_covid" value="covid1" checked>
+                  <label for="información"> vacuna del covid 2da dosis </label><br> -->
+                  <input type="submit" value="Registrar Vacunador">
+           </fieldset>
+          </form>
+          <br>
+            <form action="javascript: history.go(-1)">
+              <fieldset  style=" margin: 0 auto;">
+              <legend style="color:white; padding: 10px 15px">Eliminar Vacunador</legend>
+              <div class="center">
+              <label for="fname">DNI:</label>
+              <input type="id" id="number" name="number" Required><br>
+              <input type="submit" name="eliminar" value="Eliminar Vacunador">
+              </div>
+              </fieldset>
+            </form>
 
     <!--<div class= "left">
         <p>
