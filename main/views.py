@@ -36,7 +36,17 @@ def verif(request):
     return render(request,"main/verif.html")
 
 def inicio_admin(request):
-    return render(request, "main/inicio_admin.html")
+    
+    vacunadores = Vacunador.objects.all()
+    data= {
+        'vacunadores' : vacunadores
+    }
+    administradores = Administrador.objects.all()
+    data= {
+        'administradores' : administradores
+    }
+    
+    return render(request, "main/inicio_admin.html", data)
 
 
 # def validarCodigo(request):

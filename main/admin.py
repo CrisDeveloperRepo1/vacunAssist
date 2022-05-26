@@ -7,6 +7,19 @@ from .models import Vacuna_Covid
 from .models import Vacunatorio
 from .models import Administrador
 
+class VacunadoresList(admin.ModelAdmin):
+    list_display= ["vacunador_nombre", "vacunador_apellido",
+                    "vacunador_zona", "vacunador_dni" ]
+    list_per_page: 5
+    list_filter= ["vacunador_dni", "vacunador_zona"]
+
+class AdministradoresList(admin.ModelAdmin):
+    list_display= ["administrador_nombre", "administrador_apellido",
+                    "administrador_dni" ]
+    list_per_page: 5
+    list_filter= ["administrador_dni"]
+
+
 admin.site.register(Vacunador)
 admin.site.register(Paciente)
 admin.site.register(Vacuna_Gripe)

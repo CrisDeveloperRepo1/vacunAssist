@@ -90,52 +90,67 @@
   </div>
   
         <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
-            <caption > 
-              <div class="left"><h6> Usuarios </h6></div>
-              <div class="right"> 
-                <select name="opciones">
-                      <option value="dni">DNI</option>
-                      <option value="vacunatorio">Vacunatorio</option>
-                      <option value="apeynom">Apellido</option>
-                      <option value="rol">Rol</option>
-                </select>
+          <caption > 
+            <div class="left"><h6> Vacunadores </h6></div>
+            <!--<div class="right"> 
+              <select name="opciones">
+                    <option value="dni">DNI</option>
+                    <option value="vacunatorio">Vacunatorio</option>
+                    <option value="apeynom">Apellido</option>
+                    <option value="rol">Rol</option>
+              </select>
+            </div> -->
+          </caption>
+          <tr style="background-color:#86D03A">
+              <th>Apellido </th>
+              <th>Nombre</th>
+              <th>Vacunatorio</th>
+              <th>DNI</th>
+          </tr>
+        <div class="vacunadores">
+          {% for v in vacunadores %}
+              <div class="Vacunador">
+                <tr style="background-color:#CBCBCB, #B0B0B0">
+                  <th>{{v.vacunador_apellido}} </th>
+                  <th>{{v.vacunador_nombre}}</th>
+                  <th>{{v.vacunador_zona}}</th>
+                  <th>{{v.vacunador_dni}}</th>
+                </tr>
               </div>
-            </caption>
-            <tr style="background-color:#86D03A">
-                <th>Apellido y Nombre</th>
-                <th>Vacunatorio</th>
-                <th>DNI</th>
-            </tr>
-            <tr>
-                <td>Island Trading</td>
-                <td>Helen Bennett</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Laughing Bacchus Winecellars</td>
-                <td>Yoshi Tannamuri</td>
-                <td>Canada</td>
-            </tr>
+          {% endfor %}
+        </div>
+      </table>
+      <br>
+        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+          <caption > 
+            <div class="left"><h6> Administradores </h6></div>
+            <!-- <div class="right"> 
+              <label for="filt_admin">Filtrar por:</label>
+              <select name="filt_admin" id="filt_admin">
+                <option value="Nombre">Nombre</option>
+                <option value="Apellido">Apellido</option>
+                <option value="dni">dni</option>
+              </select>
+            </div> -->
+          </caption>
+          <tr style="background-color:#86D03A">
+              <th>Apellido </th>
+              <th>Nombre</th>
+              <th>DNI</th>
+          </tr>
+          <div class="administradores">
+            {% for a in administradores %}
+            <div class="Administrador">
+              <tr style="background-color:#CBCBCB, #B0B0B0">
+                <td>{{a.administrador_apellido}} </td>
+                <td> {{a.administrador_nombre}}</td>
+                <td>{{a.administrador_dni}}</td>
+             </tr>
+            </div>
+            {% endfor %}
+          </div>
         </table>
         <br>
-        <table id="tablaTurnos" style="background-color:#D6D8D2;  margin: 0 auto;">
-                <caption > <div class="left"><h6>Turnos Fiebre Amarilla </h6></div>  </caption>
-                <tr style="background-color:#86D03A">
-                <th>Apellido y Nombre</th>
-                <th>DNI</th>
-                <th>Aceptar/Denegar</th>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-        </table>
 
     <!--<div class= "left">
         <p>
