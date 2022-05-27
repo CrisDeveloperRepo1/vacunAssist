@@ -17,6 +17,8 @@ urlpatterns = [
 
     path('compararCodigo/' , views.compararCodigo, name= "compararCodigo"),
 
+    path('sumarTotales/' , views.sumarTotales, name= "sumarTotales"),
+
 
     path('verif/' , views.verif, name= "verif"),
     path('validarUsuario/' , views.validarUsuario, name= "validarUsuario"),

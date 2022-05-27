@@ -67,7 +67,6 @@ class Vacuna_Gripe(models.Model):
 
 class Vacunatorio(models.Model):
     administrador_nombre= models.CharField(max_length=100)
-
     vacunatorio_zona= models.CharField(max_length=100)
     stock_vac_fa=models.IntegerField()
     stock_vac_covid=models.IntegerField()

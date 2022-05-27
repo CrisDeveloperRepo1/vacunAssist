@@ -5,14 +5,26 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Vacunador, Envio_de_correo, Administrador
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 
-
+def sumarTotales(request):
+    VacunatorioList= Vacunatorio.objects.all()
+    totalVFA = 0
+    totalVG= 0
+    totalVC= 0
+    for v in VacunatorioList:
+        totalVFA = totalVFA + v.stock_vac_fa
+    for v in VacunatorioList:
+        totalVG = totalVG + v.stock_vac_gripe
+    for v in VacunatorioList:
+        totalVC = totalVC + v.stock_vac_covid
+        #,{"total":totalVFA}
+    return render(request,"main/pruebas.html",{"vacunasFA":totalVFA,"vacunasG":totalVG,"vacunasC":totalVC,"Vacunatorios":VacunatorioList})
 
 def homepage(request):
     return render(request, "main/inicio.html", { "vacunadores" : Vacunador.objects.all})

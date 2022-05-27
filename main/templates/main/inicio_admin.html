@@ -37,22 +37,22 @@
           overflow: ;
           margin-top: -6px;
       }
-        caja { 
+        caja {
             border: 20px solid ##888987;
             }
-        
+
         table {
           font-family: arial, sans-serif;
           border-collapse: collapse;
           width: 70%;
         }
-        
+
         td, th {
           border: 1px solid #000000;
           text-align: left;
           padding: 2px;
         }
-        
+
         tr:nth-child(even) {
           background-color: #BABCB7;
         }
@@ -68,7 +68,7 @@
             cursor: pointer;
           }
 
-                    
+
           fieldset {
             background-color: #eeeeee;
             display: block;
@@ -95,14 +95,26 @@
 
   <!-- Page Content goes here -->
   <div class="center">
-  <input type="button" value="Ver Stock">
-  <input type="button" value="Actualizar Stock">
+         <form method='GET' action="/sumarTotales/">
+
+               <input type="submit" value="Ver Stock">
+         </form>
+        <form method='GET' action="/login/">
+                <input type="submit" value="Actualizar Stock">
+        </form>
+
+
+
+
+    </form>
+
+
   </div>
-  
+
         <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
-          <caption > 
+          <caption >
             <div class="left"><h6> Vacunadores </h6></div>
-            <!--<div class="right"> 
+            <!--<div class="right">
               <select name="opciones">
                     <option value="dni">DNI</option>
                     <option value="vacunatorio">Vacunatorio</option>
@@ -132,9 +144,9 @@
       </table>
       <br>
         <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
-          <caption > 
+          <caption >
             <div class="left"><h6> Administradores </h6></div>
-            <!-- <div class="right"> 
+            <!-- <div class="right">
               <label for="filt_admin">Filtrar por:</label>
               <select name="filt_admin" id="filt_admin">
                 <option value="Nombre">Nombre</option>
@@ -193,7 +205,7 @@
                   </div>
                 <div class="row">
                   <div class="input-field col s6">
-                    
+
                     <select class="browser-default" Required >
                       <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
                       <option value="Cementerio Municipal">Cementerio Municipal</option>
