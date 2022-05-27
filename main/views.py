@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 # from attr import fields
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio
 from django.contrib.auth.forms import UserCreationForm
@@ -11,6 +11,7 @@ from .forms import vacunador_signUpForm
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.contrib.auth import logout, authenticate
 
 def sumarTotales(request):
     VacunatorioList= Vacunatorio.objects.all()
@@ -193,10 +194,22 @@ def recup_contra(request):
 
 def reg_vac(request):
 
+    #data = {
+    #    "form": vacunador_signUpForm()}
+    #if request.method == "POST":
+     #    formulario = UserCreationForm(request.POST)
+      #   if formulario.is_valid():
+     #       user = formulario.save()
+            
+     #       dni = form.cleaned_data["dni"]
+     #       user = authenticate(dni=dni)
+     #       login(request, user)
+     #       return redirect(to="login")
+
     form= vacunador_signUpForm(request.POST or None)
 
     if form.is_valid():
-        instance = form.save(commit=False)
+        instance = form.save()
         if Vacunador.objects.filter(dni= instance.vacunador_dni).exists():
             messages.Warning(request, "El DNI ya existe")
         else:
@@ -218,6 +231,24 @@ def reg_vac(request):
     }
     return render(request, "main/registro_vacunador.html", context)
 
+    #class reg_vac(View):
+
+    #def get(self, request):
+    #    form = UserCreationForm()
+    #    return render(request, "main/inicio_admin.html", {"form": form})
+
+    #def post(self, request):
+     #   form = UserCreationForm(request.POST)
+     #   if form.is_valid():
+     #       user = form.save()
+     #       dni_user = form.cleaned_data.get("dni")
+     #       messages.success(request, F"Se ha registrado con exito {dni_user}")
+     #       login(request, user)
+     #       return redirect("main/login")
+     #   else:
+     #       for msg in form.error_messages:
+     #           messages.error(request, form.error_messages[msg])
+
 # Create your views here.
 def eliminar_vacunador(request):
     form= vacunador_signUpForm(request.POST or None)
@@ -234,3 +265,8 @@ def eliminar_vacunador(request):
         'form': form,
     }
     return render(request,  "main/eliminar_vacunador.html", context)
+
+def cerrar_sesion (request):
+    logout(request)
+    messages.success(request, "Tu sesión se cerró correctamente")
+    return redirect('main/login/')

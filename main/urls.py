@@ -32,6 +32,7 @@ urlpatterns = [
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
     path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
     path('inicio_admin/eliminar_vacun/' , views.eliminar_vacunador, name= "eliminar_vacunador"),
+    path('logout/', views.cerrar_sesion, name = "logout"),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name= "main/password_reset.html"), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name= "main/password_reset_sent.html"), name="password_reset_done"),
