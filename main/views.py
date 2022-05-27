@@ -37,7 +37,7 @@ def verif(request):
     return render(request,"main/verif.html")
 
 def inicio_admin(request):
-<<<<<<< HEAD
+
     administradorList= Administrador.objects.all()
 
     # vacunadores = Vacunador.objects.all()
@@ -50,8 +50,8 @@ def inicio_admin(request):
     # }
 
     return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
-=======
-    
+
+
     vacunadores = Vacunador.objects.all()
     data= {
         'vacunadores' : vacunadores
@@ -60,9 +60,9 @@ def inicio_admin(request):
     data= {
         'administradores' : administradores
     }
-    
+
     return render(request, "main/inicio_admin.html", data)
->>>>>>> 7f69a281382c6688634b9e455d6c439489f6e3a3
+
 
 
 # def validarCodigo(request):
