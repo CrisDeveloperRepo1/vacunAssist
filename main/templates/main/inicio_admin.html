@@ -99,7 +99,7 @@
 
                <input type="submit" value="Ver Stock">
          </form>
-        <form method='GET' action="/login/">
+        <form method='GET' action="/inicio_admin/actualizar/">
                 <input type="submit" value="Actualizar Stock">
         </form>
 
@@ -173,24 +173,24 @@
           </div>
         </table>
         <br>
-        <form action="javascript: history.go(-1)">
+        <form >
           <fieldset  style="margin: 0 auto;">
             <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
              <div class="row">
               <form class="col s6">
                 <div class="row">
                   <div class="input-field col s6">
-                    <input placeholder="Nombre" id="first_name" type="text" class="validate">
+                    <input placeholder="Nombre" id="first_name" type="text" class="validate" name="nombre">
                     <label for="first_name">Nombre</label>
                   </div>
                   <div class="input-field col s6">
-                    <input placeholder="Apellido" id="last_name" type="text" class="validate">
+                    <input placeholder="Apellido" id="last_name" type="text" class="validate" name="apellido">
                     <label for="last_name">Apellido</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s6">
-                    <input placeholder="Email" id="email" type="email" class="validate">
+                    <input placeholder="Email" id="email" type="email" class="validate" name="mail">
                     <label >Email</label>
                   </div>
                   <div class="input-field col s6">
@@ -206,7 +206,7 @@
                 <div class="row">
                   <div class="input-field col s6">
 
-                    <select class="browser-default" Required >
+                    <select class="browser-default" Required  name="vacunatorio">
                       <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
                       <option value="Cementerio Municipal">Cementerio Municipal</option>
                       <option value="Terminal de Omnibús">Terminal de Omnibús</option>

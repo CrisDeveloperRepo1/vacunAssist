@@ -10,3 +10,4 @@ class Vacunador_creationForm (forms.ModelForm):
         model = Envio_de_correo
         fields = ['name','subject','body','email']
 
+

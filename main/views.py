@@ -1,10 +1,14 @@
 from email import message
+from random import random
+from certifi import contents
+import django
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 # from attr import fields
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from matplotlib.style import context
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -26,6 +30,10 @@ def sumarTotales(request):
         totalVC = totalVC + v.stock_vac_covid
         #,{"total":totalVFA}
     return render(request,"main/pruebas.html",{"vacunasFA":totalVFA,"vacunasG":totalVG,"vacunasC":totalVC,"Vacunatorios":VacunatorioList})
+
+def actualizar_stock (request):
+    return render(request, "main/actualizar.html")
+
 
 def homepage(request):
     return render(request, "main/inicio.html", { "vacunadores" : Vacunador.objects.all})
@@ -52,6 +60,7 @@ def verif(request):
 def inicio_admin(request):
 
     administradorList= Administrador.objects.all()
+    vacunadorList= Vacunador.objects.all()
 
     # vacunadores = Vacunador.objects.all()
     # data= {
@@ -62,7 +71,7 @@ def inicio_admin(request):
     #     'administradores' : administradores
     # }
 
-    return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
+    return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList})
 
 
     vacunadores = Vacunador.objects.all()
@@ -192,6 +201,22 @@ def compararCodigo(request):
 def recup_contra(request):
     return render(request, "main/recuperar-contraseña.html")
 
+def send_email_registro(mail):
+    context = {"mail" : mail }
+    template = get_template("main/correo.html")
+    content = template.render(context)
+
+    email = EmailMultiAlternatives (
+        "Registro en VacunAssist ", 
+        "registro de usuarios",
+        settings.EMAIL_HOST_USER,
+        [mail]        
+    )
+    
+    email.attach_alternative(content, "text/html")
+    email.send()
+
+
 def reg_vac(request):
 
     #data = {
@@ -226,10 +251,17 @@ def reg_vac(request):
             message=EmailMessage(subject, html_message, from_email, to_email)
             message.content_subtype="html"
             message.send()
+        if request.method == "POST":
+            mail = request.POST.get("mail")
+            caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+            longitud = 9  # La longitud que queremos
+            contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email_registro(mail)
     context={
         'form': form,
     }
-    return render(request, "main/registro_vacunador.html", context)
+    return render(request, "main/inicio_admin.html", context)
 
     #class reg_vac(View):
 
@@ -267,6 +299,56 @@ def eliminar_vacunador(request):
     return render(request,  "main/eliminar_vacunador.html", context)
 
 def cerrar_sesion (request):
-    logout(request)
+    request.session.flush()
     messages.success(request, "Tu sesión se cerró correctamente")
     return redirect('main/login/')
+
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+
+
+
+def send_email(mail, contraseña):
+    context = {"mail" : mail,
+               "pass" : contraseña
+               }
+    template = get_template("main/correo.html")
+    content = template.render(context)
+
+    email = EmailMultiAlternatives (
+        "Recuperar contraseña ", 
+        "probando envio de mails en django",
+        settings.EMAIL_HOST_USER,
+        [mail]        
+    )
+    
+    email.attach_alternative(content, "text/html")
+    email.send()
+
+from secrets import choice
+
+def index(request):
+    if request.method == "POST":
+        mail = request.POST.get("mail")
+        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        longitud = 6  # La longitud que queremos
+        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email(mail, contraseña)
+        
+    return render(request, "main/index.html", {})
+
+
+def reset_pass(request):
+    if request.method == "POST":
+        mail = request.POST.get("mail")
+        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        longitud = 9  # La longitud que queremos
+        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email(mail, contraseña)
+        
+    return render(request, "main/recuperar-contraseña.html", {})
+
+
