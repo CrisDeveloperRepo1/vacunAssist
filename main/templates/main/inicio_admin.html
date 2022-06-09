@@ -109,7 +109,7 @@
 
                <input type="submit" value="Ver Stock">
          </form>
-        <form method='GET' action="/login/">
+        <form method='GET' action="/inicio_admin/actualizar/">
                 <input type="submit" value="Actualizar Stock">
         </form>
 
@@ -182,6 +182,7 @@
              </tr>
             </div>
             {% endfor %}
+<<<<<<< HEAD
 
 
           </div>
@@ -195,6 +196,82 @@
         </div>
 
 
+=======
+          </div>
+        </table>
+        <br>
+        <form >
+          <fieldset  style="margin: 0 auto;">
+            <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
+             <div class="row">
+              <form class="col s6">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input placeholder="Nombre" id="first_name" type="text" class="validate" name="nombre">
+                    <label for="first_name">Nombre</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input placeholder="Apellido" id="last_name" type="text" class="validate" name="apellido">
+                    <label for="last_name">Apellido</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input placeholder="Email" id="email" type="email" class="validate" name="mail">
+                    <label >Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input placeholder="DNI" id="dni" type="text" class="validate" name="dni">
+                    <label for="dni">DNI</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <label for="birthday">Fecha de nacimiento:</label>
+                <input placeholder type="date" id="birthday" name="birthday" class="validate">
+                  </div>
+                <div class="row">
+                  <div class="input-field col s6">
+
+                    <select class="browser-default" Required  name="vacunatorio">
+                      <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
+                      <option value="Cementerio Municipal">Cementerio Municipal</option>
+                      <option value="Terminal de Omnibús">Terminal de Omnibús</option>
+                      <option value="Municipalidad">Municipalidad</option>
+                    </select>
+                   </div>
+               </div>
+               <div class="row">
+                <div class="input-field col s6">
+                 <input placeholder="Contraseña" id="pasword" type="password" class="validate" name="contraseña">
+                 <label for="dni">Contraseña</label>
+                </div>
+              </div>
+              </form>
+            </div>
+                <!--  <input type="checkbox" name="vac_gripe" value="gripe">
+                  <label for="información"> Vacuna de la gripe</label><br>
+                  <input type="checkbox" name="vac_fa" value="fiebre ama">
+                  <label for="información"> vacuna de la fiebre amarilla </label><br>
+                  <input type="checkbox" name="vac_covid" value="covid1" checked>
+                  <label for="información"> vacuna del covid 1era dosis</label><br>
+                  <input type="checkbox" name="vac_covid" value="covid1" checked>
+                  <label for="información"> vacuna del covid 2da dosis </label><br> -->
+                  <input type="submit" value="Registrar Vacunador">
+           </fieldset>
+          </form>
+          <br>
+            <form action="javascript: history.go(-1)">
+              <fieldset  style=" margin: 0 auto;">
+              <legend style="color:white; padding: 10px 15px">Eliminar Vacunador</legend>
+              <div class="center">
+              <label for="fname">DNI:</label>
+              <input type="id" id="number" name="number" Required><br>
+              <input type="submit" name="eliminar" value="Eliminar Vacunador">
+              </div>
+              </fieldset>
+            </form>
+>>>>>>> 9d05b0e6150475fe6541f5ddb8306495f1dc4432
 
     <!--<div class= "left">
         <p>

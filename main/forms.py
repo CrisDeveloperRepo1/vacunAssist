@@ -41,3 +41,8 @@ class Vacunador_creationForm (forms.ModelForm):
     class Meta:
         model = Envio_de_correo
         fields = ['name','subject','body','email']
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9d05b0e6150475fe6541f5ddb8306495f1dc4432

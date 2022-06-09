@@ -37,9 +37,14 @@ urlpatterns = [
     path('validarUsuario/' , views.validarUsuario, name= "validarUsuario"),
 
 
-    path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
+    path('recuperar_Contraseña/' , views.reset_pass, name= "recuperar_Cont"),
     path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
     path('listarModelos/' , views.listarModelos, name= "listarModelos"),
+    path('inicio_admin/actualizar/' , views.actualizar_stock, name= "listarModelos"),
+#------------ url index solo para probar envio de mails ------------
+    path('index/' , views.index, name= "index"),
+    path('index/correo' , views.send_email, name= "correo"),
+#---------------------------------------------------------------------
 
 
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
