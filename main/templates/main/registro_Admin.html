@@ -1,0 +1,22 @@
+{% extends 'main/inicio_admin.html'%}
+{% load static %}
+{% block content %}
+
+
+
+  <title>Document</title>
+  </head>
+  <body>
+    <h2>Registro de usuario</h2>
+    <form  action="" method="post">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table}}
+      </table>
+      <input type="reset"  value="Limpiar">
+      <input type="submit"  value="Registrar">
+
+    </form>
+
+  </body>
+{%endblock%}

@@ -12,6 +12,105 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout, authenticate
+from django.contrib.auth.models import User
+from email import message
+from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+from django.forms import ModelForm
+# from attr import fields
+from django.conf import settings
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .forms import vacunador_signUpForm
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.contrib.auth import login, authenticate,logout
+from.forms import CustomUserForm
+from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
+# def inicio_admin(request):
+#     # data2= {
+#     #   'form' :PacienteRegistro()
+#     # }
+#     # if request.method == 'POST':
+#     #     formulario = PacienteRegistro(request.POST)
+#     #     if formulario.is_valid():
+#     #         formulario.save()
+#     administradorList= Administrador.objects.all()
+#
+#     # vacunadores = Vacunador.objects.all()
+#     # data= {
+#     #     'vacunadores' : vacunadores
+#     # }
+#     # administradores = Administrador.objects.all()
+#     # data= {
+#     #     'administradores' : administradores
+#     # }
+#
+#     return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
+#
+#
+#     vacunadores = Vacunador.objects.all()
+#     data= {
+#         'vacunadores' : vacunadores
+#     }
+#     administradores = Administrador.objects.all()
+#     data= {
+#         'administradores' : administradores
+#     }
+#
+#
+#
+#
+#     return render(request, "main/inicio_admin.html", data)
+def registrarPaciente(request):
+    return render(request, "main/registrarPaciente.html")
+def registroPaciente(request):
+    nombre=request.POST['nombre']
+    apellido=request.POST['apellido']
+    fecha=request.POST['fechaesperada']
+    dni=request.POST['dni']
+    email=request.POST['email']
+    zona=request.POST['zona']
+    paciente=Paciente.objects.create(paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
+    messages.error(request, " registro exitoso")
+    return render(request,'main/inicio_de_sesion_Paciente.html')
+
+
+def eliminar_Admin(request,id,nombre):
+
+    admin=Vacunador.objects.get(vacunador_dni=id)
+    admin.delete()
+    #return render(request,'main/eliminarVacunador.html')
+    administradorList= Vacunador.objects.all()
+    return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
+
+def register(request,data2):
+
+    data2= {
+      'form' :PacienteRegistro()
+    }
+    if request.method == 'POST':
+        formulario = PacienteRegistro(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            #one_entry = User.objects.get(password1="adminadmin")
+            #usuario_administrador
+            return render(request,"main/inicio.html")
+
+    #     form = UserCreationForm(request.POST)
+    #     form.save()
+    #
+    #     if form.is_valid():
+    #         return redirect('/login/')
+    # else:
+    #     form = UserCreationForm(request.POST)
+    # context = { 'form' : form}
+    return render(request,'main/registro_Admin.html',data2)
 
 def sumarTotales(request):
     VacunatorioList= Vacunatorio.objects.all()
@@ -41,17 +140,50 @@ def registro(request):
     return render(request, "main/registro.html", {"form":form})
 # extenser el formulario para que pida email
 
-
-def login(request):
+def loginAdmin(request):
     return render(request, "main/inicio_de_sesión.html")
+def loginVacunador(request):
+    return render(request, "main/inicio_de_sesión_Vacunador.html")
+def loginPaciente(request):
+    return render(request, "main/inicio_de_sesion_Paciente.html")
+def main(request):
+    return render(request,"main/main.html")
+def login1(request):
+    return render(request, "main/inicio_de_sesión.html")
+
+def editarStockVacunatorio(request):
+    administradorList= Vacunatorio.objects.all()
+    VacunaFiebreAm= Vacuna_Fiebre_Am.objects.all()
+    VacunaCovid=Vacuna_Covid.objects.all()
+
+
+    return render(request, "main/editarStockVacunatorio.html",{"administradores" : administradorList,"vacunafa" : VacunaFiebreAm, "vacunaC" : VacunaCovid})
+
+def eliminarVacunador(request):
+    administradorList= Vacunador.objects.all()
+    return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
+
+    #return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
 
 
 def verif(request):
     return render(request,"main/verif.html")
 
 def inicio_admin(request):
-
+    data2= {
+      'form' :PacienteRegistro()
+    }
     administradorList= Administrador.objects.all()
+    vacunadoresList= Vacunador.objects.all()
+
+    # data2= {
+    #   'form' :PacienteRegistro()
+    # }
+    # if request.method == 'POST':
+    #     formulario = PacienteRegistro(request.POST)
+    #     if formulario.is_valid():
+    #         formulario.save()
+    #administradorList= Administrador.objects.all()
 
     # vacunadores = Vacunador.objects.all()
     # data= {
@@ -62,19 +194,23 @@ def inicio_admin(request):
     #     'administradores' : administradores
     # }
 
-    return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
+    # return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
+    #
+    #
+    # vacunadores = Vacunador.objects.all()
+    # data= {
+    #     'vacunadores' : vacunadores
+    # }
+    # administradores = Administrador.objects.all()
+    # data= {
+    #     'administradores' : administradores
+    # }
+    ##return redirect('register', data2)
+    ##return redirect('main/registro_Admin.html')
+    return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+    #return render(request,'main/registro_Admin.html')
 
-
-    vacunadores = Vacunador.objects.all()
-    data= {
-        'vacunadores' : vacunadores
-    }
-    administradores = Administrador.objects.all()
-    data= {
-        'administradores' : administradores
-    }
-
-    return render(request, "main/inicio_admin.html", data)
+    #return render(request, "main/inicio_admin.html")
 
 
 
@@ -93,6 +229,11 @@ def validarUsuario(request):
             one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
             if request.GET["pass"].isdigit():
                 if  int(request.GET["pass"]) == one_entry.administrador_contraseña :
+                     #login(request, one_entry)
+                     username = request.GET["dni"]
+                     password = request.GET["pass"]
+                     user = authenticate(request, username=username, password=password)
+                     #login(request)
                      return render(request,"main/verif.html")
                 else:
                     messages.error(request, " la contraseña es ingresada es invalida")
@@ -118,6 +259,9 @@ def validarUsuario(request):
 
 
 def compararCodigo(request):
+        data2= {
+          'form' :PacienteRegistro()
+        }
         administradorList= Administrador.objects.all()
         vacunadoresList= Vacunador.objects.all()
     # codigo=request.GET{"pass"}
@@ -192,62 +336,90 @@ def compararCodigo(request):
 def recup_contra(request):
     return render(request, "main/recuperar-contraseña.html")
 
+# def reg_vac(request):
+#
+#     #data = {
+#     #    "form": vacunador_signUpForm()}
+#     #if request.method == "POST":
+#      #    formulario = UserCreationForm(request.POST)
+#       #   if formulario.is_valid():
+#      #       user = formulario.save()
+#
+#      #       dni = form.cleaned_data["dni"]
+#      #       user = authenticate(dni=dni)
+#      #       login(request, user)
+#      #       return redirect(to="login")
+#
+#     form= vacunador_signUpForm(request.POST or None)
+#
+#     if form.is_valid():
+#         instance = form.save()
+#         if Vacunador.objects.filter(dni= instance.vacunador_dni).exists():
+#             messages.Warning(request, "El DNI ya existe")
+#         else:
+#             instance.save()
+#             messages.success(request, "Enviamos un correro electronico a " + instance.vacunador_email)
+#             #correo electronico
+#
+#             subject="Registro de Vacunador"
+#             from_email= settings.EMAIL_HOST_USER
+#             to_email=[instance.vacunador_email]
+#
+#             html_template="email_templates/welcome.html"
+#             html_message=render_to_string(html_template)
+#             message=EmailMessage(subject, html_message, from_email, to_email)
+#             message.content_subtype="html"
+#             message.send()
+#     context={
+#         'form': form,
+#     }
+#     return render(request, "main/registro_vacunador.html", context)
 def reg_vac(request):
-
-    #data = {
-    #    "form": vacunador_signUpForm()}
-    #if request.method == "POST":
-     #    formulario = UserCreationForm(request.POST)
-      #   if formulario.is_valid():
-     #       user = formulario.save()
-            
-     #       dni = form.cleaned_data["dni"]
-     #       user = authenticate(dni=dni)
-     #       login(request, user)
-     #       return redirect(to="login")
-
-    form= vacunador_signUpForm(request.POST or None)
-
-    if form.is_valid():
-        instance = form.save()
-        if Vacunador.objects.filter(dni= instance.vacunador_dni).exists():
-            messages.Warning(request, "El DNI ya existe")
-        else:
-            instance.save()
-            messages.success(request, "Enviamos un correro electronico a " + instance.vacunador_email)
-            #correo electronico
-
-            subject="Registro de Vacunador"
-            from_email= settings.EMAIL_HOST_USER
-            to_email=[instance.vacunador_email]
-
-            html_template="email_templates/welcome.html"
-            html_message=render_to_string(html_template)
-            message=EmailMessage(subject, html_message, from_email, to_email)
-            message.content_subtype="html"
-            message.send()
     context={
         'form': form,
     }
-    return render(request, "main/registro_vacunador.html", context)
+    form= vacunador_signUpForm(request.POST or None)
 
-    #class reg_vac(View):
+    if form.is_valid():
+        form.save()
 
-    #def get(self, request):
+        return render(request,"main/inicio.html")
+        #instance = form.save(commit=False)
+        # if User.objects.filter(dni= instance.vacunador_dni).exists():
+        #     messages.Warning(request, "El DNI ya existe")
+        # else:
+        #     instance.save()
+        #     messages.success(request, "Enviamos un correro electronico a " + instance.vacunador_email)
+        #     #correo electronico
+        #
+        #     subject="Registro de Vacunador"
+        #     from_email= settings.EMAIL_HOST_USER
+        #     to_email=[instance.vacunador_email]
+        #
+        #     html_template="email_templates/welcome.html"
+        #     html_message=render_to_string(html_template)
+        #     message=EmailMessage(subject, html_message, from_email, to_email)
+        #     message.content_subtype="html"
+        #     message.send()
+
+    return render(request, "main/inicio_admin.html",context)
+    # class reg_vac(View):
+    #
+    # def get(self, request):
     #    form = UserCreationForm()
     #    return render(request, "main/inicio_admin.html", {"form": form})
-
-    #def post(self, request):
-     #   form = UserCreationForm(request.POST)
-     #   if form.is_valid():
-     #       user = form.save()
-     #       dni_user = form.cleaned_data.get("dni")
-     #       messages.success(request, F"Se ha registrado con exito {dni_user}")
-     #       login(request, user)
-     #       return redirect("main/login")
-     #   else:
-     #       for msg in form.error_messages:
-     #           messages.error(request, form.error_messages[msg])
+    #
+    # def post(self, request):
+    #    form = UserCreationForm(request.POST)
+    #    if form.is_valid():
+    #        user = form.save()
+    #        dni_user = form.cleaned_data.get("dni")
+    #        messages.success(request, F"Se ha registrado con exito {dni_user}")
+    #        login(request, user)
+    #        return redirect("main/login")
+    #    else:
+    #        for msg in form.error_messages:
+    #            messages.error(request, form.error_messages[msg])
 
 # Create your views here.
 def eliminar_vacunador(request):
@@ -269,4 +441,4 @@ def eliminar_vacunador(request):
 def cerrar_sesion (request):
     logout(request)
     messages.success(request, "Tu sesión se cerró correctamente")
-    return redirect('main/login/')
+    return redirect("main/login")

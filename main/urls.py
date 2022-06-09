@@ -3,15 +3,28 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView,PasswordResetDoneView
 from django.urls import path, re_path, include, reverse_lazy
+from .views import eliminar_Admin ,editarStockVacunatorio
+
 
 app_name= 'main'
 
 urlpatterns = [
-    path('', views.login,name= 'homepage'),
-    path('login/registro/', views.registro , name="registro"),
-    path('login/', views.login, name= 'login' ),
+    #path('', views.login1,name= 'homepage'),
+    path('', views.main,name= 'main'),
 
-    path('accounts/login/', views.login, name= 'login' ),
+    path('loginPaciente/', views.loginPaciente , name="loginPaciente"),
+    path('loginAdmin/', views.loginAdmin , name="loginAdmin"),
+    path('login/registro/', views.registro , name="registro"),
+    path('login/', views.main, name= 'main' ),
+    path('registrarPaciente/', views.registrarPaciente, name= 'registrarPaciente' ),
+    path('registroPaciente/', views.registroPaciente, name= 'registroPaciente' ),
+
+    #path('register/', views.editarStockTotal, name= 'editarStockTotal' ),
+    path('editarStockVacunatorio/', views.editarStockVacunatorio, name= 'editarStockVacunatorio' ),
+    path('eliminarVacunador/', views.eliminarVacunador, name= 'eliminarVacunador' ),
+    path('eliminar_Admin/<int:id>/<str:nombre>',views.eliminar_Admin),
+
+    path('accounts/login/', views.login1, name= 'login' ),
     # path('login/verificación/' , views.verificacion, name= "verificacion"),
     path('inicio_admin/' , views.inicio_admin, name= "inicio_admin"),
 

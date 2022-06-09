@@ -1,10 +1,31 @@
 from pyexpat import model
 from unicodedata import name
 from django.db import models
+import datetime
 from django.utils import timezone
 
 # Create your models here.
 
+
+class SolicitudTurnoFA(models.Model):
+
+    dni=models.IntegerField()
+    numId=models.IntegerField()
+    email= models.EmailField(max_length=254)
+
+
+
+    def __int__(self):
+        return self.dni
+class Logeado(models.Model):
+
+    usuarioLogeado=models.IntegerField()
+    numId=models.IntegerField()
+
+
+
+    def __int__(self):
+        return self.usuarioLogeado
 class Vacunador(models.Model):
 
     vacunador_nombre= models.CharField(max_length=200)
@@ -22,25 +43,25 @@ class Vacunador(models.Model):
 
 class Paciente(models.Model):
     opciones=((1, 'Si'), (2, 'No'))
-    paciente_nombre= models.CharField(max_length=200)
+    paciente_nombre= models.CharField(max_length=20)
     paciente_apellido= models.CharField(max_length=20)
     paciente_fechaNac= models.DateTimeField("fecha nacimiento")
     paciente_zona= models.CharField(max_length=200)
     paciente_dni= models.CharField(max_length=200)
     paciente_email= models.EmailField(max_length=254)
     vac_Gripe_aplicada=models.SmallIntegerField(choices=opciones,default=2)
-    vac_Gripe_turno= models.DateTimeField("turno_gripe")
+    vac_Gripe_turno= models.DateTimeField(null=True)
     vac_Amarilla_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Amarilla_aplicada=models.SmallIntegerField(choices=opciones,default=2)
-    vac_Amarilla_turno= models.DateTimeField("turno_fa")
+    vac_Amarilla_turno= models.DateTimeField(null=True)
     vac_Amarilla_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Covid1_aplicada=models.SmallIntegerField(choices=opciones,default=2)
     vac_Covid2_aplicada=models.SmallIntegerField(choices=opciones,default=2)
-    vac_Covid_turno1= models.DateTimeField("turno_1era")
-    vac_Covid_turno2= models.DateTimeField("turno_2da")
+    vac_Covid_turno1= models.DateTimeField(null=True)
+    vac_Covid_turno2= models.DateTimeField(null=True)
     vac_Covid1era_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Covid2da_asistencia=models.SmallIntegerField(choices=opciones,default=2)
-    paciente_codigo= models.IntegerField()
+    paciente_codigo= models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.paciente_nombre

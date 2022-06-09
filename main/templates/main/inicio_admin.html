@@ -4,7 +4,17 @@
 
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+
+    <meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link rel="stylesheet" href="estilos.css">
+  	<link rel="preconnect" href="https://fonts.googleapis.com">
+  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+
+
     <!-- Compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -109,6 +119,7 @@
     </form>
 
 
+
   </div>
 
         <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
@@ -146,6 +157,7 @@
         <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
           <caption >
             <div class="left"><h6> Administradores </h6></div>
+
             <!-- <div class="right">
               <label for="filt_admin">Filtrar por:</label>
               <select name="filt_admin" id="filt_admin">
@@ -170,80 +182,19 @@
              </tr>
             </div>
             {% endfor %}
-          </div>
-        </table>
-        <br>
-        <form action="javascript: history.go(-1)">
-          <fieldset  style="margin: 0 auto;">
-            <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
-             <div class="row">
-              <form class="col s6">
-                <div class="row">
-                  <div class="input-field col s6">
-                    <input placeholder="Nombre" id="first_name" type="text" class="validate">
-                    <label for="first_name">Nombre</label>
-                  </div>
-                  <div class="input-field col s6">
-                    <input placeholder="Apellido" id="last_name" type="text" class="validate">
-                    <label for="last_name">Apellido</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s6">
-                    <input placeholder="Email" id="email" type="email" class="validate">
-                    <label >Email</label>
-                  </div>
-                  <div class="input-field col s6">
-                    <input placeholder="DNI" id="dni" type="text" class="validate" name="dni">
-                    <label for="dni">DNI</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s6">
-                    <label for="birthday">Fecha de nacimiento:</label>
-                <input placeholder type="date" id="birthday" name="birthday" class="validate">
-                  </div>
-                <div class="row">
-                  <div class="input-field col s6">
 
-                    <select class="browser-default" Required >
-                      <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
-                      <option value="Cementerio Municipal">Cementerio Municipal</option>
-                      <option value="Terminal de Omnibús">Terminal de Omnibús</option>
-                      <option value="Municipalidad">Municipalidad</option>
-                    </select>
-                   </div>
-               </div>
-               <div class="row">
-                <div class="input-field col s6">
-                 <input placeholder="Contraseña" id="pasword" type="password" class="validate" name="contraseña">
-                 <label for="dni">Contraseña</label>
-                </div>
-              </div>
-              </form>
-            </div>
-                <!--  <input type="checkbox" name="vac_gripe" value="gripe">
-                  <label for="información"> Vacuna de la gripe</label><br>
-                  <input type="checkbox" name="vac_fa" value="fiebre ama">
-                  <label for="información"> vacuna de la fiebre amarilla </label><br>
-                  <input type="checkbox" name="vac_covid" value="covid1" checked>
-                  <label for="información"> vacuna del covid 1era dosis</label><br>
-                  <input type="checkbox" name="vac_covid" value="covid1" checked>
-                  <label for="información"> vacuna del covid 2da dosis </label><br> -->
-                  <input type="submit" value="Registrar Vacunador">
-           </fieldset>
-          </form>
-          <br>
-            <form action="javascript: history.go(-1)">
-              <fieldset  style=" margin: 0 auto;">
-              <legend style="color:white; padding: 10px 15px">Eliminar Vacunador</legend>
-              <div class="center">
-              <label for="fname">DNI:</label>
-              <input type="id" id="number" name="number" Required><br>
-              <input type="submit" name="eliminar" value="Eliminar Vacunador">
-              </div>
-              </fieldset>
-            </form>
+
+          </div>
+
+
+
+        </table>
+        <div class="">
+
+
+        </div>
+
+
 
     <!--<div class= "left">
         <p>
@@ -251,8 +202,77 @@
         </p>
       </div>-->
     <!-- Compiled and minified JavaScript -->
+    <div class="center">
+           <form method='GET' action="/eliminarVacunador/">
+
+
+           </form>
+
+           <body>
+             <div class="container py-4">
+               <div class="row">
+                 <div class="col-md-4">
+                   <tr>
+                     <body>
+                       <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-success">Editar</a></td>
+                       <td><a href="/eliminarVacunador/" class="btn btn-primary btn-lg btn-danger">Eliminar Vacunador</a></td>
+                     </body>
+
+
+
+
+                   </tr>
+
+                 </div>
+                 <div class="col-md-12">
+
+     <div class="table-responsive">
+       <tr>
+
+
+
+
+       </tr>
+
+
+         <table class="table table-striped">
+
+           <tbody>
+             <tr>
+
+
+
+
+
+             </tr>
+
+
+
+
+           </tbody>
+         </table>
+
+
+
+
+
+
+
+
+
+
+
+           </body>
+
+
+
+
+
+    </div>
+        <script src="{% static 'js/noBack.js' %}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
+
 
 
 
