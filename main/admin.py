@@ -4,7 +4,7 @@ from .models import Paciente
 from .models import Vacuna_Gripe
 from .models import Vacuna_Fiebre_Am
 from .models import Vacuna_Covid
-from .models import Vacunatorio
+from .models import Vacunatorio, SolicitudTurnoFA
 from .models import Administrador,Logeado
 
 
@@ -43,4 +43,5 @@ admin.site.register(Administrador)
 admin.site.register(Vacuna_Covid)
 admin.site.register(Logeado)
 
+admin.site.register(SolicitudTurnoFA)
 # Register your models here.

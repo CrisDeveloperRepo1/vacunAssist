@@ -1,6 +1,6 @@
 from email import message
 from random import random
-from certifi import contents
+#from certifi import contents
 import django
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from matplotlib.style import context
+#from matplotlib.style import context
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -26,7 +26,7 @@ from django.conf import settings
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -71,6 +71,17 @@ from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+
+def solicitarTurnoFA(request):
+        Dni=402323422
+        NumId=23242424
+        Email='cristian@hotmail.com'
+        turno=SolicitudTurnoFA.objects.create(dni=Dni,numId=NumId,email=Email)
+        messages.error(request, "solicitud exitosa")
+        return render(request,"main/inicioPaciente.html")
+
+def inicioPaciente(request):
+     return render(request, "main/inicioPaciente.html")
 def registrarPaciente(request):
     return render(request, "main/registrarPaciente.html")
 def registroPaciente(request):
@@ -153,7 +164,7 @@ def loginAdmin(request):
 def loginVacunador(request):
     return render(request, "main/inicio_de_sesión_Vacunador.html")
 def loginPaciente(request):
-    return render(request, "main/inicio_de_sesion_Paciente.html")
+    return render(request, "main/inicioPaciente.html")
 def main(request):
     return render(request,"main/main.html")
 def login1(request):
@@ -182,7 +193,7 @@ def inicio_admin(request):
       'form' :PacienteRegistro()
     }
     administradorList= Administrador.objects.all()
-<<<<<<< HEAD
+
     vacunadoresList= Vacunador.objects.all()
 
     # data2= {
@@ -193,9 +204,9 @@ def inicio_admin(request):
     #     if formulario.is_valid():
     #         formulario.save()
     #administradorList= Administrador.objects.all()
-=======
+
     vacunadorList= Vacunador.objects.all()
->>>>>>> 9d05b0e6150475fe6541f5ddb8306495f1dc4432
+
 
     # vacunadores = Vacunador.objects.all()
     # data= {
@@ -206,7 +217,7 @@ def inicio_admin(request):
     #     'administradores' : administradores
     # }
 
-<<<<<<< HEAD
+
     # return render(request, "main/inicio_admin.html",{"administradores" : administradorList})
     #
     #
@@ -222,9 +233,9 @@ def inicio_admin(request):
     ##return redirect('main/registro_Admin.html')
     return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
     #return render(request,'main/registro_Admin.html')
-=======
+
     return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList})
->>>>>>> 9d05b0e6150475fe6541f5ddb8306495f1dc4432
+
 
     #return render(request, "main/inicio_admin.html")
 
@@ -233,6 +244,13 @@ def inicio_admin(request):
 # def validarCodigo(request):
 #
 #     return render(request, "main/validarCodigo.html",{"administrador": Administrador.objects.all})
+
+### validar usuario para un paciente  ####
+
+
+
+
+
 
 def validarUsuario(request):
 
@@ -270,7 +288,36 @@ def validarUsuario(request):
         return render(request,"main/inicio_de_sesión.html")
 
 
+### comparar codigo pára usuario paciente
+def compararCodigoPaciente(request):
+        data2= {
+          'form' :PacienteRegistro()
+        }
+        administradorList= Administrador.objects.all()
+        vacunadoresList= Vacunador.objects.all()
+    # codigo=request.GET{"pass"}
+    # if check_password(codigo,administrador. ) // falta la instancia
+        if request.GET["pass"]:
+                    if request.GET["pass"].isdigit():
+                                one_entry = Administrador.objects.get(administrador_nombre="Lautaro")
+                                if  int(request.GET["pass"]) == one_entry.administrador_codigo :
+                                    #mensaje= request.GET["pass"]
 
+                                    return render(request,"main/inicioPaciente.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+                                else:
+                                    messages.error(request, "codigo invalido")
+                                    return render (request,"main/verif.html")
+
+                    else:
+                        messages.error(request, "debe ingresar numeros")
+                        return render (request,"main/verif.html")
+
+
+
+
+        else:
+            messages.error(request, "no ingreso nada")
+            return render (request,"main/verif.html")
 
 
 
@@ -352,7 +399,7 @@ def compararCodigo(request):
 def recup_contra(request):
     return render(request, "main/recuperar-contraseña.html")
 
-<<<<<<< HEAD
+
 # def reg_vac(request):
 #
 #     #data = {
@@ -396,19 +443,19 @@ def reg_vac(request):
         'form': form,
     }
     form= vacunador_signUpForm(request.POST or None)
-=======
+
 def send_email_registro(mail):
     context = {"mail" : mail }
     template = get_template("main/correo.html")
     content = template.render(context)
 
     email = EmailMultiAlternatives (
-        "Registro en VacunAssist ", 
+        "Registro en VacunAssist ",
         "registro de usuarios",
         settings.EMAIL_HOST_USER,
-        [mail]        
+        [mail]
     )
-    
+
     email.attach_alternative(content, "text/html")
     email.send()
 
@@ -421,7 +468,7 @@ def reg_vac(request):
      #    formulario = UserCreationForm(request.POST)
       #   if formulario.is_valid():
      #       user = formulario.save()
-            
+
      #       dni = form.cleaned_data["dni"]
      #       user = authenticate(dni=dni)
      #       login(request, user)
@@ -458,7 +505,7 @@ def reg_vac(request):
         'form': form,
     }
     return render(request, "main/inicio_admin.html", context)
->>>>>>> 9d05b0e6150475fe6541f5ddb8306495f1dc4432
+
 
     if form.is_valid():
         form.save()
@@ -521,9 +568,9 @@ def eliminar_vacunador(request):
 def cerrar_sesion (request):
     request.session.flush()
     messages.success(request, "Tu sesión se cerró correctamente")
-<<<<<<< HEAD
+
     return redirect("main/login")
-=======
+
     return redirect('main/login/')
 
 from django.template.loader import get_template
@@ -540,12 +587,12 @@ def send_email(mail, contraseña):
     content = template.render(context)
 
     email = EmailMultiAlternatives (
-        "Recuperar contraseña ", 
+        "Recuperar contraseña ",
         "probando envio de mails en django",
         settings.EMAIL_HOST_USER,
-        [mail]        
+        [mail]
     )
-    
+
     email.attach_alternative(content, "text/html")
     email.send()
 
@@ -559,7 +606,7 @@ def index(request):
         contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
         send_email(mail, contraseña)
-        
+
     return render(request, "main/index.html", {})
 
 
@@ -571,8 +618,5 @@ def reset_pass(request):
         contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
         send_email(mail, contraseña)
-        
+
     return render(request, "main/recuperar-contraseña.html", {})
-
-
->>>>>>> 9d05b0e6150475fe6541f5ddb8306495f1dc4432

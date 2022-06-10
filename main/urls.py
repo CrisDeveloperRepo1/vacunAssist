@@ -12,6 +12,9 @@ urlpatterns = [
     #path('', views.login1,name= 'homepage'),
     path('', views.main,name= 'main'),
 
+    path('compararCodigoPaciente/', views.compararCodigoPaciente,name= 'compararCodigoPaciente'),
+    path('solicitarTurnoFA/', views.solicitarTurnoFA,name= 'solicitarTurnoFA'),
+    path('inicioPaciente/', views.inicioPaciente,name= 'inicioPaciente'),
     path('loginPaciente/', views.loginPaciente , name="loginPaciente"),
     path('loginAdmin/', views.loginAdmin , name="loginAdmin"),
     path('login/registro/', views.registro , name="registro"),
