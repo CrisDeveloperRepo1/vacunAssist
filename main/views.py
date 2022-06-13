@@ -85,26 +85,33 @@ def solicitarTurnoFA(request):
         Email=one_entry.paciente_email
         turno=SolicitudTurnoFA.objects.create(dni=Dni,numId=NumId,email=Email)
         messages.error(request, "solicitud exitosa")
-        return render(request,"main/inicioPaciente.html")
+        return render(request,"main/inicioPaciente.html",{"valor":1})
 
 def inicioPaciente(request):
 
     one = Logeado.objects.get(numId=3)
 
+
     one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
     try:
 
 
-        one = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
-        #valor=True
-        return render(request, "main/inicioPaciente.html",{"valor":True})
+        one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+
+
+        return render(request, "main/inicioPaciente.html",{"valor":1})
 
             # dni=models.IntegerField()
             # numId=models.IntegerField()
             # email= models.EmailField(max_length=254
 
     except ObjectDoesNotExist:
-        return render(request, "main/inicioPaciente.html")
+        return render(request, "main/inicioPaciente.html",{"valor":2})
+    # f='f'
+    # OTP=''
+    # OTP=2332
+    #
+    # return render(request, "main/inicioPaciente.html",{"codigo": OTP})
 ############ REGISTRO DE PACIENTE ##########################################################
 def registrarPaciente(request):
     return render(request, "main/registrarPaciente.html")
@@ -130,6 +137,7 @@ def registroPaciente(request):
 
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
     return render(request,'main/registrarPaciente.html',{"codigo":OTP})
+    return render(request, "main/registrarPaciente.html",{"codigo" : 3})
 
 
 def eliminar_Admin(request,id,nombre):
@@ -506,10 +514,29 @@ def compararCodigo(request):
                                         one=Logeado.objects.get(numId=3)
                                         one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
                                         if  int(request.GET["pass"]) == one_entry.paciente_codigo :
+                                            print('')
 
+
+#############################################################
+    # one = Logeado.objects.get(numId=3)
+    #
+    #
+    # one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+                                            try:
+                                                paso= SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+                                                return render(request, "main/inicioPaciente.html",{"valor":1})
+                                            except ObjectDoesNotExist:
+                                                return render(request, "main/inicioPaciente.html",{"valor":2})
+            # dni=models.IntegerField()
+            # numId=models.IntegerField()
+            # email= models.EmailField(max_length=254
+
+                                            # except ObjectDoesNotExist:
+                                            #     return render(request, "main/inicioPaciente.html",{"valor":2})
                                         #mensaje= request.GET["pass"]
 
-                                            return render(request,"main/inicioPaciente.html")
+                                                #return render(request,"main/inicioPaciente.html")
+###################################################################
                                         else:
 
                                             messages.error(request, "codigo invalido")

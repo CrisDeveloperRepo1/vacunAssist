@@ -74,24 +74,44 @@
           <span class="card-title">vacuna fiebre amarilla</span>
 
           {% if message.tags == 'error' %}
-          <p>SDWD</p>
+
 
           {% endif %}
         </div>
         <div class="card-action">
-
-          {% if valor %}
-             <a href="/solicitarTurnoFA/">solicitar turno</a>
+          {% if valor == 1 %}
           <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
+            <p>usted ya solicito un turno </p>
+           </a> </h7>
+         <!-- <p>{{codigo}}</p> -->
 
+         {% else %}
+         <h7><a href="/solicitarTurnoFA/">solicitar turno</a> </h7>
 
-           {% else %}
-           <p> Usted ya tiene un turno solicitado </p>
 
 
 
 
           {% endif %}
+
+
+
+
+               <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
+
+             <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
+          <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
+
+
+
+
+
+
+
+
+
+
+
 
 
           <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
