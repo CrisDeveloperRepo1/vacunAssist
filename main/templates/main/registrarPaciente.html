@@ -45,7 +45,7 @@
 
                  </div>
                  <div class="form-group">
-                   <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="Apellido" minlength="20" maxlength="50" required>
+                   <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="Apellido" minlength="5" maxlength="50" required>
 
                  </div>
 
@@ -54,7 +54,11 @@
 
                  </div>
                  <div class="form-group">
-                   <input type="int" id="dni" name="dni" clas="form-control" placeholder="DNI"  maxlength="8" required>
+                   <input type="int" id="dni" name="dni" clas="form-control" placeholder="DNI"  minlength="8" maxlength="8" required>
+
+                 </div>
+                 <div class="form-group">
+                   <input type="int" id="Contraseña" name="Contraseña" clas="form-control" placeholder="contraseña"  minlength="4" required>
 
                  </div>
 
@@ -85,6 +89,65 @@
 
 
 
+
     </div>
 
  </div>
+
+ <!-- <script type = "text/javascript">
+      M.toast({html: 'fdfd',
+      classes: 'red rounded',
+      displayLength:2000,
+      })
+
+</script> -->
+
+
+{% if messages %}
+  {% for message in messages %}
+  <!-- {% if message.tags == 'success' %}
+  <script type = "text/javascript">
+  M.toast({html: '{{message}}',
+  classes: 'green rounded',
+  displayLength:2000,
+})
+
+</script>
+{% endif %} -->
+
+{% if message.tags == 'error' %}
+  <script type = "text/javascript">
+       M.toast({html: '{{message}}',
+       classes: 'green rounded',
+       displayLength:2000,
+       })
+
+ </script>
+ <p> su contraseña {{codigo}}</p>
+{% endif %}
+
+
+
+
+
+<!-- <script type = "text/javascript">
+M.toast({html: '{{message}}',
+classes: 'red rounded',
+displayLength:2000,
+})
+
+</script> -->
+
+ {% endfor %}
+
+
+
+{% endif %}
+
+<script src="{% static 'js/noback.js' %}"></script>
+<script src="{% static 'js/noBack.js' %}"></script>
+<script src="{% static 'js/noback.js' %}"></script>
+<script src="{% static 'js/noBack.js' %}"></script>
+
+</body>
+</html>

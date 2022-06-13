@@ -26,7 +26,7 @@ from django.conf import settings
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA,Logeado
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -36,6 +36,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth import login, authenticate,logout
 from.forms import CustomUserForm
 from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
+import math, random
 # def inicio_admin(request):
 #     # data2= {
 #     #   'form' :PacienteRegistro()
@@ -71,17 +72,40 @@ from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
-
+########## SOLICITUD DE TURNO DE FIEBRE AMARILLA ###############################################################
 def solicitarTurnoFA(request):
-        Dni=402323422
-        NumId=23242424
-        Email='cristian@hotmail.com'
+        one = Logeado.objects.get(numId=3)
+
+        one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+        # usuarioLogeado=models.IntegerField()
+        # numId=models.IntegerField()
+        Dni=one_entry.paciente_dni
+        NumId=0
+        #23242424
+        Email=one_entry.paciente_email
         turno=SolicitudTurnoFA.objects.create(dni=Dni,numId=NumId,email=Email)
         messages.error(request, "solicitud exitosa")
         return render(request,"main/inicioPaciente.html")
 
 def inicioPaciente(request):
-     return render(request, "main/inicioPaciente.html")
+
+    one = Logeado.objects.get(numId=3)
+
+    one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+    try:
+
+
+        one = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+        #valor=True
+        return render(request, "main/inicioPaciente.html",{"valor":True})
+
+            # dni=models.IntegerField()
+            # numId=models.IntegerField()
+            # email= models.EmailField(max_length=254
+
+    except ObjectDoesNotExist:
+        return render(request, "main/inicioPaciente.html")
+############ REGISTRO DE PACIENTE ##########################################################
 def registrarPaciente(request):
     return render(request, "main/registrarPaciente.html")
 def registroPaciente(request):
@@ -91,9 +115,21 @@ def registroPaciente(request):
     dni=request.POST['dni']
     email=request.POST['email']
     zona=request.POST['zona']
-    paciente=Paciente.objects.create(paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
-    messages.error(request, " registro exitoso")
-    return render(request,'main/inicio_de_sesion_Paciente.html')
+    Contraseña=request.POST['Contraseña']
+
+########## GENERO EL CODIGO DE 6 DIGITOS #################################################
+    digits = "0123456789"
+    OTP = ""
+    for i in range(6) :
+        OTP += digits[math.floor(random.random() * 10)]
+    codigo=OTP
+
+    paciente=Paciente.objects.create(paciente_codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
+    messages.error(request, " PACIENTE REGISTRADO")
+
+
+########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
+    return render(request,'main/registrarPaciente.html',{"codigo":OTP})
 
 
 def eliminar_Admin(request,id,nombre):
@@ -160,14 +196,51 @@ def registro(request):
 # extenser el formulario para que pida email
 
 def loginAdmin(request):
+    try:
+        one_entry = Logeado.objects.get(numId=1)
+
+    except ObjectDoesNotExist:
+        UsuarioLogeado=0
+        NumId=1
+        usuario=Logeado.objects.create(usuarioLogeado=UsuarioLogeado,numId=NumId)
+
+
     return render(request, "main/inicio_de_sesión.html")
 def loginVacunador(request):
-    return render(request, "main/inicio_de_sesión_Vacunador.html")
+    try:
+        one_entry = Logeado.objects.get(numId=2)
+
+    except ObjectDoesNotExist:
+        UsuarioLogeado=0
+        NumId=2
+        usuario=Logeado.objects.create(usuarioLogeado=UsuarioLogeado,numId=NumId)
+
+    return render(request, "main/inicio_de_sesión.html")
 def loginPaciente(request):
-    return render(request, "main/inicioPaciente.html")
+    try:
+        one_entry = Logeado.objects.get(numId=3)
+
+    except ObjectDoesNotExist:
+
+        digits = "0123456789"
+        OTP = ""
+
+
+
+        for i in range(6) :
+            OTP += digits[math.floor(random.random() * 10)]
+        UsuarioLogeado=0
+        NumId=3
+        usuario=Logeado.objects.create(usuarioLogeado=UsuarioLogeado,numId=NumId)
+
+    return render(request, "main/inicio_de_sesión.html",{"codigo" : 3})
 def main(request):
+    records=Logeado.objects.all()
+    records.delete()
     return render(request,"main/main.html")
 def login1(request):
+    records=Logeado.objects.all()
+    records.delete()
     return render(request, "main/inicio_de_sesión.html")
 
 def editarStockVacunatorio(request):
@@ -258,11 +331,65 @@ def validarUsuario(request):
         # one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
 
         try:
+            q1 = Logeado.objects.get(numId=1)
+            q1.usuarioLogeado=request.GET["dni"]
+            q1.save()
+            try:
+                    one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
+                    contraseña= one_entry.contraseña
+
+            except ObjectDoesNotExist:
+
+                    messages.error(request, "  no pertenece a un usuario admin del sistema")
+                    return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
+
+        except ObjectDoesNotExist:
+            try:
+
+                q1 = Logeado.objects.get(numId=2)
+                q1.usuarioLogeado=request.GET["dni"]
+                q1.save()
+                try:
+                    #one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
+                    one_entry = Vacunador.objects.get(vacunador_dni = request.GET["dni"])
+                    contraseña= one_entry.contraseña
+                except ObjectDoesNotExist:
+
+                    messages.error(request, "  no pertenece a un usuario vacunador del sistema")
+                    return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
+
+            except ObjectDoesNotExist:
+
+                try:
+                   q1 = Logeado.objects.get(numId=3)
+                   q1.usuarioLogeado=request.GET["dni"]
+                   q1.save()
+                   one_entry = Paciente.objects.get(paciente_dni = request.GET["dni"])
+                   contraseña= one_entry.contraseña
+                   print(request.GET["dni"])
+                   # try:
+                   #    one_entry = Paciente.objects.get(paciente_dni = request.GET["dni"])
+                   #    contraseña= one_entry.contraseña
+                   #
+                   # except ObjectDoesNotExist:
+                   #
+                   #     messages.error(request, "  no pertenece a un usuario paciente del sistema")
+                   #     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
+                except ObjectDoesNotExist:
+                    print('')
+                    messages.error(request, "  no pertenece a un usuario paciente del sistemapppp")
+                    return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
+#####
+
+####
+        try:
+
             # blog = Blog.objects.get(id=1)
             # entry = Entry.objects.get(blog=blog, entry_number=1)
-            one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
+            #one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
+
             if request.GET["pass"].isdigit():
-                if  int(request.GET["pass"]) == one_entry.administrador_contraseña :
+                if  int(request.GET["pass"]) == contraseña :
                      #login(request, one_entry)
                      username = request.GET["dni"]
                      password = request.GET["pass"]
@@ -273,7 +400,7 @@ def validarUsuario(request):
                     messages.error(request, " la contraseña es ingresada es invalida")
                     return render(request,"main/inicio_de_sesión.html")
             else:
-                if  request.GET["pass"] == one_entry.administrador_contraseña :
+                if  request.GET["pass"] == one_entry.contraseña :
                      return render(request,"main/verif.html")
                 else:
                     messages.error(request, " la contraseña es ingresada es invalida")
@@ -281,7 +408,7 @@ def validarUsuario(request):
 
         except ObjectDoesNotExist:
            print("Either the blog or entry doesn't exist.")
-           messages.error(request, " el dni ingresado no pertenece a un usuario del sistema")
+           messages.error(request, " el dni ingresado no pertenece a un usuario del sistemasssssx")
            return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
     else:
         messages.error(request, "el dni ingresado debe contener numeros")
@@ -289,35 +416,48 @@ def validarUsuario(request):
 
 
 ### comparar codigo pára usuario paciente
-def compararCodigoPaciente(request):
-        data2= {
-          'form' :PacienteRegistro()
-        }
-        administradorList= Administrador.objects.all()
-        vacunadoresList= Vacunador.objects.all()
-    # codigo=request.GET{"pass"}
-    # if check_password(codigo,administrador. ) // falta la instancia
-        if request.GET["pass"]:
-                    if request.GET["pass"].isdigit():
-                                one_entry = Administrador.objects.get(administrador_nombre="Lautaro")
-                                if  int(request.GET["pass"]) == one_entry.administrador_codigo :
-                                    #mensaje= request.GET["pass"]
-
-                                    return render(request,"main/inicioPaciente.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
-                                else:
-                                    messages.error(request, "codigo invalido")
-                                    return render (request,"main/verif.html")
-
-                    else:
-                        messages.error(request, "debe ingresar numeros")
-                        return render (request,"main/verif.html")
-
-
-
-
-        else:
-            messages.error(request, "no ingreso nada")
-            return render (request,"main/verif.html")
+# def compararCodigoPaciente(request):
+#         data2= {
+#           'form' :PacienteRegistro()
+#         }
+#         administradorList= Administrador.objects.all()
+#         vacunadoresList= Vacunador.objects.all()
+#     # codigo=request.GET{"pass"}
+#     # if check_password(codigo,administrador. ) // falta la instancia
+#         if request.GET["pass"]:
+#                     if request.GET["pass"].isdigit():
+#                                 #one_entry = Administrador.objects.get(administrador_nombre="Lautaro")
+#                                 try:
+#                                     one=Logeado.objects.get(numId=1)
+#                                     one_entry = Administrador.objects.get(administrador_dni=one.usuarioLogeado)
+#                                 except ObjectDoesNotExist:
+#                                     try:
+#
+#                                         one=Logeado.objects.get(numId=2)
+#                                         one_entry = Vacunador.objects.get(vacunador_dni=one.usuarioLogeado)
+#                                     except ObjectDoesNotExist:
+#
+#                                         one=Logeado.objects.get(numId=3)
+#                                         one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+#
+#                                 if  int(request.GET["pass"]) == one_entry.codigo :
+#                                     #mensaje= request.GET["pass"]
+#
+#                                     return render(request,"main/inicioPaciente.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+#                                 else:
+#                                     messages.error(request, "codigo invalido")
+#                                     return render (request,"main/verif.html")
+#
+#                     else:
+#                         messages.error(request, "debe ingresar numeros")
+#                         return render (request,"main/verif.html")
+#
+#
+#
+#
+#         else:
+#             messages.error(request, "no ingreso nada")
+#             return render (request,"main/verif.html")
 
 
 
@@ -331,14 +471,59 @@ def compararCodigo(request):
     # if check_password(codigo,administrador. ) // falta la instancia
         if request.GET["pass"]:
                     if request.GET["pass"].isdigit():
-                                one_entry = Administrador.objects.get(administrador_nombre="Lautaro")
-                                if  int(request.GET["pass"]) == one_entry.administrador_codigo :
+                                #one_entry = Administrador.objects.get(administrador_nombre="Lautaro")
+
+                                try:
+                                    one=Logeado.objects.get(numId=1)
+                                    one_entry = Administrador.objects.get(administrador_dni=one.usuarioLogeado)
+                                    if  int(request.GET["pass"]) == one_entry.administrador_codigo :
+
                                     #mensaje= request.GET["pass"]
 
-                                    return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
-                                else:
-                                    messages.error(request, "codigo invalido")
-                                    return render (request,"main/verif.html")
+                                        return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+                                    else:
+
+                                        messages.error(request, "codigo invalido")
+                                        return render (request,"main/verif.html")
+
+
+                                except ObjectDoesNotExist:
+                                    try:
+
+                                        one=Logeado.objects.get(numId=2)
+                                        one_entry = Vacunador.objects.get(vacunador_dni=one.usuarioLogeado)
+                                        if  int(request.GET["pass"]) == one_entry.vacunador_codigo :
+
+                                        #mensaje= request.GET["pass"]
+
+                                            return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+                                        else:
+
+                                            messages.error(request, "codigo invalido")
+                                            return render (request,"main/verif.html")
+                                    except ObjectDoesNotExist:
+
+                                        one=Logeado.objects.get(numId=3)
+                                        one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+                                        if  int(request.GET["pass"]) == one_entry.paciente_codigo :
+
+                                        #mensaje= request.GET["pass"]
+
+                                            return render(request,"main/inicioPaciente.html")
+                                        else:
+
+                                            messages.error(request, "codigo invalido")
+                                            return render (request,"main/verif.html")
+
+
+
+                                # if  int(request.GET["pass"]) == one_entry.codigo :
+                                #     #mensaje= request.GET["pass"]
+                                #
+                                #     return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+                                # else:
+                                #     messages.error(request, "codigo invalido")
+                                #     return render (request,"main/verif.html")
 
                     else:
                         messages.error(request, "debe ingresar numeros")

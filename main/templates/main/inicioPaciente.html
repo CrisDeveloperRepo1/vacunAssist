@@ -79,7 +79,22 @@
           {% endif %}
         </div>
         <div class="card-action">
-          <a href="/solicitarTurnoFA/">solicitar turno</a>
+
+          {% if valor %}
+             <a href="/solicitarTurnoFA/">solicitar turno</a>
+          <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
+
+
+           {% else %}
+           <p> Usted ya tiene un turno solicitado </p>
+
+
+
+
+          {% endif %}
+
+
+          <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
 
         </div>
       </div>

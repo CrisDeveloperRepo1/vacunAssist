@@ -11,11 +11,14 @@ app_name= 'main'
 urlpatterns = [
     #path('', views.login1,name= 'homepage'),
     path('', views.main,name= 'main'),
+    path('main/', views.main,name= 'main'),
 
-    path('compararCodigoPaciente/', views.compararCodigoPaciente,name= 'compararCodigoPaciente'),
+    #path('compararCodigoPaciente/', views.compararCodigoPaciente,name= 'compararCodigoPaciente'),
     path('solicitarTurnoFA/', views.solicitarTurnoFA,name= 'solicitarTurnoFA'),
     path('inicioPaciente/', views.inicioPaciente,name= 'inicioPaciente'),
     path('loginPaciente/', views.loginPaciente , name="loginPaciente"),
+
+    path('loginVacunador/', views.loginVacunador , name="loginVacunador"),
     path('loginAdmin/', views.loginAdmin , name="loginAdmin"),
     path('login/registro/', views.registro , name="registro"),
     path('login/', views.main, name= 'main' ),
