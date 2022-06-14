@@ -72,6 +72,14 @@ import math, random
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+def evaluarTurno(request):
+    ListSolicitud= SolicitudTurnoFA.objects.all()
+
+
+
+
+    return render(request,"main/evaluarTurnos.html",{"turnos":ListSolicitud})
+
 ########## SOLICITUD DE TURNO DE FIEBRE AMARILLA ###############################################################
 def solicitarTurnoFA(request):
         one = Logeado.objects.get(numId=3)
@@ -386,7 +394,7 @@ def validarUsuario(request):
                 except ObjectDoesNotExist:
                     print('')
                     messages.error(request, "  no pertenece a un usuario paciente del sistemapppp")
-                    return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
+                    return render(request,"main/inicio_de_sesión.html",{"codigo" : 3}) # vuelvo a la pagina
 #####
 
 ####

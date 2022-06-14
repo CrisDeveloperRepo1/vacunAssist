@@ -17,6 +17,7 @@ urlpatterns = [
     path('solicitarTurnoFA/', views.solicitarTurnoFA,name= 'solicitarTurnoFA'),
     path('inicioPaciente/', views.inicioPaciente,name= 'inicioPaciente'),
     path('loginPaciente/', views.loginPaciente , name="loginPaciente"),
+    path('evaluarTurno/', views.evaluarTurno , name="evaluarTurno"),
 
     path('loginVacunador/', views.loginVacunador , name="loginVacunador"),
     path('loginAdmin/', views.loginAdmin , name="loginAdmin"),
