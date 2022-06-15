@@ -133,15 +133,16 @@ def registroPaciente(request):
     Contraseña=request.POST['Contraseña']
 
 ########## GENERO EL CODIGO DE 6 DIGITOS #################################################
-    digitos = '1234567890'
+    digitos = '0123456789'
     longitud = 4  # La longitud que queremos
     codigo = ''.join(choice(digitos) for digito in range(longitud))
-    print(codigo)
+    
     paciente=Paciente.objects.create(paciente_codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
     messages.error(request, " PACIENTE REGISTRADO")
 
 
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
+    send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
     return render(request, "main/registrarPaciente.html",{"codigo" : 3})
 
@@ -657,21 +658,24 @@ def recup_contra(request):
 #     }
 #     return render(request, "main/registro_vacunador.html", context)
 
-def send_email_registro(mail):
-    context = {"mail" : mail }
-    template = get_template("main/correo.html")
+def send_email_registro(mail, codigo, dni, nombre):
+    context = {"mail" : mail,
+               "codigo" : codigo,
+               "dni" : dni,
+               "nombre" : nombre,
+               }
+    template = get_template("main/correo-registro.html")
     content = template.render(context)
 
     email = EmailMultiAlternatives (
         "Registro en VacunAssist ",
-        "registro de usuarios",
+        "",
         settings.EMAIL_HOST_USER,
         [mail]
     )
 
     email.attach_alternative(content, "text/html")
     email.send()
-
 
 def reg_vac(request):
 
@@ -709,20 +713,19 @@ def reg_vac(request):
             message.send()
         if request.method == "POST":
             mail = request.POST.get("mail")
-            caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
-            longitud = 9  # La longitud que queremos
-            contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
-
-        send_email_registro(mail)
-    digitos = '1234567890'
-    longitud = 4  # La longitud que queremos
-    codigo = ''.join(choice(digitos) for digito in range(longitud))
+            digitos = '1234567890'
+            longitud = 4  # La longitud que queremos
+            codigo = ''.join(choice(digitos) for digito in range(longitud))
+            send_email_registro(mail, codigo)
+            context={
+                'form': form,
+                'codigo' : codigo,
+            }
+            return render(request, "main/registro_vacunador.html", context)
     context={
-        'form': form,
-        'codigo' : codigo,
-    }
+            'form': form,
+        }
     return render(request, "main/registro_vacunador.html", context)
-
 
     if form.is_valid():
         form.save()
@@ -796,11 +799,12 @@ from django.conf import settings
 
 
 
-def send_email(mail, contraseña):
+def send_email(mail, contraseña, nombre):
     context = {"mail" : mail,
-               "pass" : contraseña
+               "pass" : contraseña,
+               "nombre" : nombre
                }
-    template = get_template("main/correo.html")
+    template = get_template("main/correo-reset-pass.html")
     content = template.render(context)
 
     email = EmailMultiAlternatives (
@@ -815,6 +819,18 @@ def send_email(mail, contraseña):
 
 from secrets import choice
 
+def reset_pass(request):
+    if request.method == "POST":
+        dni = request.POST.get("dni")
+        mail = request.POST.get("mail")
+        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        longitud = 9  # La longitud que queremos
+        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email(mail, contraseña, dni)
+
+    return render(request, "main/recuperar-contraseña.html", {})
+
 def index(request):
     if request.method == "POST":
         mail = request.POST.get("mail")
@@ -825,15 +841,3 @@ def index(request):
         send_email(mail, contraseña)
 
     return render(request, "main/index.html", {})
-
-
-def reset_pass(request):
-    if request.method == "POST":
-        mail = request.POST.get("mail")
-        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
-        longitud = 9  # La longitud que queremos
-        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
-
-        send_email(mail, contraseña)
-
-    return render(request, "main/recuperar-contraseña.html", {})

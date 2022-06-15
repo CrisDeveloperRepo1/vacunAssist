@@ -12,6 +12,20 @@
 </html>
 
   <head>
+
+<style>
+  input[type=button], input[type=submit] {
+    background-color: #888987;
+    border-color:#86D03A;
+    border-radius: 10px;
+    color: white;
+    padding: 7px 15px;
+    text-decoration: none;
+    margin: 2px 0px;
+    cursor: pointer;
+  }
+</style>
+
     <meta charset="utf-8">
     <!-- Compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
@@ -42,7 +56,7 @@
 
     {% if codigo == 4 %}
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="/login/"> < volver </a></li>
+      <li><a href="/login/"> volver </a></li>
     </ul>
 
 
@@ -65,11 +79,11 @@
         <form name='formulario' action ="/validarUsuario/" method='GET' style='text-align:center'>
           <!-- Campo de entrada de usuario -->
           <font face='Verdana'><h6><strong>DNI</strong></h6></font>
-          <input type='int'name='dni' placeholder='12345678' Required />
+          <input type='tel'name='dni' placeholder='12345678' Required style="background-color:white; " />
           <!-- Campo de entrada de password -->
           <br>
           <font face='Verdana'><h6><strong>Contraseña</strong></h6></font>
-          <input type='password' name='pass' placeholder='Contraseña' Required />
+          <input type='password' name='pass' placeholder='Contraseña' Required style="background-color:white"/>
           <!-- Campo oculto: Este campo no se verá en el navegador -->
           <br>
           <!-- Botón de envío del formulario -->

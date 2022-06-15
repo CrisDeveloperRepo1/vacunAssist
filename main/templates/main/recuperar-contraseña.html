@@ -54,10 +54,31 @@
         <form action="" method="POST" style="margin:100px">
             {% csrf_token %}
             <h3>Recuperar Contraseña</h3>
+            <label> Ingrese su dni</label>
+            <input type="tel", name="dni" placeholder="24567987"> <br>
             <label> Ingrese su direccion de correo electronico</label>
             <input type="text", name="mail" placeholder="example@gmail.com">
-            <input style="font-size: 26px;" type="submit" value="Enviar">
-        </form>
+            <button style="font-size: 26px;" type="submit" class="btn" onclick="openPopup()"> Enviar </button>
+          </form>
+        
+        <div class="popup" id="popup">
+          <img src="{% static 'imagenes/tick.png' %}">
+          <h2> Registro Exitoso </h2>
+          <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
+          
+          <p> Gracias por utilizar nuestro sistema de turnos </p>
+          <button type="button" onclick="closePopup()"> Ok </button>
+        </div>
+        <script> 
+          let popup = document.getElementById("popup")
+      
+          function openPopup() {
+            popup.classList.add("open-popup")
+          }
+          function closePopup() {
+            popup.classList.remove("open-popup")
+          }
+        </script>
     </body>
 </html>
 
