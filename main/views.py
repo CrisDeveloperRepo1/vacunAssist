@@ -133,18 +133,16 @@ def registroPaciente(request):
     Contraseña=request.POST['Contraseña']
 
 ########## GENERO EL CODIGO DE 6 DIGITOS #################################################
-    digits = "0123456789"
-    OTP = ""
-    for i in range(6) :
-        OTP += digits[math.floor(random.random() * 10)]
-    codigo=OTP
-
+    digitos = '1234567890'
+    longitud = 4  # La longitud que queremos
+    codigo = ''.join(choice(digitos) for digito in range(longitud))
+    print(codigo)
     paciente=Paciente.objects.create(paciente_codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
     messages.error(request, " PACIENTE REGISTRADO")
 
 
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
-    return render(request,'main/registrarPaciente.html',{"codigo":OTP})
+    return render(request,'main/registrarPaciente.html',{'codigo': codigo})
     return render(request, "main/registrarPaciente.html",{"codigo" : 3})
 
 
@@ -658,11 +656,6 @@ def recup_contra(request):
 #         'form': form,
 #     }
 #     return render(request, "main/registro_vacunador.html", context)
-def reg_vac(request):
-    context={
-        'form': form,
-    }
-    form= vacunador_signUpForm(request.POST or None)
 
 def send_email_registro(mail):
     context = {"mail" : mail }
@@ -721,10 +714,14 @@ def reg_vac(request):
             contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
         send_email_registro(mail)
+    digitos = '1234567890'
+    longitud = 4  # La longitud que queremos
+    codigo = ''.join(choice(digitos) for digito in range(longitud))
     context={
         'form': form,
+        'codigo' : codigo,
     }
-    return render(request, "main/inicio_admin.html", context)
+    return render(request, "main/registro_vacunador.html", context)
 
 
     if form.is_valid():

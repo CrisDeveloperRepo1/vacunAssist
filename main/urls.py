@@ -45,7 +45,7 @@ urlpatterns = [
 
 
     path('recuperar_Contraseña/' , views.reset_pass, name= "recuperar_Cont"),
-    path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
+    path('registro_vacunador/' , views.reg_vac, name= "nuevo_vac"),
     path('listarModelos/' , views.listarModelos, name= "listarModelos"),
     path('inicio_admin/actualizar/' , views.actualizar_stock, name= "listarModelos"),
 #------------ url index solo para probar envio de mails ------------

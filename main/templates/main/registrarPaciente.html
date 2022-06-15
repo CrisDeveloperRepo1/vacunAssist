@@ -32,35 +32,27 @@
       <body>
 
 <div class="container py4">
-
-
     <div class="row justify-content-center align-items-center">
-         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-           <h2> Registro </h2>
-           <div class="card">
-             <div class="card-body">
-               <form class="" action="/registroPaciente/" method="post">{% csrf_token %}
-                 <div class="form-group">
-                   <input type="text" id="nombre" name="nombre" clas="form-control" placeholder="Nombre" minlength="3" maxlength="20" required>
-
-                 </div>
-                 <div class="form-group">
-                   <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="Apellido" minlength="5" maxlength="50" required>
-
-                 </div>
-
-                 <div class="form-group">
-                   <input type="text" id="zona" name="zona" clas="form-control" placeholder="Zona"  maxlength="50" required>
-
-                 </div>
-                 <div class="form-group">
+      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2> Registro </h2>
+          <div class="card">
+            <div class="card-body">
+              <form class="" action="/registroPaciente/" method="post">{% csrf_token %}
+                <div class="form-group">
+                  <input type="text" id="nombre" name="nombre" clas="form-control" placeholder="Nombre" minlength="3" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                  <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="Apellido" minlength="5" maxlength="50" required>
+                </div>
+                <div class="form-group">
+                  <input type="text" id="zona" name="zona" clas="form-control" placeholder="Zona"  maxlength="50" required>
+                </div>
+                <div class="form-group">
                    <input type="int" id="dni" name="dni" clas="form-control" placeholder="DNI"  minlength="8" maxlength="8" required>
-
-                 </div>
+                </div>
                  <div class="form-group">
                    <input type="int" id="Contraseña" name="Contraseña" clas="form-control" placeholder="contraseña"  minlength="4" required>
-
-                 </div>
+                </div>
 
 
 
@@ -75,55 +67,66 @@
                  </div>
 
 
-                 <div class="form-group">
-                   <button type="submit" class="btn btn-success btn-block text-white" > Guardar</button>
+                <div class="form-group">
+                  <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
+                  <div class="popup" id="popup">
+                    <img src="{% static 'imagenes/tick.png' %}">
+                    <h2> Registro Exitoso </h2>
+                    <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
+                    <h5> Codigo Único: {{codigo}} </h5>
+                    <p> Gracias por utilizar nuestro sistema de turnos </p>
+                    <button type="button" onclick="closePopup()"> Ok </button>
+                  </div>
+                </div>
 
-                 </div>
+              </form>
 
-               </form>
+            </div>
 
-             </div>
+          </div>
+        </div>
+   </div>
+</div>
 
-           </div>
-         </div>
-
-
-
-
-    </div>
-
- </div>
-
- <!-- <script type = "text/javascript">
-      M.toast({html: 'fdfd',
-      classes: 'red rounded',
-      displayLength:2000,
-      })
+<!-- <script type = "text/javascript">
+     M.toast({html: 'fdfd',
+     classes: 'red rounded',
+     displayLength:2000,
+     })
 
 </script> -->
+<script> 
+ let popup = document.getElementById("popup")
 
+ function openPopup() {
+   popup.classList.add("open-popup")
+ }
+ function closePopup() {
+   popup.classList.remove("open-popup")
+ }
+</script>
 
 {% if messages %}
-  {% for message in messages %}
-  <!-- {% if message.tags == 'success' %}
-  <script type = "text/javascript">
-  M.toast({html: '{{message}}',
-  classes: 'green rounded',
-  displayLength:2000,
+ {% for message in messages %}
+ <!-- {% if message.tags == 'success' %}
+ <script type = "text/javascript">
+ M.toast({html: '{{message}}',
+ classes: 'green rounded',
+ displayLength:2000,
 })
 
 </script>
 {% endif %} -->
 
 {% if message.tags == 'error' %}
-  <script type = "text/javascript">
-       M.toast({html: '{{message}}',
-       classes: 'green rounded',
-       displayLength:2000,
-       })
+ <script type = "text/javascript">
+      M.toast({html: '{{message}}',
+      classes: 'green rounded',
+      displayLength:2000,
+      })
 
- </script>
- <p> su contraseña {{codigo}}</p>
+</script>
+<p> su contraseña {{codigo}}</p>
 {% endif %}
 
 
@@ -138,7 +141,7 @@ displayLength:2000,
 
 </script> -->
 
- {% endfor %}
+{% endfor %}
 
 
 

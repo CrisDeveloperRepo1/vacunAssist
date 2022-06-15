@@ -12,6 +12,17 @@
 </html>
 
 <style>
+  input[type=button], input[type=submit], input[type=reset] {
+    background-color: #888987;
+    border-color:#86D03A;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin: 20px 0px;
+    cursor: pointer;
+  }
+
 fieldset {
   background-color: #eeeeee;
   display: block;
@@ -63,36 +74,88 @@ input {
   <!-- bgcolor="#8bc34a" -->
   <body bgcolor="FFFFFF" >
   
-  <form action="javascript: history.go(-1)">
- <fieldset>
-  <legend style="color:white; padding: 10px 15px">Registro:</legend>
-  <label for="fname">Nombre:</label>
-  <input type="text"  id="fname" name="fname"><br><br>
-  <label for="lname">Apellido:</label>
-  <input type="text" id="lname" name="lname"><br><br>
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email"><br><br>
-    <label for="fname">DNI:</label>
-  <input type="number" id="number" name="number"><br><br>
-  <label for="birthday">Fecha de nacimiento:</label>
-  <input type="date" id="birthday" name="birthday"><br><br>
-    <label for="cars">Choose a car:</label>
-  <select name="cars" id="cars">
-    <option value="Cementerio Municipal">Cementerio Municipal</option>
-    <option value="Terminal de Omnibús">Terminal de Omnibús</option>
-    <option value="Municipalidad">Municipalidad</option>
-  </select><br><br>
-        <input type="checkbox" name="vac_gripe" value="gripe">
-        <label for="información"> Vacuna de la gripe</label><br>
-        <input type="checkbox" name="vac_fa" value="fiebre ama">
-        <label for="información"> vacuna de la fiebre amarilla </label><br>
-        <input type="checkbox" name="vac_covid" value="covid1" checked>
-        <label for="información"> vacuna del covid 1era dosis</label><br>
-        <input type="checkbox" name="vac_covid" value="covid1" checked>
-        <label for="información"> vacuna del covid 2da dosis </label><br>
-        <input type="submit" value="Registrarse">
- </fieldset>
-</form>
-  
+  </div>
+</table>
+<br>
+<form  style="margin: 0 auto;">
+  <fieldset >
+    <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
+     <div class="row">
+      <form class="col s6">
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="Nombre" id="first_name" type="text" class="validate" name="nombre">
+            <label for="first_name">Nombre</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="Apellido" id="last_name" type="text" class="validate" name="apellido">
+            <label for="last_name">Apellido</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="Email" id="email" type="email" class="validate" name="mail">
+            <label >Email</label>
+          </div>
+          <div class="input-field col s6">
+            <input placeholder="DNI" id="dni" type="text" class="validate" name="dni">
+            <label for="dni">DNI</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <label for="birthday">Fecha de nacimiento:</label>
+        <input placeholder type="date" id="birthday" name="birthday" class="validate">
+          </div>
+        <div class="row">
+          <div class="input-field col s6">
+
+            <select class="browser-default"   name="vacunatorio">
+              <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
+              <option value="Cementerio Municipal">Cementerio Municipal</option>
+              <option value="Terminal de Omnibús">Terminal de Omnibús</option>
+              <option value="Municipalidad">Municipalidad</option>
+            </select>
+           </div>
+       </div>
+       <div class="row">
+        <div class="input-field col s6">
+         <input placeholder="Contraseña" id="pasword" type="password" class="validate" name="contraseña">
+         <label for="dni">Contraseña</label>
+        </div>
+      </div>
+      </form>
+    </div>
+        <!--  <input type="checkbox" name="vac_gripe" value="gripe">
+          <label for="información"> Vacuna de la gripe</label><br>
+          <input type="checkbox" name="vac_fa" value="fiebre ama">
+          <label for="información"> vacuna de la fiebre amarilla </label><br>
+          <input type="checkbox" name="vac_covid" value="covid1" checked>
+          <label for="información"> vacuna del covid 1era dosis</label><br>
+          <input type="checkbox" name="vac_covid" value="covid1" checked>
+          <label for="información"> vacuna del covid 2da dosis </label><br> -->
+          <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button>
+          <div class="popup" id="popup">
+            <img src="{% static 'imagenes/tick.png' %}">
+            <h2> Registro Exitoso </h2>
+            <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
+            <h5> Codigo Único: {{codigo}} </h5>
+            <p> Gracias por utilizar nuestro sistema de turnos </p>
+            <button type="button" onclick="closePopup()"> Ok </button>
+          </div>
+   </fieldset>
+  </form>
+  <script> 
+    let popup = document.getElementById("popup")
+
+    function openPopup() {
+      popup.classList.add("open-popup")
+    }
+    function closePopup() {
+      popup.classList.remove("open-popup")
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   </body>
 </html>
