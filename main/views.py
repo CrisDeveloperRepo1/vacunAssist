@@ -239,9 +239,7 @@ def loginPaciente(request):
 
         digits = "0123456789"
         OTP = ""
-
-
-
+        
         for i in range(6) :
             OTP += digits[math.floor(random.random() * 10)]
         UsuarioLogeado=0
@@ -796,10 +794,9 @@ def cerrar_sesion (request):
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from secrets import choice
 
-
-
-def send_email(mail, contraseña, nombre):
+def send_email_pass(mail, contraseña, nombre):
     context = {"mail" : mail,
                "pass" : contraseña,
                "nombre" : nombre
@@ -817,7 +814,7 @@ def send_email(mail, contraseña, nombre):
     email.attach_alternative(content, "text/html")
     email.send()
 
-from secrets import choice
+
 
 def reset_pass(request):
     if request.method == "POST":
@@ -827,9 +824,43 @@ def reset_pass(request):
         longitud = 9  # La longitud que queremos
         contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
-        send_email(mail, contraseña, dni)
+        send_email_pass(mail, contraseña, dni)
 
     return render(request, "main/recuperar-contraseña.html", {})
+
+def send_email_codigo(mail, contraseña, nombre):
+    context = {"mail" : mail,
+               "pass" : contraseña,
+               "nombre" : nombre
+               }
+    template = get_template("main/correo-reset-codigo.html")
+    content = template.render(context)
+
+    email = EmailMultiAlternatives (
+        "Recuperar código ",
+        "",
+        settings.EMAIL_HOST_USER,
+        [mail]
+    )
+
+    email.attach_alternative(content, "text/html")
+    email.send()
+
+
+def reset_codigo(request):
+    if request.method == "POST":
+        dni = request.POST.get("dni")
+        mail = request.POST.get("mail")
+        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        longitud = 9  # La longitud que queremos
+        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email_codigo(mail, contraseña, dni)
+        
+
+    return render(request, "main/recuperar-codigo.html", {})
+
+
 
 def index(request):
     if request.method == "POST":
@@ -838,6 +869,6 @@ def index(request):
         longitud = 6  # La longitud que queremos
         contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
-        send_email(mail, contraseña)
+        send_email_pass(mail, contraseña, "hola")
 
     return render(request, "main/index.html", {})

@@ -44,13 +44,14 @@ urlpatterns = [
     path('validarUsuario/' , views.validarUsuario, name= "validarUsuario"),
 
 
+    path('recuperar_codigo/' , views.reset_codigo, name= "recuperar_codigo"),
     path('recuperar_Contraseña/' , views.reset_pass, name= "recuperar_Cont"),
     path('registro_vacunador/' , views.reg_vac, name= "nuevo_vac"),
     path('listarModelos/' , views.listarModelos, name= "listarModelos"),
     path('inicio_admin/actualizar/' , views.actualizar_stock, name= "listarModelos"),
 #------------ url index solo para probar envio de mails ------------
     path('index/' , views.index, name= "index"),
-    path('index/correo' , views.send_email, name= "correo"),
+    path('index/correo' , views.send_email_pass, name= "correo"),
 #---------------------------------------------------------------------
 
 
