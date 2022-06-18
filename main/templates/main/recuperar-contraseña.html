@@ -59,6 +59,47 @@
             <input style="font-size: 26px;" type="submit" value="Enviar">
         </form>
     </body>
+
+    {% if messages %}
+      {% for message in messages %}
+      <!-- {% if message.tags == 'success' %}
+      <script type = "text/javascript">
+      M.toast({html: '{{message}}',
+      classes: 'green rounded',
+      displayLength:2000,
+    })
+
+    </script>
+    {% endif %} -->
+
+    {% if message.tags == 'error' %}
+      <script type = "text/javascript">
+           M.toast({html: '{{message}}',
+           classes: 'green rounded',
+           displayLength:2000,
+           })
+
+     </script>
+     <p>{{message}}</p>
+    {% endif %}
+
+
+
+    <!-- <script type = "text/javascript">
+    M.toast({html: '{{message}}',
+    classes: 'red rounded',
+    displayLength:2000,
+    })
+
+    </script> -->
+
+     {% endfor %}
+
+
+
+    {% endif %}
+
+
 </html>
 
 
@@ -71,7 +112,7 @@
 
     <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
 
-<!-- 
+<!--
 </html>
 
 <head>
@@ -114,7 +155,7 @@
   <!-- Compiled and minified JavaScript -->
   <!--
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-     
+
       <div class="right"  align="center"  style="border: 2px solid #96D041; background:#BCBCBC; margin: 100px 110px;">
         <font face="Lucida Bright" ><h5> Recuperar Contraseña</h5></font> -->
         <!-- Campo de entrada de password -->

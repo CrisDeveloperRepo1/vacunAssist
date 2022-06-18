@@ -135,7 +135,7 @@ def registroPaciente(request):
 ########## GENERO EL CODIGO DE 6 DIGITOS #################################################
     digits = "0123456789"
     OTP = ""
-    for i in range(6) :
+    for i in range(4) :
         OTP += digits[math.floor(random.random() * 10)]
     codigo=OTP
 
@@ -833,10 +833,59 @@ def index(request):
 def reset_pass(request):
     if request.method == "POST":
         mail = request.POST.get("mail")
+        #  recupero al usuario logeado
+        one_entry=Logeado.objects.all()[:1].get()
+
+        # veo de que tipo es el usuario
+        if (one_entry.numId == 1):
+            # try si el mail existe dentro de la base de datos del admin  sigue el flujo normal  , se genera la contraseña y se envia
+            try:
+                usuario= Administrador.objects.get(administrador_email=mail)
+                email= usuario.administrador_email
+            #except si no se encuentra el mail dentro de la base de datos del admin , se recarga la pagina y se muestra el msj de error
+            except ObjectDoesNotExist:
+                messages.error(request, "el mail no pertenece a un usuario administrador")
+                # el mensaje lo deje para q veas el seguimiento , podes borrarlo despues
+                return render(request, "main/recuperar-contraseña.html", {})
+
+
+
+        elif (one_entry.numId == 2):
+
+            try:
+                usuario= Vacunador.objects.get(vacunador_email=mail)
+                email= usuario.vacunador_email
+
+
+            except ObjectDoesNotExist:
+                messages.error(request, "el mail no pertenece a un usuario Vacunador")
+                return render(request, "main/recuperar-contraseña.html", {})
+
+
+        else:
+
+            try:
+                usuario= Paciente.objects.get(paciente_email=mail)
+                email=usuario.paciente_email
+
+            except ObjectDoesNotExist:
+                messages.error(request, "el mail no pertenece a un usuario Paciente")
+                return render(request, "main/recuperar-contraseña.html", {})
+
+
+
+
+
         caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
         longitud = 9  # La longitud que queremos
         contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+        #contraseña= 334
+        usuario.contraseña=contraseña
+        usuario.save()
 
-        send_email(mail, contraseña)
+        # actualizo la contraseña
+
+        #send_email(mail, contraseña)
+        # revisar
 
     return render(request, "main/recuperar-contraseña.html", {})
