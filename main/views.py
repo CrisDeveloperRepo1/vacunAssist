@@ -133,18 +133,26 @@ def registroPaciente(request):
     Contraseña=request.POST['Contraseña']
 
 ########## GENERO EL CODIGO DE 6 DIGITOS #################################################
+<<<<<<< HEAD
     digits = "0123456789"
     OTP = ""
     for i in range(4) :
         OTP += digits[math.floor(random.random() * 10)]
     codigo=OTP
 
+=======
+    digitos = '0123456789'
+    longitud = 4  # La longitud que queremos
+    codigo = ''.join(choice(digitos) for digito in range(longitud))
+    
+>>>>>>> c11b2c154a5a9130f2c9f50d26bba1e50838b432
     paciente=Paciente.objects.create(paciente_codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
     messages.error(request, " PACIENTE REGISTRADO")
 
 
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
-    return render(request,'main/registrarPaciente.html',{"codigo":OTP})
+    send_email_registro(email, codigo, dni, nombre )
+    return render(request,'main/registrarPaciente.html',{'codigo': codigo})
     return render(request, "main/registrarPaciente.html",{"codigo" : 3})
 
 
@@ -240,9 +248,7 @@ def loginPaciente(request):
 
         digits = "0123456789"
         OTP = ""
-
-
-
+        
         for i in range(6) :
             OTP += digits[math.floor(random.random() * 10)]
         UsuarioLogeado=0
@@ -658,27 +664,25 @@ def recup_contra(request):
 #         'form': form,
 #     }
 #     return render(request, "main/registro_vacunador.html", context)
-def reg_vac(request):
-    context={
-        'form': form,
-    }
-    form= vacunador_signUpForm(request.POST or None)
 
-def send_email_registro(mail):
-    context = {"mail" : mail }
-    template = get_template("main/correo.html")
+def send_email_registro(mail, codigo, dni, nombre):
+    context = {"mail" : mail,
+               "codigo" : codigo,
+               "dni" : dni,
+               "nombre" : nombre,
+               }
+    template = get_template("main/correo-registro.html")
     content = template.render(context)
 
     email = EmailMultiAlternatives (
         "Registro en VacunAssist ",
-        "registro de usuarios",
+        "",
         settings.EMAIL_HOST_USER,
         [mail]
     )
 
     email.attach_alternative(content, "text/html")
     email.send()
-
 
 def reg_vac(request):
 
@@ -716,16 +720,19 @@ def reg_vac(request):
             message.send()
         if request.method == "POST":
             mail = request.POST.get("mail")
-            caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
-            longitud = 9  # La longitud que queremos
-            contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
-
-        send_email_registro(mail)
+            digitos = '1234567890'
+            longitud = 4  # La longitud que queremos
+            codigo = ''.join(choice(digitos) for digito in range(longitud))
+            send_email_registro(mail, codigo)
+            context={
+                'form': form,
+                'codigo' : codigo,
+            }
+            return render(request, "main/registro_vacunador.html", context)
     context={
-        'form': form,
-    }
-    return render(request, "main/inicio_admin.html", context)
-
+            'form': form,
+        }
+    return render(request, "main/registro_vacunador.html", context)
 
     if form.is_valid():
         form.save()
@@ -796,14 +803,14 @@ def cerrar_sesion (request):
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from secrets import choice
 
-
-
-def send_email(mail, contraseña):
+def send_email_pass(mail, contraseña, nombre):
     context = {"mail" : mail,
-               "pass" : contraseña
+               "pass" : contraseña,
+               "nombre" : nombre
                }
-    template = get_template("main/correo.html")
+    template = get_template("main/correo-reset-pass.html")
     content = template.render(context)
 
     email = EmailMultiAlternatives (
@@ -816,7 +823,53 @@ def send_email(mail, contraseña):
     email.attach_alternative(content, "text/html")
     email.send()
 
-from secrets import choice
+
+
+def reset_pass(request):
+    if request.method == "POST":
+        dni = request.POST.get("dni")
+        mail = request.POST.get("mail")
+        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        longitud = 9  # La longitud que queremos
+        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email_pass(mail, contraseña, dni)
+
+    return render(request, "main/recuperar-contraseña.html", {})
+
+def send_email_codigo(mail, contraseña, nombre):
+    context = {"mail" : mail,
+               "pass" : contraseña,
+               "nombre" : nombre
+               }
+    template = get_template("main/correo-reset-codigo.html")
+    content = template.render(context)
+
+    email = EmailMultiAlternatives (
+        "Recuperar código ",
+        "",
+        settings.EMAIL_HOST_USER,
+        [mail]
+    )
+
+    email.attach_alternative(content, "text/html")
+    email.send()
+
+
+def reset_codigo(request):
+    if request.method == "POST":
+        dni = request.POST.get("dni")
+        mail = request.POST.get("mail")
+        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        longitud = 9  # La longitud que queremos
+        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+        send_email_codigo(mail, contraseña, dni)
+        
+
+    return render(request, "main/recuperar-codigo.html", {})
+
+
 
 def index(request):
     if request.method == "POST":
@@ -825,9 +878,10 @@ def index(request):
         longitud = 6  # La longitud que queremos
         contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
-        send_email(mail, contraseña)
+        send_email_pass(mail, contraseña, "hola")
 
     return render(request, "main/index.html", {})
+<<<<<<< HEAD
 
 
 def reset_pass(request):
@@ -889,3 +943,5 @@ def reset_pass(request):
         # revisar
 
     return render(request, "main/recuperar-contraseña.html", {})
+=======
+>>>>>>> c11b2c154a5a9130f2c9f50d26bba1e50838b432

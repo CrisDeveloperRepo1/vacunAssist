@@ -8,6 +8,20 @@
 </html>
 
   <head>
+
+    <style>
+      input[type=button], input[type=submit] {
+        background-color: #888987;
+        border-color:#86D03A;
+        border-radius: 10px;
+        color: white;
+        padding: 7px 15px;
+        text-decoration: none;
+        margin: 2px 0px;
+        cursor: pointer;
+      }
+    </style>
+
     <meta charset="utf-8">
     <!-- Compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
@@ -58,13 +72,13 @@
           <div class="center" style="background:#BCBCBC; margin: 10px 100px">
             <form name='formulario' action ="/compararCodigo/" method='GET' style='text-align:center'>
               <font face='arial'><h6><strong>Código Único</strong></h6></font>
-              <input type='password' name='pass' />
+              <input type='password' placeholder="1234" name='pass' style="background-color:white;" />
               <!-- Campo oculto: Este campo no se verá en el navegador -->
               <br>
               <!-- Botón de envío del formulario -->
               <h6><input type='submit' value='Verificar'/></h6>
               <hr>
-              <h7>¿Olvidó su código? <a href="/" style="color:#006BB8">Clickee aqui</a> </h7>
+              <h7>¿Olvidó su código? <a href="/recuperar_codigo/" style="color:#006BB8">Clickee aqui</a> </h7>
             </form>
           </div>
         </div>
