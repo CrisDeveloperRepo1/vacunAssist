@@ -60,16 +60,16 @@
             <input type="text", name="mail" placeholder="example@gmail.com">
             <button style="font-size: 26px;" type="submit" class="btn" onclick="openPopup()"> Enviar </button>
           </form>
-        
+
         <div class="popup" id="popup">
           <img src="{% static 'imagenes/tick.png' %}">
           <h5> Enviamos un mail a su casilla de correo </h5>
           <p> Gracias por utilizar nuestro sistema de turnos </p>
           <button type="button" onclick="closePopup()"> Ok </button>
         </div>
-        <script> 
+        <script>
           let popup = document.getElementById("popup")
-      
+
           function openPopup() {
             popup.classList.add("open-popup")
           }

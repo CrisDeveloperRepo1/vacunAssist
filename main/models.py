@@ -35,7 +35,7 @@ class Vacunador(models.Model):
     vacunador_zona= models.CharField(max_length=200)
     vacunador_dni= models.IntegerField()
     vacunador_email= models.EmailField(max_length=254)
-    vacunador_codigo= models.IntegerField()
+    codigo= models.IntegerField()
     contraseña = models.CharField(max_length=200)
 
 
@@ -62,7 +62,7 @@ class Paciente(models.Model):
     vac_Covid_turno2= models.DateTimeField(null=True)
     vac_Covid1era_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Covid2da_asistencia=models.SmallIntegerField(choices=opciones,default=2)
-    paciente_codigo= models.PositiveIntegerField(default=0)
+    codigo= models.PositiveIntegerField(default=0)
     contraseña = models.CharField(max_length=200)
 
     def __str__(self):
@@ -76,7 +76,7 @@ class Administrador(models.Model):
     administrador_dni= models.IntegerField()
     contraseña = models.CharField(max_length=200)
     administrador_email= models.EmailField(max_length=254)
-    administrador_codigo= models.IntegerField()
+    codigo= models.IntegerField()
 
     def __str__(self):
         return self.administrador_nombre

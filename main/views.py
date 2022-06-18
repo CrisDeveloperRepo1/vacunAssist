@@ -133,25 +133,25 @@ def registroPaciente(request):
     Contraseña=request.POST['Contraseña']
 
 ########## GENERO EL CODIGO DE 6 DIGITOS #################################################
-<<<<<<< HEAD
+
     digits = "0123456789"
     OTP = ""
     for i in range(4) :
         OTP += digits[math.floor(random.random() * 10)]
     codigo=OTP
 
-=======
+
     digitos = '0123456789'
     longitud = 4  # La longitud que queremos
     codigo = ''.join(choice(digitos) for digito in range(longitud))
-    
->>>>>>> c11b2c154a5a9130f2c9f50d26bba1e50838b432
-    paciente=Paciente.objects.create(paciente_codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
+
+
+    paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
     messages.error(request, " PACIENTE REGISTRADO")
 
 
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
-    send_email_registro(email, codigo, dni, nombre )
+    ##########send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
     return render(request, "main/registrarPaciente.html",{"codigo" : 3})
 
@@ -248,7 +248,7 @@ def loginPaciente(request):
 
         digits = "0123456789"
         OTP = ""
-        
+
         for i in range(6) :
             OTP += digits[math.floor(random.random() * 10)]
         UsuarioLogeado=0
@@ -399,7 +399,7 @@ def validarUsuario(request):
                    #     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
                 except ObjectDoesNotExist:
                     print('')
-                    messages.error(request, "  no pertenece a un usuario paciente del sistemapppp")
+                    messages.error(request, "  no pertenece a un usuario paciente del sistemappppxxx")
                     return render(request,"main/inicio_de_sesión.html",{"codigo" : 3}) # vuelvo a la pagina
 #####
 
@@ -410,23 +410,23 @@ def validarUsuario(request):
             # entry = Entry.objects.get(blog=blog, entry_number=1)
             #one_entry = Administrador.objects.get(administrador_dni = request.GET["dni"])
 
-            if request.GET["pass"].isdigit():
-                if  int(request.GET["pass"]) == contraseña :
-                     #login(request, one_entry)
-                     username = request.GET["dni"]
-                     password = request.GET["pass"]
-                     user = authenticate(request, username=username, password=password)
-                     #login(request)
-                     return render(request,"main/verif.html")
-                else:
-                    messages.error(request, " la contraseña es ingresada es invalida")
-                    return render(request,"main/inicio_de_sesión.html")
+            #if request.GET["pass"].isdigit():
+                # if  int(request.GET["pass"]) == contraseña :
+                #      #login(request, one_entry)
+                #      username = request.GET["dni"]
+                #      password = request.GET["pass"]
+                #      user = authenticate(request, username=username, password=password)
+                #      #login(request)
+                #      return render(request,"main/verif.html")
+                # else:
+                #     messages.error(request, " la contraseña es ingresada es invalida")
+                #     return render(request,"main/inicio_de_sesión.html")
+            #if:
+            if  request.GET["pass"] == one_entry.contraseña :
+                 return render(request,"main/verif.html")
             else:
-                if  request.GET["pass"] == one_entry.contraseña :
-                     return render(request,"main/verif.html")
-                else:
-                    messages.error(request, " la contraseña es ingresada es invalida")
-                    return render(request,"main/inicio_de_sesión.html")
+                messages.error(request, " la contraseña es ingresada es invalida")
+                return render(request,"main/inicio_de_sesión.html")
 
         except ObjectDoesNotExist:
            print("Either the blog or entry doesn't exist.")
@@ -498,7 +498,7 @@ def compararCodigo(request):
                                 try:
                                     one=Logeado.objects.get(numId=1)
                                     one_entry = Administrador.objects.get(administrador_dni=one.usuarioLogeado)
-                                    if  int(request.GET["pass"]) == one_entry.administrador_codigo :
+                                    if  int(request.GET["pass"]) == one_entry.codigo :
 
                                     #mensaje= request.GET["pass"]
 
@@ -514,7 +514,7 @@ def compararCodigo(request):
 
                                         one=Logeado.objects.get(numId=2)
                                         one_entry = Vacunador.objects.get(vacunador_dni=one.usuarioLogeado)
-                                        if  int(request.GET["pass"]) == one_entry.vacunador_codigo :
+                                        if  int(request.GET["pass"]) == one_entry.codigo :
 
                                         #mensaje= request.GET["pass"]
 
@@ -527,7 +527,7 @@ def compararCodigo(request):
 
                                         one=Logeado.objects.get(numId=3)
                                         one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
-                                        if  int(request.GET["pass"]) == one_entry.paciente_codigo :
+                                        if  int(request.GET["pass"]) == one_entry.codigo :
                                             print('')
 
 
@@ -860,14 +860,66 @@ def reset_codigo(request):
     if request.method == "POST":
         dni = request.POST.get("dni")
         mail = request.POST.get("mail")
-        caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
-        longitud = 9  # La longitud que queremos
-        contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
 
-        send_email_codigo(mail, contraseña, dni)
-        
+        if request.POST.get("dni").isdigit():
 
-    return render(request, "main/recuperar-codigo.html", {})
+        #mail= request.GET["dni"]
+            try:
+                usuario= Administrador.objects.get(administrador_dni = request.POST.get("dni"))
+                email= usuario.administrador_email
+                if (mail != email):
+                    messages.error(request, "el mail ingresado no pertenece a un usuario Administrador")
+                    return render(request, "main/recuperar-codigo.html")
+
+
+            except ObjectDoesNotExist:
+                try:
+                    usuario= Vacunador.objects.get(vacunador_dni = request.POST.get("dni"))
+                    email= usuario.vacunador_email
+                    if (mail != email):
+                        messages.error(request, "el mail ingresado no pertenece a un usuario Vacunador")
+                        return render(request, "main/recuperar-codigo.html")
+
+                except ObjectDoesNotExist:
+                    try:
+                        usuario= Paciente.objects.get(paciente_dni = request.POST.get("dni"))
+                        email= usuario.paciente_email
+                        if (mail != email):
+                            messages.error(request, "el mail ingresado no pertenece a un usuario Paciente")
+                            return render(request, "main/recuperar-codigo.html")
+
+                    except ObjectDoesNotExist:
+                        messages.error(request, "el dni ingresado no se esta asociado a un usuario del sistema")
+                        return render(request, "main/recuperar-codigo.html", {})
+
+
+        else:
+
+            messages.error(request, "el dni debe ser un numero")
+            return render(request, "main/recuperar-codigo.html")
+
+
+
+    ### si todo sigue un flujo normal, se genera el nuevo codigo y se cambia el codigo en la base de datos
+        #caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
+        digitos = '123456789'
+        longitud = 4  # La longitud que queremos
+        codigo = ''.join(choice(digitos) for digito in range(longitud))
+        codigo = int(codigo)
+        usuario.codigo=codigo
+
+
+        usuario.save()
+        #longitud = 4  # La longitud que queremos
+        #contraseña = ''.join(choice(caracteres) for caracter in range(longitud))
+
+
+
+        #send_email_codigo(mail, contraseña, dni)
+        ## revisar 
+
+
+    return render(request, "main/recuperar-codigo.html", {"codigoq":codigo})
 
 
 
@@ -881,54 +933,58 @@ def index(request):
         send_email_pass(mail, contraseña, "hola")
 
     return render(request, "main/index.html", {})
-<<<<<<< HEAD
+
 
 
 def reset_pass(request):
     if request.method == "POST":
+
         mail = request.POST.get("mail")
-        #  recupero al usuario logeado
-        one_entry=Logeado.objects.all()[:1].get()
+        if request.POST.get("dni").isdigit():
 
-        # veo de que tipo es el usuario
-        if (one_entry.numId == 1):
-            # try si el mail existe dentro de la base de datos del admin  sigue el flujo normal  , se genera la contraseña y se envia
+        #mail= request.GET["dni"]
+        ################## voy buscando por tipo de usuario, hasta encontrar al dueño del dni
             try:
-                usuario= Administrador.objects.get(administrador_email=mail)
+                usuario= Administrador.objects.get(administrador_dni = request.POST.get("dni"))
                 email= usuario.administrador_email
-            #except si no se encuentra el mail dentro de la base de datos del admin , se recarga la pagina y se muestra el msj de error
-            except ObjectDoesNotExist:
-                messages.error(request, "el mail no pertenece a un usuario administrador")
-                # el mensaje lo deje para q veas el seguimiento , podes borrarlo despues
-                return render(request, "main/recuperar-contraseña.html", {})
-
-
-
-        elif (one_entry.numId == 2):
-
-            try:
-                usuario= Vacunador.objects.get(vacunador_email=mail)
-                email= usuario.vacunador_email
+                ## si los mails no coinciden , se recarga la pagina y se informa la razon
+                if (mail != email):
+                    messages.error(request, "el mail ingresado no pertenece a un usuario Administrador")
+                    return render(request, "main/recuperar-contraseña.html")
 
 
             except ObjectDoesNotExist:
-                messages.error(request, "el mail no pertenece a un usuario Vacunador")
-                return render(request, "main/recuperar-contraseña.html", {})
+                try:
+                    usuario= Vacunador.objects.get(vacunador_dni = request.POST.get("dni"))
+                    email= usuario.vacunador_email
+                    if (mail != email):
+                        messages.error(request, "el mail ingresado no pertenece a un usuario Vacunador")
+                        return render(request, "main/recuperar-contraseña.html")
+
+                except ObjectDoesNotExist:
+                    try:
+                        usuario= Paciente.objects.get(paciente_dni = request.POST.get("dni"))
+                        email= usuario.paciente_email
+                        if (mail != email):
+                            messages.error(request, "el mail ingresado no pertenece a un usuario Paciente")
+                            return render(request, "main/recuperar-contraseña.html")
+
+                    except ObjectDoesNotExist:
+                        messages.error(request, "el dni ingresado no se esta asociado a un usuario del sistema")
+                        return render(request, "main/recuperar-contraseña.html", {})
 
 
         else:
 
-            try:
-                usuario= Paciente.objects.get(paciente_email=mail)
-                email=usuario.paciente_email
-
-            except ObjectDoesNotExist:
-                messages.error(request, "el mail no pertenece a un usuario Paciente")
-                return render(request, "main/recuperar-contraseña.html", {})
+            messages.error(request, "el dni debe ser un numero")
+            return render(request, "main/recuperar-contraseña.html")
 
 
+###################################################        #######################
 
+        # one_entry=Logeado.objects.all()[:1].get()
 
+        ### si todo sigue un flujo normal, se genera la nueva contraseña y se cambia la contraseña en la base de datos
 
         caracteres = 'abcdefghijklmnopqrtsuvwxyz1234567890'
         longitud = 9  # La longitud que queremos
@@ -943,5 +999,3 @@ def reset_pass(request):
         # revisar
 
     return render(request, "main/recuperar-contraseña.html", {})
-=======
->>>>>>> c11b2c154a5a9130f2c9f50d26bba1e50838b432
