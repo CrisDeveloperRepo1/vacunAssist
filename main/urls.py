@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView,PasswordResetDoneView
 from django.urls import path, re_path, include, reverse_lazy
-from .views import eliminar_Admin ,editarStockVacunatorio
+from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno
 
 
 app_name= 'main'
@@ -13,6 +13,7 @@ urlpatterns = [
     path('', views.main,name= 'main'),
     path('main/', views.main,name= 'main'),
 
+    path('cancelarTurno/', views.cancelarTurno,name= 'cancelarTurno'),
     #path('compararCodigoPaciente/', views.compararCodigoPaciente,name= 'compararCodigoPaciente'),
     path('solicitarTurnoFA/', views.solicitarTurnoFA,name= 'solicitarTurnoFA'),
     path('inicioPaciente/', views.inicioPaciente,name= 'inicioPaciente'),
@@ -26,9 +27,16 @@ urlpatterns = [
     path('registrarPaciente/', views.registrarPaciente, name= 'registrarPaciente' ),
     path('registroPaciente/', views.registroPaciente, name= 'registroPaciente' ),
 
+    path('AsignarTurno/', views.AsignarTurno, name= 'AsignarTurno' ),
+
     #path('register/', views.editarStockTotal, name= 'editarStockTotal' ),
     path('editarStockVacunatorio/', views.editarStockVacunatorio, name= 'editarStockVacunatorio' ),
+
+    path('empezarAsignacionTurno/<int:dni>', views.empezarAsignacionTurno, name= 'empezarAsignacionTurno' ),
     path('eliminarVacunador/', views.eliminarVacunador, name= 'eliminarVacunador' ),
+    path('eliminarSolicitud/<int:dni>', views.eliminarSolicitud , name="eliminarSolicitud"),
+
+
     path('eliminar_Admin/<int:id>/<str:nombre>',views.eliminar_Admin),
 
     path('accounts/login/', views.login1, name= 'login' ),

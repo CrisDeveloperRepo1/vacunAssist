@@ -26,7 +26,7 @@ from django.conf import settings
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA,Logeado
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA,Logeado,TurnoFAAprobados
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -37,6 +37,10 @@ from django.contrib.auth import login, authenticate,logout
 from.forms import CustomUserForm
 from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
 import math, random
+from datetime import datetime
+from datetime import datetime
+from datetime import date
+
 # def inicio_admin(request):
 #     # data2= {
 #     #   'form' :PacienteRegistro()
@@ -72,11 +76,19 @@ import math, random
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+
+def cancelarTurno (request):
+#### agregar metodo q devuelva el ultimo objeto de la tabla
+    usuario = Logeado.objects.get(numId=3)
+    TurnoFA= TurnoFAAprobados.objects.get(dni=usuario.usuarioLogeado)
+    TurnoFA.delete()
+    paciente= Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+    paciente.vac_Amarilla_turno= None
+    paciente.save()
+    return render(request,"main/inicioPaciente.html",{"valor":2,"p":paciente})
+
 def evaluarTurno(request):
     ListSolicitud= SolicitudTurnoFA.objects.all()
-
-
-
 
     return render(request,"main/evaluarTurnos.html",{"turnos":ListSolicitud})
 
@@ -90,10 +102,25 @@ def solicitarTurnoFA(request):
         Dni=one_entry.paciente_dni
         NumId=0
         #23242424
+        # inicio = datetime(2022, 6, 30)
+        # final =  datetime(2022, 9, 28)
+        # random_date = inicio + (final - inicio) * random.random()
+        # one_entry.vac_Amarilla_turno=random_date
+        # one_entry.save()
+        today = date.today()
+
+        age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+        #
+        # age = today.year - self.fecha_nac.year - (
+        #             (today.month, today.day) < (self.fecha_nac.month, self.fecha_nac.day))
+        print(age)
+
+
+        #edad = relativedelta(datetime.now(), datetime(1988, 4, 15))
         Email=one_entry.paciente_email
-        turno=SolicitudTurnoFA.objects.create(dni=Dni,numId=NumId,email=Email)
+        turno=SolicitudTurnoFA.objects.create(dni=Dni,numId=NumId,email=Email,edad=age)
         messages.error(request, "solicitud exitosa")
-        return render(request,"main/inicioPaciente.html",{"valor":1})
+        return render(request,"main/inicioPaciente.html",{"valor":1,"p":one_entry})
 
 def inicioPaciente(request):
 
@@ -101,20 +128,30 @@ def inicioPaciente(request):
 
 
     one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
-    try:
+    today = date.today()
+
+    age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+    if (age >= 60):
+        return render(request, "main/inicioPaciente.html",{"valor":3, "p":one_entry})
+
+    else:
+
+###########################################
+        try:
 
 
-        one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+            one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
 
 
-        return render(request, "main/inicioPaciente.html",{"valor":1})
+            return render(request, "main/inicioPaciente.html",{"valor":1, "p":one_entry})
 
-            # dni=models.IntegerField()
-            # numId=models.IntegerField()
-            # email= models.EmailField(max_length=254
+                # dni=models.IntegerField()
+                # numId=models.IntegerField()
+                # email= models.EmailField(max_length=254
 
-    except ObjectDoesNotExist:
-        return render(request, "main/inicioPaciente.html",{"valor":2})
+        except ObjectDoesNotExist:
+            return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
+###############################################
     # f='f'
     # OTP=''
     # OTP=2332
@@ -131,8 +168,22 @@ def registroPaciente(request):
     email=request.POST['email']
     zona=request.POST['zona']
     Contraseña=request.POST['Contraseña']
+    inicio = datetime(2022, 6, 30)
+    final =  datetime(2022, 9, 28)
 
-########## GENERO EL CODIGO DE 6 DIGITOS #################################################
+    # random_date = inicio + (final - inicio) * random.random()
+    # vacFaTurno = random_date
+    random_turnoCovid = inicio + (final - inicio) * random.random()
+    random_gripe = inicio + (final - inicio) * random.random()
+    #vac_Gripe_turno=random_gripe
+    #vac_Covid_turno1= random_turnoCovid
+    #vac_Covid_turno2
+    #vac_Amarilla_turno= models.DateTimeField(null=True)
+
+    #print(random_date)
+
+
+########## GENERO EL CODIGO DE 4 DIGITOS #################################################
 
     digits = "0123456789"
     OTP = ""
@@ -146,7 +197,7 @@ def registroPaciente(request):
     codigo = ''.join(choice(digitos) for digito in range(longitud))
 
 
-    paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email)
+    paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
     messages.error(request, " PACIENTE REGISTRADO")
 
 
@@ -154,6 +205,32 @@ def registroPaciente(request):
     ##########send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
     return render(request, "main/registrarPaciente.html",{"codigo" : 3})
+
+###################### empezar Asignacion del turno FA
+def empezarAsignacionTurno (request,dni):
+    ListSolicitud= SolicitudTurnoFA.objects.all()
+
+    return render(request, "main/evaluarTurnos.html",{"turnos":ListSolicitud,"valor":1,"asignacionDNI":dni})
+################### Asignar turno FA
+def AsignarTurno (request):
+    ListSolicitud= SolicitudTurnoFA.objects.all()
+    fecha = request.POST['fechaesperada']
+    DNI =request.POST['dni']
+    #one_entry=Paciente.objects.get(paciente_dni=request.POST['dni'])
+    # Email=one_entry.paciente_email
+    # one_entry.vac_Amarilla_turno=fecha
+    # one_entry.save()
+    # Turno=TurnoFAAprobados.objects.create(dni=DNI,numId=0,email=Email)
+    return render(request, "main/evaluarTurnos.html",{"turnos":ListSolicitud,"asignacionDNI":DNI})
+
+############## elimar solicitud de vacuna fiebre amarilla
+
+def eliminarSolicitud (request,dni):
+    ListSolicitud= SolicitudTurnoFA.objects.all()
+    turno=SolicitudTurnoFA.objects.get(dni=dni)
+    turno.delete()
+    return render(request, "main/evaluarTurnos.html",{"turnos":ListSolicitud})
+
 
 
 def eliminar_Admin(request,id,nombre):
@@ -530,17 +607,26 @@ def compararCodigo(request):
                                         if  int(request.GET["pass"]) == one_entry.codigo :
                                             print('')
 
+                                            today = date.today()
+
+                                            age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+                                            if (age >= 60):
+                                                return render(request, "main/inicioPaciente.html",{"valor":3,"p":one_entry})
+                                            else:
+
+                                                try:
+                                                    pasa= SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+                                                    return render(request, "main/inicioPaciente.html",{"valor":1,"p":one_entry})
+                                                except ObjectDoesNotExist:
+                                                    return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
+
 
 #############################################################
     # one = Logeado.objects.get(numId=3)
     #
     #
     # one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
-                                            try:
-                                                paso= SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
-                                                return render(request, "main/inicioPaciente.html",{"valor":1})
-                                            except ObjectDoesNotExist:
-                                                return render(request, "main/inicioPaciente.html",{"valor":2})
+
             # dni=models.IntegerField()
             # numId=models.IntegerField()
             # email= models.EmailField(max_length=254
@@ -916,7 +1002,7 @@ def reset_codigo(request):
 
 
         #send_email_codigo(mail, contraseña, dni)
-        ## revisar 
+        ## revisar
 
 
     return render(request, "main/recuperar-codigo.html", {"codigoq":codigo})

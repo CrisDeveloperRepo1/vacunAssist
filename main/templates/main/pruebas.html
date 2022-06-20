@@ -1,198 +1,32 @@
-<!-- <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    holaaaaaaaaaaaaaaaaaa
-
-    <tr>
-      <td> {{vacunasFA}} </td>
-      <td> {{vacunasG}} </td>
-      <td> {{vacunasC}} </td>
-      {{vacunasC}}
-
-    </tr>
+<html>
 
 
 
-  </body>
-</html> -->
+<form action="../../form-result.php" method="post" target="_blank">
 
+  <p>
 
+    Intereses:<br>
 
-<!DOCTYPE html>
-{% load static %}
+    <label><input type="checkbox" name="cb-html5" checked> HTML5</label><br>
 
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <!-- Compiled and minified CSS -->
-    <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+    <label><input type="checkbox" name="cb-css3" checked> CSS3</label><br>
 
+    <label><input type="checkbox" name="cb-javascript"> Javascript</label>
 
-    <title></title>
+  </p>
 
-    <nav>
-        <div class="nav-wrapper  light-green">
-          <a href="/" class="brand-logo">
-            <img src="{% static 'imagenes/Logo_VacunAssist_recortado.png' %}" class="img-fluid" width="100" height="66">
-          <div class="right"  style="margin: 9px 0px 0px 10px">
-            <h6>Stock de vacunas</h6>
-            </div>
-          </a>
-          <ul id="nav-mobile" class="right hide-on-med"></a>
-            <li><a href="/login/">Volver</a></li>
-          </ul>
-        </div>
-      </nav>
+  <p>
 
-      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
-      <style>
+    <input type="submit" value="Enviar datos">
 
-        .logo-image{
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          overflow: ;
-          margin-top: -6px;
-      }
-        caja {
-            border: 20px solid ##888987;
-            }
+    <input type="reset" value="Restaurar formulario">
 
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 70%;
-        }
+  </p>
 
-        td, th {
-          border: 1px solid #000000;
-          text-align: left;
-          padding: 2px;
-        }
+</form>
 
-        tr:nth-child(even) {
-          background-color: #BABCB7;
-        }
-
-        input[type=button], input[type=submit], input[type=reset] {
-            background-color: #888987;
-            border-color:#86D03A;
-            border-radius: 10px;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            margin: 20px 1px;
-            cursor: pointer;
-          }
-
-
-          fieldset {
-            background-color: #eeeeee;
-            display: block;
-            width: 70%;
-            border: 2px groove (internal value);
-          }
-
-          legend {
-            background-color: gray;
-          }
-
-          input {
-            margin: 5px;
-          }
-
-        </style>
-  </head>
-  <!-- bgcolor="#8bc34a" -->
-  <body bgcolor="FFFFFF">
-
-
-
-  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
-
-  <!-- Page Content goes here -->
-
-
-        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
-          <caption >
-            <div class="left"><h6>  </h6></div>
-            <!--<div class="right">
-              <select name="opciones">
-                    <option value="dni">DNI</option>
-                    <option value="vacunatorio">Vacunatorio</option>
-                    <option value="apeynom">Apellido</option>
-                    <option value="rol">Rol</option>
-              </select>
-            </div> -->
-          </caption>
-          <tr style="background-color:#86D03A">
-              <th>Vacunatorio </th>
-              <th>stock vacunas fiebre A</th>
-              <th>stock vacunas gripe</th>
-              <th>stock vacunas covid</th>
-
-
-          </tr>
-        <div class="vacunadores">
-          {% for v in Vacunatorios %}
-              <div class="Vacunador">
-                <tr style="background-color:#CBCBCB, #B0B0B0">
-                  <th>{{v.vacunatorio_zona}} </th>
-                  <th>{{v.stock_vac_fa}}</th>
-                  <th>{{v.stock_vac_covid}}</th>
-                  <th>{{v.stock_vac_gripe}}</th>
-                </tr>
-              </div>
-          {% endfor %}
-        </div>
-      </table>
-      <br>
-        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
-          <caption >
-            <div class="left"><h6>  </h6></div>
-            <!-- <div class="right">
-              <label for="filt_admin">Filtrar por:</label>
-              <select name="filt_admin" id="filt_admin">
-                <option value="Nombre">Nombre</option>
-                <option value="Apellido">Apellido</option>
-                <option value="dni">dni</option>
-              </select>
-            </div> -->
-          </caption>
-          <tr style="background-color:#86D03A">
-              <th> Stock total Vacunas FA </th>
-              <th>Stock total Vacunas Gripe</th>
-              <th>Stock total Vacunas Covi</th>
-          </tr>
-          <div class="administradores">
-
-            <div class="Administrador">
-              <tr style="background-color:#CBCBCB, #B0B0B0">
-                <td>{{vacunasFA}} </td>
-                <td> {{vacunasG}}</td>
-                <td>{{vacunasC}}</td>
-             </tr>
-            </div>
-
-          </div>
-        </table>
-
-
-    <!--<div class= "left">
-        <p>
-       <img src="{% static 'imagenes/Logo.png' %}"  width="200" height="179">
-        </p>
-      </div>-->
-    <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  </body>
-
+<html/>
 
 
 </html>

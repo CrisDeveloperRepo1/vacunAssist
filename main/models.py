@@ -6,12 +6,25 @@ from django.utils import timezone
 
 # Create your models here.
 
+class TurnoFAAprobados(models.Model):
+
+    dni=models.IntegerField()
+    numId=models.IntegerField()
+    email= models.EmailField(max_length=254)
+
+
+
+    def __int__(self):
+        return self.dni
+
+
 
 class SolicitudTurnoFA(models.Model):
 
     dni=models.IntegerField()
     numId=models.IntegerField()
     email= models.EmailField(max_length=254)
+    edad=models.IntegerField()
 
 
 

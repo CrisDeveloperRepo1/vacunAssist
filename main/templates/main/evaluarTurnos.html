@@ -35,6 +35,7 @@
 
 
     <div class="row">
+
          <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
            <h2>Gestion </h2>
            <div class="card">
@@ -82,23 +83,26 @@
                <tbody>
                  {% for c in turnos %}
                  <tr>
-  
+
                    <td>{{forloop.counter}}</td>
                    <td>{{c.dni}} </td>
                    <td> {{c.email}}</td>
+
+
                    <!-- <td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
 
                    <!-- </td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
                    <!-- <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td> -->
-                   <td><a href="" class="btn btn-block btn-info">Aceptar</a></td>
-                   <td><a href="" class="btn btn-block btn-danger">Rechazar</a></td>
+                   <td><a href="/empezarAsignacionTurno/{{c.dni}}" class="btn btn-block btn-info">Asignar</a></td>
+
+                   <td><a href="/eliminarSolicitud/{{c.dni}}" class="btn btn-block btn-danger">Rechazar</a></td>
                    <!-- <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td> -->
 
 
                  </tr>
                  {% endfor%}
 
-               </tbody>
+
 
              </table>
 
@@ -107,6 +111,40 @@
            </div>
 
          </div>
+         {% if valor == 1 %}
+
+             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+               <h2> Elegir Fecha</h2>
+               <div class="card">
+                 <div class="card-body">
+                   <form  action="/AsignarTurno/" method="post">{% csrf_token %}
+                     <div class="form-group">
+                       <input type="datetime-local" id="fechaesperada" name="fechaesperada" min="2022-01-01" max="2022-12-31" required >
+                     </div>
+
+                     <div class="form-group">
+
+
+                        <input type="text"  id="dni" name="dni" minlength="1" value="DNI {{asignacionDNI}}" clas="form-control" placeholder="DNI"  minlength="8" maxlength="8" readonly required >
+                     </div>
+
+                     <div class="form-group">
+                       <button type="submit" class="btn btn-success btn-block" text-white>Asignar Turno</button>
+
+                     </div>
+
+
+
+                   </form>
+
+                 </div>
+
+               </div>
+             </div>
+
+         {% endif %}
+
+
 
 
     </div>

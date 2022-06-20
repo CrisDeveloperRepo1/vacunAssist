@@ -28,10 +28,8 @@
             </div>
           </a>
           <ul id="nav-mobile" class="right hide-on-med">
-            <li><a href="/login"><i class="fa-solid fa-user" style="color:#FFFFFF; width:25; height:25;"></i></i> paciente</a></li>
-            <li><a href="/login/"><i class="fa-solid fa-user" style="color:#FFFFFF; width:25; height:25;"></i></i>Cerrar sesion</a></li>
-            <li><a href="/login/"><i class="fa-solid fa-user-nurse"  style="color:#FFFFFF; width:25; height:25;" ></i> configurar </a></li>
-            <li><a href="collapsible.html"> vacunador</a></li>
+
+            <li><a href="/login/"> salir </a></li>
           </ul>
         </div>
       </nav>
@@ -47,7 +45,8 @@
           <span class="card-title"> vacuna covid</span>
           <p> turno: asignado
           </p>
-          <p> fecha : 07/07/2022
+          <p> fecha : {{p.vac_Covid_turno1}}
+
           </p>
         </div>
         <div class="card-action">
@@ -64,7 +63,7 @@
           <span class="card-title">vacuna gripe</span>
           <p> turno: asignado
           </p>
-          <p> fecha : 12/09/2022
+          <p> fecha : {{p.vac_Gripe_turno}}
           </p>
         </div>
         <div class="card-action">
@@ -77,38 +76,59 @@
     </div>
 
     <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">vacuna fiebre amarilla</span>
-
-          {% if message.tags == 'error' %}
+      {% if valor == 3 %}
 
 
-          {% endif %}
-        </div>
-        <div class="card-action">
-          {% if valor == 1 %}
-          <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
-            <p>usted ya solicito un turno </p>
-           </a> </h7>
-         <!-- <p>{{codigo}}</p> -->
+      {% else %}
 
-         {% else %}
-         <h7><a href="/solicitarTurnoFA/">solicitar turno</a> </h7>
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">vacuna fiebre amarilla</span>
 
 
 
 
 
-          {% endif %}
+              {% if valor == 1 %}
+
+              <p>usted ya solicito un turno </p>
+                 {% if p.vac_Amarilla_turno == none %}
+                    <p>turno : no asignado</p>
+                 {% else %}
+                    <p> estado del turno : asignado</p>
+                    <p> fecha : {{p.vac_Amarilla_turno}}
+                 {% endif%}
+
+              {% else %}
+                 <p>usted todavia no solicito un turno   </p>
+                 
+
+
+
+              {% endif %}
+
+
+            </div>
+            <div class="card-action">
+              {% if valor == 2 %}
+                 <h7><a href="/solicitarTurnoFA/">solicitar turno</a> </h7>
+              {% endif %}
+              {% if p.vac_Amarilla_turno == none %}
+
+              <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
+
+               <!-- <h7><a href="//">cancelar solicitud </a> </h7> -->
+             <!-- <p>{{codigo}}</p> -->
+
+             {% else %}
+             <!-- <h7><a href="/solicitarTurnoFA/">solicitar turno</a> </h7> -->
+             <h7><a href="/cancelarTurno/">cancelar Turno </a> </h7>
 
 
 
 
-               <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
 
-             <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
-          <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
+              {% endif %}
 
 
 
@@ -122,14 +142,28 @@
 
 
 
-          <!-- <a href="/solicitarTurnoFA/">solicitar turno</a> -->
-
-        </div>
-      </div>
 
 
+
+
+
+
+
+            </div>
+            </div>
+          <!-- </div>  ########## -->
+
+       {% endif %}
 
     </div>
+
+
+
+
+
+
+
+
 
 
   </div>
@@ -182,6 +216,6 @@ displayLength:2000,
 <i class="fa-solid fa-user-tie"  style=""></i></i>
 <i class="fa-solid fa-user" style="color:#FFFFFF; width:25; height:25;"></i></i>
 
-erfef
+
 
       </body>
