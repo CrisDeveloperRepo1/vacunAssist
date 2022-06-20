@@ -107,8 +107,15 @@
                   <div>
 
                 <div class="form-group">
-                  <button type="submit" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
-
+                  <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
+                  <div class="popup" id="popup">
+                    <img src="{% static 'imagenes/tick.png' %}">
+                    <h2> Registro Exitoso </h2>
+                    <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
+                    <h5> Codigo Único: {{codigo}} </h5>
+                    <p> Gracias por utilizar nuestro sistema de turnos </p>
+                    <button type="submit" onclick="closePopup()"> Ok </button>
+                  </div>
                 </div>
 
               </div>
@@ -123,36 +130,7 @@
 </div>
 
 
-{% if messages %}
- {% for message in messages %}
- <!-- {% if message.tags == 'success' %}
- <script type = "text/javascript">
- M.toast({html: '{{message}}',
- classes: 'green rounded',
- displayLength:2000,
-})
 
-</script>
-{% endif %} -->
-
-{% if message.tags == 'error' %}
-
-<div class="popup" id="popup">
-  <img src="{% static 'imagenes/tick.png' %}">
-  <h2> Registro Exitoso </h2>
-  <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
-  <h5> Codigo Único: {{codigo}} </h5>
-  <p> Gracias por utilizar nuestro sistema de turnos </p>
-  <button type="button" onclick="closePopup()"> Ok </button>
-</div>
-
-<!-- <script type = "text/javascript">
-     M.toast({html: 'fdfd',
-     classes: 'red rounded',
-     displayLength:2000,
-     })
-
-</script> -->
 <script>
  let popup = document.getElementById("popup")
 
@@ -164,33 +142,6 @@
  }
 </script>
 
- <!-- <script type = "text/javascript">
-      M.toast({html: '{{message}}',
-      classes: 'green rounded',
-      displayLength:2000,
-      })
-
-</script> -->
-<!-- <p> su contraseña {{codigo}}</p> -->
-{% endif %}
-
-
-
-
-
-<!-- <script type = "text/javascript">
-M.toast({html: '{{message}}',
-classes: 'red rounded',
-displayLength:2000,
-})
-
-</script> -->
-
-{% endfor %}
-
-
-
-{% endif %}
 
 <script src="{% static 'js/noback.js' %}"></script>
 <script src="{% static 'js/noBack.js' %}"></script>

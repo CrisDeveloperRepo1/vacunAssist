@@ -134,18 +134,18 @@ input {
           <label for="información"> vacuna del covid 1era dosis</label><br>
           <input type="checkbox" name="vac_covid" value="covid1" checked>
           <label for="información"> vacuna del covid 2da dosis </label><br> -->
-          <button  type="submit" class="btn" onclick="openPopup()" > Registrar Vacunador </button>
-
+          <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button>
+          <div class="popup" id="popup">
+            <img src="{% static 'imagenes/tick.png' %}">
+            <h2> Registro Exitoso </h2>
+            <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
+            <h5> Codigo Único: {{codigo}} </h5>
+            <p> Gracias por utilizar nuestro sistema de turnos </p>
+            <button type="submit" onclick="closePopup()"> Ok </button>
+          </div>
    </fieldset>
   </form>
-  <div class="popup" id="popup">
-    <img src="{% static 'imagenes/tick.png' %}">
-    <h2> Registro Exitoso </h2>
-    <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
-    <h5> Codigo Único: {{codigo}} </h5>
-    <p> Gracias por utilizar nuestro sistema de turnos </p>
-    <button type="button" onclick="closePopup()"> Ok </button>
-  </div>
+
   <script> 
     let popup = document.getElementById("popup")
 
