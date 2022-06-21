@@ -77,8 +77,9 @@ input {
   </div>
 </table>
 <br>
-<form  style="margin: 0 auto;">
+<form  style="margin: 0 auto;" method="POST">
   <fieldset >
+    {% csrf_token %}
     <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
      <div class="row">
       <form class="col s6">
@@ -110,7 +111,7 @@ input {
         <div class="row">
           <div class="input-field col s6">
 
-            <select class="browser-default"   name="vacunatorio">
+            <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
               <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
               <option value="Cementerio Municipal">Cementerio Municipal</option>
               <option value="Terminal de Omnibús">Terminal de Omnibús</option>
@@ -158,5 +159,10 @@ input {
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+  <script src="{% static 'js/noback.js' %}"></script>
+  <script src="{% static 'js/noBack.js' %}"></script>
+  <script src="{% static 'js/noback.js' %}"></script>
+  <script src="{% static 'js/noBack.js' %}"></script>
+  
   </body>
 </html>

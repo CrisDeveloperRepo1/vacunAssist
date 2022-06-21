@@ -40,6 +40,7 @@ import math, random
 from datetime import datetime
 from datetime import datetime
 from datetime import date
+from django.contrib.auth import login, logout, authenticate
 
 # def inicio_admin(request):
 #     # data2= {
@@ -198,9 +199,9 @@ def registroPaciente(request):
 
 
     paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
-    messages.error(request, " PACIENTE REGISTRADO")
+    messages.error(request, " El paciente ya exite")
 
-
+    send_email_registro(codigo, nombre)
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
     ##########send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
@@ -439,7 +440,7 @@ def validarUsuario(request):
 
             except ObjectDoesNotExist:
 
-                    messages.error(request, "  no pertenece a un usuario admin del sistema")
+                    messages.error(request, "  No pertenece a un usuario administrador del sistema")
                     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
 
         except ObjectDoesNotExist:
@@ -454,7 +455,7 @@ def validarUsuario(request):
                     contraseña= one_entry.contraseña
                 except ObjectDoesNotExist:
 
-                    messages.error(request, "  no pertenece a un usuario vacunador del sistema")
+                    messages.error(request, "  No pertenece a un usuario vacunador del sistema")
                     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
 
             except ObjectDoesNotExist:
@@ -476,7 +477,7 @@ def validarUsuario(request):
                    #     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
                 except ObjectDoesNotExist:
                     print('')
-                    messages.error(request, "  no pertenece a un usuario paciente del sistemappppxxx")
+                    messages.error(request, "  No pertenece a un usuario paciente del sistema")
                     return render(request,"main/inicio_de_sesión.html",{"codigo" : 3}) # vuelvo a la pagina
 #####
 
@@ -502,7 +503,7 @@ def validarUsuario(request):
             if  request.GET["pass"] == one_entry.contraseña :
                  return render(request,"main/verif.html")
             else:
-                messages.error(request, " la contraseña es ingresada es invalida")
+                messages.error(request, " DNI o contraseña incorrecta")
                 return render(request,"main/inicio_de_sesión.html")
 
         except ObjectDoesNotExist:
@@ -879,8 +880,9 @@ def eliminar_vacunador(request):
     return render(request,  "main/eliminar_vacunador.html", context)
 
 def cerrar_sesion (request):
-    request.session.flush()
-    messages.success(request, "Tu sesión se cerró correctamente")
+    logout(request)
+    messages.info(request, "Tu sesión se cerró correctamente")
+    return redirect("/") 
 
     return redirect("main/login")
 
@@ -925,7 +927,7 @@ def reset_pass(request):
 
 def send_email_codigo(mail, contraseña, nombre):
     context = {"mail" : mail,
-               "pass" : contraseña,
+               "codigo" : contraseña,
                "nombre" : nombre
                }
     template = get_template("main/correo-reset-codigo.html")
@@ -943,6 +945,7 @@ def send_email_codigo(mail, contraseña, nombre):
 
 
 def reset_codigo(request):
+    codigo=''
     if request.method == "POST":
         dni = request.POST.get("dni")
         mail = request.POST.get("mail")
@@ -1001,9 +1004,8 @@ def reset_codigo(request):
 
 
 
-        #send_email_codigo(mail, contraseña, dni)
+        send_email_codigo(mail, codigo, dni)
         ## revisar
-
 
     return render(request, "main/recuperar-codigo.html", {"codigoq":codigo})
 
@@ -1033,6 +1035,7 @@ def reset_pass(request):
             try:
                 usuario= Administrador.objects.get(administrador_dni = request.POST.get("dni"))
                 email= usuario.administrador_email
+                dni = usuario.administrador_dni
                 ## si los mails no coinciden , se recarga la pagina y se informa la razon
                 if (mail != email):
                     messages.error(request, "el mail ingresado no pertenece a un usuario Administrador")
@@ -1043,6 +1046,7 @@ def reset_pass(request):
                 try:
                     usuario= Vacunador.objects.get(vacunador_dni = request.POST.get("dni"))
                     email= usuario.vacunador_email
+                    dni = usuario.vacunador_dni
                     if (mail != email):
                         messages.error(request, "el mail ingresado no pertenece a un usuario Vacunador")
                         return render(request, "main/recuperar-contraseña.html")
@@ -1051,6 +1055,7 @@ def reset_pass(request):
                     try:
                         usuario= Paciente.objects.get(paciente_dni = request.POST.get("dni"))
                         email= usuario.paciente_email
+                        dni = usuario.paciente_dni
                         if (mail != email):
                             messages.error(request, "el mail ingresado no pertenece a un usuario Paciente")
                             return render(request, "main/recuperar-contraseña.html")
@@ -1081,7 +1086,7 @@ def reset_pass(request):
 
         # actualizo la contraseña
 
-        #send_email(mail, contraseña)
+        send_email_pass(email, contraseña, dni)
         # revisar
 
     return render(request, "main/recuperar-contraseña.html", {})
