@@ -133,3 +133,12 @@ class Envio_de_correo (models.Model):
 
     def __str__(self):
         return self.name
+    
+class Dni (models.Model):
+    num_dni= models.CharField(max_length=200)
+    nombre= models.CharField(max_length=200)
+    apellido= models.CharField(max_length=20)
+    
+    def __str__(self):
+       return self.num_dni
+    

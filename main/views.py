@@ -1090,3 +1090,7 @@ def reset_pass(request):
         # revisar
 
     return render(request, "main/recuperar-contraseña.html", {})
+
+def validarDni(request):
+    
+    return render(request, "main/validar-dni.html")

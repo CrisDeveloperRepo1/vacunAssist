@@ -26,6 +26,7 @@ urlpatterns = [
     path('login/', views.main, name= 'main' ),
     path('registrarPaciente/', views.registrarPaciente, name= 'registrarPaciente' ),
     path('registroPaciente/', views.registroPaciente, name= 'registroPaciente' ),
+    path('validarDni/', views.validarDni, name= 'validarDni' ),
 
     path('AsignarTurno/', views.AsignarTurno, name= 'AsignarTurno' ),
 
