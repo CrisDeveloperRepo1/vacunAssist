@@ -921,9 +921,8 @@ def eliminar_vacunador(request):
     return render(request,  "main/eliminar_vacunador.html", context)
 
 def cerrar_sesion (request):
-    logout(request)
     messages.info(request, "Tu sesión se cerró correctamente")
-    return redirect("/")
+    return (request, "main/main.html")
 
     return redirect("main/login")
 
