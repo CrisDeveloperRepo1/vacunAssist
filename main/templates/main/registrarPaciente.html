@@ -49,9 +49,14 @@
                 </div>
 
                 <div class="form-group">
-                  <input type="text" id="zona" name="zona" clas="form-control" placeholder="Zona"  maxlength="50" required>
+                  <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
+                    <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
+                    <option value="Cementerio Municipal">Cementerio Municipal</option>
+                    <option value="Terminal de Omnibús">Terminal de Omnibús</option>
+                    <option value="Municipalidad">Municipalidad</option>
+                  </select>
                 </div>
-
+                <br>
                 <div class="form-group">
                    <input type="int" id="dni" name="dni" clas="form-control" placeholder="DNI"  minlength="8" maxlength="8" required>
                 </div>

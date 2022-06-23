@@ -189,12 +189,13 @@ def inicioPaciente(request):
 def registrarPaciente(request):
     return render(request, "main/registrarPaciente.html")
 def registroPaciente(request):
+    print(request.method)
     nombre=request.POST['nombre']
     apellido=request.POST['apellido']
     fecha=request.POST['fechaesperada']
     dni=request.POST['dni']
     email=request.POST['email']
-    zona=request.POST['zona']
+    zona=request.POST['vacunatorio']
     Contraseña=request.POST['Contraseña']
     inicio = datetime(2022, 6, 30)
     final =  datetime(2022, 9, 28)
@@ -228,7 +229,7 @@ def registroPaciente(request):
     paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
     messages.error(request, " El paciente ya exite")
 
-    send_email_registro(codigo, nombre)
+    send_email_registro(email, codigo, dni, nombre)
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
     ##########send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
@@ -824,9 +825,10 @@ def reg_vac(request):
      #       login(request, user)
      #       return redirect(to="login")
 
-    form= vacunador_signUpForm(request.POST or None)
-
+    form= VacunadorRegistro(request.POST or None)
+    print(request.method)
     if form.is_valid():
+        print("entró al if ")
         instance = form.save()
         if Vacunador.objects.filter(dni= instance.vacunador_dni).exists():
             messages.Warning(request, "El DNI ya existe")
