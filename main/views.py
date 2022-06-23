@@ -151,6 +151,8 @@ def inicioPaciente(request):
                 # email= models.EmailField(max_length=254
 
         except ObjectDoesNotExist:
+            
+
             return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
 ###############################################
     # f='f'
@@ -217,11 +219,23 @@ def AsignarTurno (request):
     ListSolicitud= SolicitudTurnoFA.objects.all()
     fecha = request.POST['fechaesperada']
     DNI =request.POST['dni']
-    #one_entry=Paciente.objects.get(paciente_dni=request.POST['dni'])
-    # Email=one_entry.paciente_email
-    # one_entry.vac_Amarilla_turno=fecha
-    # one_entry.save()
-    # Turno=TurnoFAAprobados.objects.create(dni=DNI,numId=0,email=Email)
+    one_entry=Paciente.objects.get(paciente_dni=request.POST['dni'])
+    #l=Logeado.objects.get(numId=3)
+    #l.usuarioLogeado=DNI
+    #print(DNI)
+    #l.save()
+
+    #one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+    Email=one_entry.paciente_email
+    one_entry.vac_Amarilla_turno=fecha
+    one_entry.save()
+    ############ se guarda en turnos aprobados ######################
+    Turno=TurnoFAAprobados.objects.create(dni=DNI,numId=0,email=Email)
+    ##### se elimina  la solicitud de la tabla de solicitud de turnos #############
+    solicitud=SolicitudTurnoFA.objects.get(dni=DNI)
+    solicitud.delete()
+
+
     return render(request, "main/evaluarTurnos.html",{"turnos":ListSolicitud,"asignacionDNI":DNI})
 
 ############## elimar solicitud de vacuna fiebre amarilla
@@ -882,7 +896,7 @@ def eliminar_vacunador(request):
 def cerrar_sesion (request):
     logout(request)
     messages.info(request, "Tu sesión se cerró correctamente")
-    return redirect("/") 
+    return redirect("/")
 
     return redirect("main/login")
 
@@ -1092,5 +1106,5 @@ def reset_pass(request):
     return render(request, "main/recuperar-contraseña.html", {})
 
 def validarDni(request):
-    
+
     return render(request, "main/validar-dni.html")

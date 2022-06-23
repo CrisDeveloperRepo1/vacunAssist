@@ -100,8 +100,15 @@
                  {% endif%}
 
               {% else %}
-                 <p>Usted todavía no solicitó un turno   </p>
-                 
+                {% if p.vac_Amarilla_turno != none %}
+                <p> Estado del turno : asignado</p>
+                <p> Fecha : {{p.vac_Amarilla_turno}}
+
+                {% else %}
+                   <p>Usted todavía no solicitó un turno   </p>
+                {% endif%}
+
+
 
 
 
@@ -111,21 +118,12 @@
             </div>
             <div class="card-action">
               {% if valor == 2 %}
-                 <h7><a href="/solicitarTurnoFA/">Solicitar turno</a> </h7>
-              {% endif %}
-              {% if p.vac_Amarilla_turno == none %}
+                {% if p.vac_Amarilla_turno != none %}
+                   <h7><a href="/cancelarTurno/">Cancelar turno </a> </h7>
+                {% else %}
+                   <h7><a href="/solicitarTurnoFA/">Solicitar turno</a> </h7>
 
-              <!-- <h7>¿Sos Nuevo? <a href='/registrarPaciente/'><input type='button' value='Registrarse'> -->
-
-               <!-- <h7><a href="//">cancelar solicitud </a> </h7> -->
-             <!-- <p>{{codigo}}</p> -->
-
-             {% else %}
-             <!-- <h7><a href="/solicitarTurnoFA/">solicitar turno</a> </h7> -->
-             <h7><a href="/cancelarTurno/">Cancelar turno </a> </h7>
-
-
-
+                {% endif %}
 
 
               {% endif %}
