@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
 
 
-    
+
     <!-- bgcolor="#8bc34a" -->
 
     <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
@@ -73,11 +73,12 @@ input {
 
   <!-- bgcolor="#8bc34a" -->
   <body bgcolor="FFFFFF" >
-  
+
   </div>
 </table>
 <br>
-<form  style="margin: 0 auto;" method="POST">
+<!-- <form  action="/registroPaciente/" method="post">{% csrf_token %} -->
+<form  action="/registrarVacunador/" method="post">
   <fieldset >
     {% csrf_token %}
     <legend style="color:white; padding: 10px 15px">Nuevo Vacunador</legend>
@@ -99,7 +100,7 @@ input {
             <label >Email</label>
           </div>
           <div class="input-field col s6">
-            <input placeholder="DNI" id="dni" type="text" class="validate" name="dni">
+            <input placeholder="DNI" id="dni" type="int" class="validate" name="dni">
             <label for="dni">DNI</label>
           </div>
         </div>
@@ -111,7 +112,7 @@ input {
         <div class="row">
           <div class="input-field col s6">
 
-            <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
+            <select type="text" id= "vacunatorio" class="browser-default"   name="vacunatorio">
               <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
               <option value="Cementerio Municipal">Cementerio Municipal</option>
               <option value="Terminal de Omnibús">Terminal de Omnibús</option>
@@ -121,7 +122,8 @@ input {
        </div>
        <div class="row">
         <div class="input-field col s6">
-         <input placeholder="Contraseña" id="pasword" type="password" class="validate" name="contraseña">
+          <input placeholder="Contraseña" id="contraseña" type="text" class="validate" name="contraseña">
+         <!-- <input placeholder="Contraseña" id="contraseña" type="text" class="validate" name="pasword"> -->
          <label for="dni">Contraseña</label>
         </div>
       </div>
@@ -135,7 +137,8 @@ input {
           <label for="información"> vacuna del covid 1era dosis</label><br>
           <input type="checkbox" name="vac_covid" value="covid1" checked>
           <label for="información"> vacuna del covid 2da dosis </label><br> -->
-          <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button>
+          <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrar Vacunador </button>
+          <!-- <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button> -->
           <div class="popup" id="popup">
             <img src="{% static 'imagenes/tick.png' %}">
             <h2> Registro Exitoso </h2>
@@ -147,7 +150,7 @@ input {
    </fieldset>
   </form>
 
-  <script> 
+  <script>
     let popup = document.getElementById("popup")
 
     function openPopup() {
@@ -163,6 +166,6 @@ input {
   <script src="{% static 'js/noBack.js' %}"></script>
   <script src="{% static 'js/noback.js' %}"></script>
   <script src="{% static 'js/noBack.js' %}"></script>
-  
+
   </body>
 </html>

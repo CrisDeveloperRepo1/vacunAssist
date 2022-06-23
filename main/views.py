@@ -77,6 +77,31 @@ from django.contrib.auth import login, logout, authenticate
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+def registrarVacunador (request):
+    admin=Administrador.objects.get(administrador_dni=12345678)
+    #nombre=request.POST['nombre']
+    apellido=request.POST['apellido']
+    # admin.administrador_apellido=request.POST['apellido']
+    # admin.save()
+
+    nombre=request.POST['nombre']
+    fechaNac=request.POST['birthday']
+    zona=request.POST['vacunatorio']
+    dni=request.POST['dni']
+    email=request.POST['email']
+    Contraseña=request.POST['contraseña']
+    digitos = '0123456789'
+    longitud = 4  # La longitud que queremos
+    Codigo = ''.join(choice(digitos) for digito in range(longitud))
+    #codigo=request.POST['dni']
+
+#### agregar metodo q devuelva el ultimo objeto de la tabla
+    vacunador=Vacunador.objects.create(vacunador_nombre=nombre,vacunador_apellido=apellido,vacunador_fechaNac=fechaNac,vacunador_zona=zona,vacunador_dni=dni,vacunador_email=email,codigo=Codigo,contraseña=Contraseña)
+
+
+    return render(request,"main/registro_vacunador.html")
+
+
 
 def cancelarTurno (request):
 #### agregar metodo q devuelva el ultimo objeto de la tabla
@@ -151,7 +176,7 @@ def inicioPaciente(request):
                 # email= models.EmailField(max_length=254
 
         except ObjectDoesNotExist:
-            
+
 
             return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
 ###############################################
