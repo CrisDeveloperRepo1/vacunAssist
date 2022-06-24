@@ -26,7 +26,7 @@ from django.conf import settings
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA,Logeado,TurnoFAAprobados
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA,Logeado,TurnoFAAprobados,Dni
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -1195,6 +1195,39 @@ def reset_pass(request):
         # revisar
 
     return render(request, "main/recuperar-contraseña.html", {})
+
+
+
+def verficacionDni(request):
+    #r=request.POST.get('dni')
+    #request.POST.get("dni")
+    #
+
+    #ListSolicitud= Dni.objects.all()
+    #admin=Administrador.objects.get(administrador_dni=request.GET["dni"])
+
+
+
+
+    try:
+        ### agregar un if para q vea el tipo si es num o int
+        datosDni=Dni.objects.get(num_dni=request.GET["dni"])
+        #messages.error(request, "")
+        return render(request, "main/registrarPaciente.html")
+    except ObjectDoesNotExist:
+        messages.error(request, "el dni no es valido")
+        return render(request, "main/validar-dni.html")
+
+
+        # if (int(num_dni=request.GET["dni"])):
+        #     return render(request, "main/registrarPaciente.html")
+        # else:
+        #
+        #     messages.error(request, "el dni no es valido")
+        #     return render(request, "main/validar-dni.html")
+
+
+
 
 def validarDni(request):
 

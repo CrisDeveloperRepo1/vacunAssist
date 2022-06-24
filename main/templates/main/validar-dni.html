@@ -53,6 +53,7 @@
 
   </head>
 
+
   <!-- bgcolor="#8bc34a" -->
   <body bgcolor="FFFFFF" >
 
@@ -70,15 +71,62 @@
          <hr>
        <div class="center"
        style="background:#BCBCBC; margin: 10px 100px">
-       <form name='formulario' method='post' style='text-align:center'>
+       <form name='formulario' action ="/verficacionDni/" method='GET' style='text-align:center'>
+       <!-- <form name='formulario'  method='post' style='text-align:center'> -->
          <!-- Campo de entrada de usuario -->
          <font face='Verdana'><h6><strong>DNI</strong></h6></font>
-          <input type='tel'name='dni' placeholder='12345678' Required style="background-color:white; " />
+
+          <input type='int' placeholder="1234" name='dni' id='dni' style="background-color:white;" />
+          <h6><input type='submit' value='Verificar'/></h6>
          <!-- Botón de envío del formulario -->
-          <a href='/registrarPaciente/'>
+          <!-- <a href='/verficacionDni/'>
            <h6><input type='button' value='Validar'></h6>
-          </a>
+          </a> -->
        </form> </div>
    </div>
+   {% if messages %}
+     {% for message in messages %}
+     <!-- {% if message.tags == 'success' %}
+     <script type = "text/javascript">
+     M.toast({html: '{{message}}',
+     classes: 'green rounded',
+     displayLength:2000,
+   })
+
+ </script>
+ {% endif %} -->
+
+   {% if message.tags == 'error' %}
+     <script type = "text/javascript">
+          M.toast({html: '{{message}}',
+          classes: 'red rounded',
+          displayLength:2000,
+          })
+
+    </script>
+ {% endif %}
+
+
+
+<!-- <script type = "text/javascript">
+M.toast({html: '{{message}}',
+classes: 'red rounded',
+displayLength:2000,
+})
+
+</script> -->
+
+    {% endfor %}
+
+
+
+{% endif %}
+   <!-- <script type = "text/javascript">
+       M.toast({html: 'fgf',
+       classes: 'red rounded',
+       displayLength:2000,
+     })
+
+  </script> -->
  </body>
 </html>

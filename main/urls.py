@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView,PasswordResetDoneView
 from django.urls import path, re_path, include, reverse_lazy
-from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock
+from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,verficacionDni,Dni
 
 
 app_name= 'main'
@@ -30,6 +30,8 @@ urlpatterns = [
     path('registrarPaciente/', views.registrarPaciente, name= 'registrarPaciente' ),
     path('registroPaciente/', views.registroPaciente, name= 'registroPaciente' ),
     path('validarDni/', views.validarDni, name= 'validarDni' ),
+
+    path('verficacionDni/', views.verficacionDni, name= 'verficacionDni' ),
 
     path('AsignarTurno/', views.AsignarTurno, name= 'AsignarTurno' ),
 
