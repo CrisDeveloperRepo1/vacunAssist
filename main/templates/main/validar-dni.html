@@ -44,6 +44,7 @@
               <!-- <li><a href="sass.html">inicio</a></li>
               <li><a href="badges.html">registro</a></li> -->
               <!-- <li><a href="collapsible.html">entrar</a></li> -->
+              <li><a href="/login/">  Volver </a></li>
             </ul>
           </div>
         </div>
@@ -71,6 +72,7 @@
          <hr>
        <div class="center"
        style="background:#BCBCBC; margin: 10px 100px">
+<<<<<<< HEAD
        <form name='formulario' action ="/verficacionDni/" method='GET' style='text-align:center'>
        <!-- <form name='formulario'  method='post' style='text-align:center'> -->
          <!-- Campo de entrada de usuario -->
@@ -128,5 +130,30 @@ displayLength:2000,
      })
 
   </script> -->
+=======
+       <form  action="/registrarPaciente/"name='formulario' method='get' style='text-align:center'>
+        {% csrf_token %}  
+        <!-- Campo de entrada de usuario -->
+         <font face='Verdana'><h6><strong>DNI</strong></h6></font>
+          <input type='tel'name='dni' id="dni" placeholder='12345678' Required style="background-color:white; " />
+         <!-- Botón de envío del formulario -->
+         <a action ="registrarPaciente/">
+          <h6><input type='submit' value='Validar'></h6>   </a>     
+          </a>
+       </form> </div>
+   </div>
+   {% if messages %}
+   {% for message in messages %}
+       {% if message.tags == 'error' %}
+         <script type = "text/javascript">
+              M.toast({html: '{{message}}',
+              classes: 'red rounded',
+              displayLength:2000,
+              })
+             </script>
+         {% endif%}
+   {% endfor%}
+   {% endif%}
+>>>>>>> eaf9b80de18838a8802a80dde5f6d0a0bb3fa0e0
  </body>
 </html>

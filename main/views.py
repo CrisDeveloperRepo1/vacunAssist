@@ -9,7 +9,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 #from matplotlib.style import context
-from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio, Dni
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
 from django.conf import settings
@@ -189,7 +189,6 @@ def inicioPaciente(request):
 def registrarPaciente(request):
     return render(request, "main/registrarPaciente.html")
 def registroPaciente(request):
-    print(request.method)
     nombre=request.POST['nombre']
     apellido=request.POST['apellido']
     fecha=request.POST['fechaesperada']
@@ -227,7 +226,7 @@ def registroPaciente(request):
 
 
     paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
-    messages.error(request, " El paciente ya exite")
+    #messages.error(request, " El paciente ya exite")
 
     send_email_registro(email, codigo, dni, nombre)
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
@@ -1230,5 +1229,14 @@ def verficacionDni(request):
 
 
 def validarDni(request):
-
-    return render(request, "main/validar-dni.html")
+    if (request.method == "GET"):
+        dni= request.GET.get("dni")
+        try:
+            one = Dni.objects.get(num_dni = dni)
+            print(one.num_dni)
+            if int(one.num_dni) == dni:
+                print("entra al if")
+                messages.error(request, "Dni inválido")
+                return render(request, "main/validar-dni.html")
+        except ObjectDoesNotExist:
+                return render(request, "main/validar-dni.html")
