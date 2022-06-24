@@ -116,6 +116,14 @@ def cancelarTurno (request):
 def evaluarTurno(request):
     ListSolicitud= SolicitudTurnoFA.objects.all()
 
+    if (ListSolicitud.exists()):
+        print('')
+
+    else:
+        messages.error(request, " no hay solicitudes de turno en el listado")
+
+    #return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
+
     return render(request,"main/evaluarTurnos.html",{"turnos":ListSolicitud})
 
 ########## SOLICITUD DE TURNO DE FIEBRE AMARILLA ###############################################################
@@ -482,7 +490,7 @@ def inicio_admin(request):
     #         formulario.save()
     #administradorList= Administrador.objects.all()
 
-    vacunadorList= Vacunador.objects.all()
+    PacienteList= Paciente.objects.all()
 
 
     # vacunadores = Vacunador.objects.all()
@@ -508,10 +516,10 @@ def inicio_admin(request):
     # }
     ##return redirect('register', data2)
     ##return redirect('main/registro_Admin.html')
-    return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+    return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList,"paciente":PacienteList})
     #return render(request,'main/registro_Admin.html')
 
-    return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList})
+    return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList,"paciente":PacienteList})
 
 
     #return render(request, "main/inicio_admin.html")
@@ -681,10 +689,15 @@ def compararCodigo(request):
                                     one=Logeado.objects.get(numId=1)
                                     one_entry = Administrador.objects.get(administrador_dni=one.usuarioLogeado)
                                     if  int(request.GET["pass"]) == one_entry.codigo :
+                                        PacienteList= Paciente.objects.all()
+                                        administradorList= Administrador.objects.all()
+
+                                        vacunadorList= Vacunador.objects.all()
+                                        return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList,"paciente":PacienteList})
 
                                     #mensaje= request.GET["pass"]
 
-                                        return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+                                        #return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
                                     else:
 
                                         messages.error(request, "codigo invalido")

@@ -129,8 +129,8 @@
         <td><a href="/evaluarTurno/" class="btn btn-primary btn-lg btn-danger">Evaluar Turnos</a></td>
         <th colspan="2"> </th><td><a href="/sumarTotales/" class="btn btn-primary btn-lg btn-danger">Ver Stock</a></td>
         <th colspan="2"> </th><td><a href="/editarStockVacunatorio/" class="btn btn-primary btn-lg btn-danger"> Actualizar Stock</a></td>
-        <th colspan="2"> </th><td><a href="/eliminarVacunador/" class="btn btn-primary btn-lg btn-danger"> Eliminar Vacunador </a></td> 
-        <th colspan="2"> </th><td><a href="/registroVacunador/" class="btn btn-primary btn-lg btn-danger"> Nuevo Vacunador </a></td> 
+        <th colspan="2"> </th><td><a href="/eliminarVacunador/" class="btn btn-primary btn-lg btn-danger"> Eliminar Vacunador </a></td>
+        <th colspan="2"> </th><td><a href="/registroVacunador/" class="btn btn-primary btn-lg btn-danger"> Nuevo Vacunador </a></td>
 
       </div>
     </div>
@@ -208,6 +208,45 @@
 
 
         </table>
+
+        <br>
+          <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+            <caption >
+              <div class="left"><h6> Pacientes </h6></div>
+
+              <!-- <div class="right">
+                <label for="filt_admin">Filtrar por:</label>
+                <select name="filt_admin" id="filt_admin">
+                  <option value="Nombre">Nombre</option>
+                  <option value="Apellido">Apellido</option>
+                  <option value="dni">dni</option>
+                </select>
+              </div> -->
+            </caption>
+            <tr style="background-color:#86D03A">
+                <th>Apellido </th>
+                <th>Nombre</th>
+                <th>DNI</th>
+            </tr>
+            <div class="administradores">
+              {% for a in paciente %}
+              <div class="Administrador">
+                <tr style="background-color:#CBCBCB, #B0B0B0">
+                  <td>{{a.paciente_apellido}} </td>
+                  <td> {{a.paciente_nombre}}</td>
+                  <td>{{a.paciente_dni}}</td>
+               </tr>
+              </div>
+              {% endfor %}
+
+
+            </div>
+
+
+
+          </table>
+
+
         <div class="">
 
 
