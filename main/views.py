@@ -280,6 +280,13 @@ def eliminar_Admin(request,id,nombre):
     admin.delete()
     #return render(request,'main/eliminarVacunador.html')
     administradorList= Vacunador.objects.all()
+
+    if (administradorList.exists()):
+        print('')
+
+    else:
+        messages.error(request, " no hay vacunadores en el listado")
+
     return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
 
 def register(request,data2):
@@ -384,15 +391,73 @@ def login1(request):
     return render(request, "main/inicio_de_sesión.html")
 
 def editarStockVacunatorio(request):
-    administradorList= Vacunatorio.objects.all()
-    VacunaFiebreAm= Vacuna_Fiebre_Am.objects.all()
-    VacunaCovid=Vacuna_Covid.objects.all()
+
+    # administradorList= Vacunatorio.objects.all()
+    # VacunaFiebreAm= Vacuna_Fiebre_Am.objects.all()
+    # VacunaCovid=Vacuna_Covid.objects.all()
+    #one_entry = Logeado.objects.get(numId=2)
+    vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+    vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+    # Cementerio Municipal
+    # Municipalidad
+    # Terminal de Omnibús
 
 
-    return render(request, "main/editarStockVacunatorio.html",{"administradores" : administradorList,"vacunafa" : VacunaFiebreAm, "vacunaC" : VacunaCovid})
+    return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
+def accionDeEdicionStock(request):
+    # vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+    # vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+    # vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+    admin=Administrador.objects.get(administrador_dni="12345678")
+    admin.administrador_nombre=request.POST['origen']
+    admin.save()
+    # origen=Vacunatorio.objects.get(vacunatorio_zona=request.POST['origen'])
+    # destino=Vacunatorio.objects.get(vacunatorio_zona=request.POST['destino'])
+    # try:
+    #     #nombre=request.POST['origen']
+    #     origen=Vacunatorio.objects.get(vacunatorio_zona=request.POST['origen'])
+    #     destino=Vacunatorio.objects.get(vacunatorio_zona=request.POST['destino'])
+    #     msj="funciona tarado"
+    # except ObjectDoesNotExist:
+    #     render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
+    # if(request.POST['vacuna'] =="stock_vac_fa" ):
+    #     origen.stock_vac_fa=origen.stock_vac_fa-request.POST['cantidad']
+    #     origen.save()
+    #     destino.stock_vac_fa=destino.stock_vac_fa+request.POST['cantidad']
+    #     destino.save()
+        # stock_vac_fa=models.IntegerField()
+        # stock_vac_covid=models.IntegerField()
+        # stock_vac_gripe
+
+    # elif(request.POST['vacuna'] =="stock_vac_covid"):
+    #
+    #     origen.stock_vac_covid=origen.stock_vac_covid-request.POST['cantidad']
+    #     origen.save()
+    #     destino.stock_vac_covid=destino.stock_vac_covid+request.POST['cantidad']
+    #     destino.save()
+    # else:
+    #
+    #     origen.stock_vac_gripe=origen.stock_vac_gripe-request.POST['cantidad']
+    #     origen.save()
+    #     destino.stock_vac_gripe=destino.stock_vac_gripe+request.POST['cantidad']
+    #     destino.save()
+    #
+    # vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+    # vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+    # vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+    return render(request, "main/editarStockVacunatorio.html")
+
 
 def eliminarVacunador(request):
     administradorList= Vacunador.objects.all()
+
+    if (administradorList.exists()):
+        print('')
+
+    else:
+        messages.error(request, " no hay vacunadores en el listado")
+
     return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
 
     #return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})

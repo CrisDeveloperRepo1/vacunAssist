@@ -30,6 +30,7 @@
 
 
       <body>
+<p>{{m}}</p>
 
 <div class="container py4">
 
@@ -63,8 +64,8 @@
 
            </div>
          </div> -->
-         <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-           <h2>Stock Vacunatorios</h2>
+         <div class="col s12 m6">
+           <h2>Vacunatorio Cementerio</h2>
            <div class="table-responsive py-2">
              <table class="table table-striped">
 
@@ -73,30 +74,31 @@
                <thead>
                  <tr>
                   <th>#</th>
-                   <th>Zona de vacunatorio</th>
+
                    <th>Stock vacunas FA </th>
                    <th>Stock acunas Covid</th>
                    <th>Stock vacunas Grip</th>
-                   <th colspan="2">Opciones</th>
+                   <th colspan="2"></th>
 
                  </tr>
                </thead>
                <tbody>
-                 {% for c in administradores %}
-                 <tr>
+
+
+
                    <td>{{forloop.counter}}</td>
-                   <td>{{c.vacunatorio_zona}} </td>
-                   <td> {{c.stock_vac_fa}}</td>
+
+                   <td> {{vacunatorioC.stock_vac_fa}}</td>
                    <!-- <td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
-                   <td>{{c.stock_vac_covid}}
+                   <td>{{vacunatorioC.stock_vac_covid}}
                    <!-- </td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
-                   <td>{{c.stock_vac_gripe}}</td>
-                   <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td>
+                   <td>{{vacunatorioC.stock_vac_gripe}}</td>
+
                    <!-- <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td> -->
 
 
                  </tr>
-                 {% endfor%}
+
 
                </tbody>
 
@@ -107,129 +109,152 @@
            </div>
 
          </div>
+         <div class="col s12 m6">
+           <h2>Vacunatorio Municipalidad</h2>
+           <div class="table-responsive py-2">
+             <table class="table table-striped">
 
 
+
+               <thead>
+                 <tr>
+                  <th>#</th>
+
+                   <th>Stock vacunas FA </th>
+                   <th>Stock acunas Covid</th>
+                   <th>Stock vacunas Grip</th>
+                   <th colspan="2"></th>
+
+                 </tr>
+               </thead>
+               <tbody>
+
+
+
+                   <td>{{forloop.counter}}</td>
+
+                   <td> {{vacunatorioMuni.stock_vac_fa}}</td>
+                   <!-- <td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
+                   <td>{{vacunatorioMuni.stock_vac_covid}}
+                   <!-- </td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
+                   <td>{{vacunatorioMuni.stock_vac_gripe}}</td>
+
+                   <!-- <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td> -->
+
+
+                 </tr>
+
+
+               </tbody>
+
+             </table>
+
+
+
+           </div>
+
+         </div>
+         <div class="col s12 m6">
+           <h2>Vacunatorio Terminal</h2>
+           <div class="table-responsive py-2">
+             <table class="table table-striped">
+
+
+
+               <thead>
+                 <tr>
+                  <th>#</th>
+
+                   <th>Stock vacunas FA </th>
+                   <th>Stock acunas Covid</th>
+                   <th>Stock vacunas Grip</th>
+                   <th colspan="2"></th>
+
+                 </tr>
+               </thead>
+               <tbody>
+
+
+
+                   <td>{{forloop.counter}}</td>
+
+                   <td> {{vacunatorioTerm.stock_vac_fa}}</td>
+                   <!-- <td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
+                   <td>{{vacunatorioTerm.stock_vac_covid}}
+                   <!-- </td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
+                   <td>{{vacunatorioTerm.stock_vac_gripe}}</td>
+
+                   <!-- <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td> -->
+
+
+                 </tr>
+
+
+               </tbody>
+
+             </table>
+
+
+
+           </div>
+
+         </div>
     </div>
 
  </div>
 
+<div class="center">
 
 
-
-<!--
-    class Vacunatorio(models.Model):
-        administrador_nombre= models.CharField(max_length=100)
-        vacunatorio_zona= models.CharField(max_length=100)
-        stock_vac_fa=models.IntegerField()
-        stock_vac_covid=models.IntegerField()
-        stock_vac_gripe=models.IntegerField() -->
+   <div class="container py4">
 
 
-        <div class="container py4">
+       <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+              <h2>Gestion </h2>
+              <div class="card">
+                <div class="card-body">
+                  <form  action="/accionDeEdicionStock/" method="post">{% csrf_token %}
 
 
-            <div class="row">
-                 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                   <h2>Gestion </h2>
-                   <div class="card">
-                     <div class="card-body">
-                       <form class="" action="" method="post">
-                         <div class="form-group">
-                           <input type="text" id="txCodigo" name="txCodigo" clas="form-control" placeholder="Zona" minlength="6" maxlength="6" required>
+                    <div class="row">
+                      <div class="input-field col s6">
 
-                         </div>
-                         <div class="form-group">
-                           <input type="text" id="txNombre" name="txNombre" clas="form-control" placeholder="Stock"  maxlength="50" required>
-
-                         </div>
-                         <div class="form-group">
-                           <input type="text" id="numCreditos" name="numCreditos" clas="form-control" min="1" max="9" value="1" required>
-
-                         </div>
-                         <div class="form-group">
-                           <button type="submit" class="btn btn-success btn-block text-white" > Guardar</button>
-
-                         </div>
-
-                       </form>
-
-                     </div>
-
-                   </div>
-                 </div>
-                 <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-                   <h2>Stock Vacunas</h2>
-                   <div class="table-responsive py-2">
-                     <table class="table table-striped">
-
-
-
-                       <thead>
-                         <tr>
-                           <th>#</th>
-                           <th> vacuna </th>
-                           <th>stock vacunas </th>
-
-                           <th colspan="2">opciones</th>
-
-                         </tr>
-                       </thead>
-                       <tbody>
-                         <!-- {% for a in vacunafa %} -->
-                         <tr>
-
-                           <td>{{forloop.counter}}</td>
-
-                           <td> {{a.vac_fa_nombre}}</td>
-                           <td> {{a.stock_vac_fa}}</td>
-
-                           <td><a href="edicionVacunadores/{{a.vac_fa_nombre}}" class="btn btn-block btn-info">Editar</a></td>
-                           <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td>
-
-                          <!-- {% endfor%} -->
-                         </tr>
-                         <tr>
-
-                           <td>{{forloop.counter}}</td>
-                          <!-- {% for t in vacunaC %} -->
-                           <td> {{t.vac_covid_nombre}}</td>
-                           <td> {{t.stock_vac_covid_1era}}</td>
-
-
-                           <td><a href="edicionVacunadores/{{t.vac_covid_nombre}}" class="btn btn-block btn-info">Editar</a></td>
-                           <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td>
-
-
-                         </tr>
-                         <!-- {% endfor%} -->
-
-                       </tbody>
-
-                     </table>
-
-
-
+                        <select type="text" id= "vacunatorio" class="browser-default"   name="vacunatorio">
+                          <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
+                          <option value="Cementerio Municipal">Cementerio Municipal</option>
+                          <option value="Terminal de Omnibús">Terminal de Omnibus</option>
+                          <option value="Municipalidad">Municipalidad</option>
+                        </select>
+                       </div>
                    </div>
 
-                 </div>
+
+                    <div class="form-group">
+                      <input type="number" id="cantidad" value="0" min="0" max="100"  required>
+
+                    </div>
+                    <!-- <div class="form-group">
+                      <input type="text" id="numCreditos" name="numCreditos" clas="form-control" min="1" max="9" value="1" required>
+
+                    </div> -->
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-success btn-block text-white" > Guardar</button>
+                    </div>
 
 
+
+
+                  </form>
+
+
+
+              </div>
             </div>
+  </div>
+  </div>
 
-         </div>
-
-
-
-
-
-      </body>
-
-
- <td>{{vacunaFA.vac_fa_nombre}} </td>
-<!-- class Vacuna_Fiebre_Am(models.Model):
-    vac_fa_nombre= models.CharField(max_length=100)
-    stock_vac_fa=models.IntegerField() -->
-
+</div>
       <body>
 
       </body>
