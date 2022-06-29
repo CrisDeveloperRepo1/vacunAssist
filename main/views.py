@@ -98,7 +98,7 @@ def registrarVacunador (request):
 #### agregar metodo q devuelva el ultimo objeto de la tabla
     vacunador=Vacunador.objects.create(vacunador_nombre=nombre,vacunador_apellido=apellido,vacunador_fechaNac=fechaNac,vacunador_zona=zona,vacunador_dni=dni,vacunador_email=email,codigo=Codigo,contraseña=Contraseña)
 
-
+    send_email_registro(email, Codigo, dni, nombre)
     return render(request,"main/registro_vacunador.html")
 
 
