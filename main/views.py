@@ -413,47 +413,67 @@ def editarStockVacunatorio(request):
 
     return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 def accionDeEdicionStock(request):
-    # vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
-    # vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-    # vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
-    admin=Administrador.objects.get(administrador_dni="12345678")
-    admin.administrador_nombre=request.POST['origen']
-    admin.save()
-    # origen=Vacunatorio.objects.get(vacunatorio_zona=request.POST['origen'])
-    # destino=Vacunatorio.objects.get(vacunatorio_zona=request.POST['destino'])
-    # try:
-    #     #nombre=request.POST['origen']
-    #     origen=Vacunatorio.objects.get(vacunatorio_zona=request.POST['origen'])
-    #     destino=Vacunatorio.objects.get(vacunatorio_zona=request.POST['destino'])
-    #     msj="funciona tarado"
-    # except ObjectDoesNotExist:
-    #     render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
-    # if(request.POST['vacuna'] =="stock_vac_fa" ):
-    #     origen.stock_vac_fa=origen.stock_vac_fa-request.POST['cantidad']
-    #     origen.save()
-    #     destino.stock_vac_fa=destino.stock_vac_fa+request.POST['cantidad']
-    #     destino.save()
+
+    origen=Vacunatorio.objects.get(vacunatorio_zona=request.POST['origen'])
+    destino=Vacunatorio.objects.get(vacunatorio_zona=request.POST['destino'])
+    if(request.POST['vacuna'] =="stock_vac_fa" ):
+        print('')
+        if(int(request.POST['cantidad']) > origen.stock_vac_fa):
+            if(request.POST['origen'] == request.POST['destino'] ):
+
+                print('origen y destino no deven ser iguales ')
+                messages.error(request, " origen y destino no deven ser iguales ")
+            else:
+                print('la cantidad ingresada es mayor')
+                messages.error(request, " la cantidad ingresada es mayor")
+
+            vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+            vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+            vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+            return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
+
+        else:
+            origen.stock_vac_fa=origen.stock_vac_fa-int(request.POST['cantidad'])
+            origen.save()
+            destino.stock_vac_fa=destino.stock_vac_fa+int(request.POST['cantidad'])
+            destino.save()
         # stock_vac_fa=models.IntegerField()
         # stock_vac_covid=models.IntegerField()
         # stock_vac_gripe
 
-    # elif(request.POST['vacuna'] =="stock_vac_covid"):
-    #
-    #     origen.stock_vac_covid=origen.stock_vac_covid-request.POST['cantidad']
-    #     origen.save()
-    #     destino.stock_vac_covid=destino.stock_vac_covid+request.POST['cantidad']
-    #     destino.save()
-    # else:
-    #
-    #     origen.stock_vac_gripe=origen.stock_vac_gripe-request.POST['cantidad']
-    #     origen.save()
-    #     destino.stock_vac_gripe=destino.stock_vac_gripe+request.POST['cantidad']
-    #     destino.save()
-    #
-    # vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
-    # vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-    # vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
-    return render(request, "main/editarStockVacunatorio.html")
+    elif(request.POST['vacuna'] =="stock_vac_covid"):
+        if(int(request.POST['cantidad']) > origen.stock_vac_covid):
+            print('la cantidad ingresada es mayor')
+            vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+            vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+            vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+
+            return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
+
+        else:
+            origen.stock_vac_covid=origen.stock_vac_covid-int(request.POST['cantidad'])
+            origen.save()
+            destino.stock_vac_covid=destino.stock_vac_covid+int(request.POST['cantidad'])
+            destino.save()
+    else:
+        if(int(request.POST['cantidad']) > origen.stock_vac_gripe):
+            vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+            vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+            vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+            return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
+
+        else:
+            origen.stock_vac_gripe=origen.stock_vac_gripe-int(request.POST['cantidad'])
+            origen.save()
+            destino.stock_vac_gripe=destino.stock_vac_gripe+int(request.POST['cantidad'])
+            destino.save()
+
+    vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
+    vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
+    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+
+    return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
+
 
 
 def eliminarVacunador(request):

@@ -30,7 +30,7 @@
 
 
       <body>
-<p>{{m}}</p>
+<p>{{message}}</p>
 
 <div class="container py4">
 
@@ -206,60 +206,115 @@
 <div class="center">
 
 
-   <div class="container py4">
 
+################
+<div class="center">
+<div class="container py4">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 
-       <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-              <h2>Gestion </h2>
-              <div class="card">
-                <div class="card-body">
-                  <form  action="/accionDeEdicionStock/" method="post">{% csrf_token %}
+        <h2> Gestion </h2>
+          <div class="card">
+            <div class="card-body">
+              <form  action="/accionDeEdicionStock/" method="post">{% csrf_token %}
 
-
-                    <div class="row">
-                      <div class="input-field col s6">
-
-                        <select type="text" id= "vacunatorio" class="browser-default"   name="vacunatorio">
-                          <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
-                          <option value="Cementerio Municipal">Cementerio Municipal</option>
-                          <option value="Terminal de Omnibús">Terminal de Omnibus</option>
-                          <option value="Municipalidad">Municipalidad</option>
-                        </select>
-                       </div>
-                   </div>
-
-
-                    <div class="form-group">
-                      <input type="number" id="cantidad" value="0" min="0" max="100"  required>
-
-                    </div>
-                    <!-- <div class="form-group">
-                      <input type="text" id="numCreditos" name="numCreditos" clas="form-control" min="1" max="9" value="1" required>
-
-                    </div> -->
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-success btn-block text-white" > Guardar</button>
-                    </div>
+                <div class="input-field col s12 m6" style="margin: 0px 0px 0px 0px">
 
 
 
+                <div class="form-group">
+                  <select id= "origen" class="browser-default"   name="origen" required>
+                    <option value="" disabled selected>origen</option>
+                    <option value="Cementerio Municipal">Cementerio Municipal</option>
+                    <option value="Terminal de Omnibus">Terminal de Omnibús</option>
+                    <option value="Municipalidad">Municipalidad</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select id= "destino" class="browser-default"   name="destino" required>
+                    <option value="" disabled selected>destino</option>
+                    <option value="Cementerio Municipal">Cementerio Municipal</option>
+                    <option value="Terminal de Omnibus">Terminal de Omnibús</option>
+                    <option value="Municipalidad">Municipalidad</option>
+                  </select>
+                </div>
 
-                  </form>
 
+                <br>
+                <div class="form-group">
+                  <select id= "vacuna"  class="browser-default"   name="vacuna" required>
+                    <option value="" disabled selected>vacuna</option>
+                    <option value="stock_vac_covid">Covid 19</option>
+                    <option value="stock_vac_gripe">gripe</option>
+                    <option value="stock_vac_fa">fiebre amarilla</option>
+                  </select>
+                </div>
 
+                <div class="form-group">
+                  <input type="number" id="cantidad" name="cantidad" value="0" min="0" max="100"  required>
 
-              </div>
-            </div>
-  </div>
-  </div>
+                </div>
+                <div class="form-group">
 
+                    <button type="submit" class="btn btn-success btn-block text-white" > Guardar</button>
+
+                  <!-- <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button> -->
+                  <!-- <div class="popup" id="popup">
+                    <img src="{% static 'imagenes/tick.png' %}">
+                    <h2> Registro Exitoso </h2>
+                    <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
+                    <h5> Codigo Único: {{codigo}} </h5>
+                    <p> Gracias por utilizar nuestro sistema de turnos </p>
+                    <button type="submit" onclick="closePopup()"> Ok </button>
+                  </div> -->
+                </div>
+        </div>
+   </div>
 </div>
 
+{% if messages %}
+  {% for message in messages %}
+  <!-- {% if message.tags == 'success' %}
+  <script type = "text/javascript">
+  M.toast({html: '{{message}}',
+  classes: 'green rounded',
+  displayLength:2000,
+})
+
+</script>
+{% endif %} -->
+
+{% if message.tags == 'error' %}
+  <script type = "text/javascript">
+       M.toast({html: '{{message}}',
+       classes: 'red rounded',
+       displayLength:2000,
+       })
+
+ </script>
+{% endif %}
 
 
 
-      <body>
+<!-- <script type = "text/javascript">
+M.toast({html: '{{message}}',
+classes: 'red rounded',
+displayLength:2000,
+})
+
+</script> -->
+
+ {% endfor %}
+
+
+
+{% endif %}
+<!-- <script type = "text/javascript">
+    M.toast({html: 'fgf',
+    classes: 'red rounded',
+    displayLength:2000,
+  })
+
+</script> -->
 
       </body>
 
