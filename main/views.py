@@ -598,7 +598,7 @@ def validarUsuario(request):
 
             except ObjectDoesNotExist:
 
-                    messages.error(request, "  No pertenece a un usuario administrador del sistema")
+                    messages.error(request, "  No pertenece a un usuario del sistema")
                     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
 
         except ObjectDoesNotExist:
@@ -613,7 +613,7 @@ def validarUsuario(request):
                     contraseña= one_entry.contraseña
                 except ObjectDoesNotExist:
 
-                    messages.error(request, "  No pertenece a un usuario vacunador del sistema")
+                    messages.error(request, " DNI o contraseña incorrecta")
                     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
 
             except ObjectDoesNotExist:
@@ -635,7 +635,7 @@ def validarUsuario(request):
                    #     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
                 except ObjectDoesNotExist:
                     print('')
-                    messages.error(request, "  No pertenece a un usuario paciente del sistema")
+                    messages.error(request, "  No pertenece a un usuario del sistema")
                     return render(request,"main/inicio_de_sesión.html",{"codigo" : 3}) # vuelvo a la pagina
 #####
 
@@ -666,11 +666,11 @@ def validarUsuario(request):
 
         except ObjectDoesNotExist:
            print("Either the blog or entry doesn't exist.")
-           messages.error(request, " el dni ingresado no pertenece a un usuario del sistemasssssx")
+           messages.error(request, " El dni ingresado no pertenece a un usuario del sistema")
            return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
-    else:
-        messages.error(request, "el dni ingresado debe contener numeros")
-        return render(request,"main/inicio_de_sesión.html")
+ #   else:
+  #      messages.error(request, "El dni ingresado debe contener nmeros")
+   #     return render(request,"main/inicio_de_sesión.html")
 
 
 ### comparar codigo pára usuario paciente

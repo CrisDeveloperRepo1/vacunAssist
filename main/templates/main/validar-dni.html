@@ -24,6 +24,13 @@
         margin: 2px 0px;
         cursor: pointer;
       }
+      input[type=number]::-webkit-inner-spin-button, 
+      input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
     </style>
 
     <meta charset="utf-8">
@@ -77,7 +84,7 @@
          <!-- Campo de entrada de usuario -->
          <font face='Verdana'><h6><strong>DNI</strong></h6></font>
 
-          <input type='int' placeholder="1234" name='dni' id='dni' style="background-color:white;" />
+          <input type='number' placeholder="1234" name='dni' id='dni' style="background-color:white;" />
           <h6><input type='submit' value='Verificar'/></h6>
          <!-- Botón de envío del formulario -->
           <!-- <a href='/verficacionDni/'>
@@ -127,30 +134,6 @@ displayLength:2000,
        classes: 'red rounded',
        displayLength:2000,
      })
-
   </script> -->
-       <form  action="/registrarPaciente/"name='formulario' method='get' style='text-align:center'>
-        {% csrf_token %}  
-        <!-- Campo de entrada de usuario -->
-         <font face='Verdana'><h6><strong>DNI</strong></h6></font>
-          <input type='tel'name='dni' id="dni" placeholder='12345678' Required style="background-color:white; " />
-         <!-- Botón de envío del formulario -->
-         <a action ="registrarPaciente/">
-          <h6><input type='submit' value='Validar'></h6>   </a>     
-          </a>
-       </form> </div>
-   </div>
-   {% if messages %}
-   {% for message in messages %}
-       {% if message.tags == 'error' %}
-         <script type = "text/javascript">
-              M.toast({html: '{{message}}',
-              classes: 'red rounded',
-              displayLength:2000,
-              })
-             </script>
-         {% endif%}
-   {% endfor%}
-   {% endif%}
  </body>
 </html>
