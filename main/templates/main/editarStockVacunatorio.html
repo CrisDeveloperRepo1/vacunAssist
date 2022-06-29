@@ -8,6 +8,7 @@
     <!-- Compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
 
 
@@ -31,7 +32,7 @@
 
       <body>
 <p>{{message}}</p>
-
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <div class="container py4">
 
 
@@ -207,7 +208,7 @@
 
 
 
-################
+
 <div class="center">
 <div class="container py4">
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
@@ -270,7 +271,6 @@
         </div>
    </div>
 </div>
-
 {% if messages %}
   {% for message in messages %}
   <!-- {% if message.tags == 'success' %}
@@ -315,111 +315,6 @@ displayLength:2000,
   })
 
 </script> -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
       </body>
-
-
-
-<!-- <div class="row">
-  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-    <h2>Gestion Cursos</h2>
-    <div class="card">
-      <div class="card-body">
-        <form class="" action="" method="post">
-          <div class="form-group">
-            <input type="text" id="txCodigo" name="txCodigo" clas="form-control" placeholder="Codigo" minlength="6" maxlength="6" required>
-
-          </div>
-          <div class="form-group">
-            <input type="text" id="txNombre" name="txNombre" clas="form-control" placeholder="f" minlength="6" maxlength="6" required>
-
-          </div>
-          <div class="form-group">
-            <input type="text" id="txCodigo" name="txCodigo" clas="form-control" placeholder="Codigo" minlength="6" maxlength="6" required>
-
-          </div>
-
-
-        </form>
-
-      </div>
-
-    </div>
-
-  </div> -->
-
-
-
-
-
-
-              <!-- <div class="container py-4">
-                <div class="row">
-                  <div class="col-md-4">
-
-                  </div>
-                  <div class="col-md-12">
-                    <h2>Stock por Vacunatorios</h2>
-      <div class="table-responsive">
-
-
-
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>zona de vacunatorio</th>
-                <th>stock vacunas fiebre amarilla</th>
-                <th>stock vacunas covid</th>
-                <th>stock vacunas gripe</th>
-                <th colspan="2">opciones</th>
-
-              <tr>
-
-            </thead>
-            <tbody>
-              {% for c in administradores %}
-              <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{c.vacunatorio_zona}} </td>
-                <td> {{c.stock_vac_fa}}</td>
-                <td>{{c.stock_vac_covid}}</td>
-                <td>{{c.stock_vac_gripe}}</td>
-                <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td>
-                <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td>
-
-
-              </tr>
-              {% endfor%}
-
-            </tbody>
-          </table>
-          <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-              <h2>Gestion Cursos</h2>
-              <div class="card">
-                <div class="card-body">
-                  <form class="" action="" method="post">
-                    <div class="form-group">
-                      <input type="text" id="txCodigo" name="txCodigo" clas="form-control" placeholder="Codigo" minlength="6" maxlength="6" required>
-
-                    </div>
-                    <div class="form-group">
-                      <input type="text" id="txNombre" name="txNombre" clas="form-control" placeholder="f" minlength="6" maxlength="6" required>
-
-                    </div>
-                    <div class="form-group">
-                      <input type="text" id="txCodigo" name="txCodigo" clas="form-control" placeholder="Codigo" minlength="6" maxlength="6" required>
-
-                    </div>
-
-
-                  </form>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div> --> -->

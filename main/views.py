@@ -203,7 +203,12 @@ def registroPaciente(request):
     dni=request.POST['dni']
     email=request.POST['email']
     zona=request.POST['vacunatorio']
+    opGripe=request.POST['opcVacunaGripe']
+    opFA=request.POST['opcVacunaFA']
+    opCoviP1=request.POST['opcVacunaCovidP1']
+    opCoviP2=request.POST['opcVacunaCovidP2']
     Contraseña=request.POST['Contraseña']
+
     inicio = datetime(2022, 6, 30)
     final =  datetime(2022, 9, 28)
 
@@ -233,8 +238,12 @@ def registroPaciente(request):
     codigo = ''.join(choice(digitos) for digito in range(longitud))
 
 
-    paciente=Paciente.objects.create(codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
+    paciente=Paciente.objects.create(vac_Covid2_aplicada=opCoviP2,vac_Covid1_aplicada=opCoviP1,vac_Amarilla_aplicada=opFA,vac_Gripe_aplicada=opGripe,codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
     #messages.error(request, " El paciente ya exite")
+
+
+
+
 
     send_email_registro(email, codigo, dni, nombre)
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
@@ -421,7 +430,7 @@ def accionDeEdicionStock(request):
         if(int(request.POST['cantidad']) > origen.stock_vac_fa):
             if(request.POST['origen'] == request.POST['destino'] ):
 
-                print('origen y destino no deven ser iguales ')
+                print('origen y destino no deben ser iguales ')
                 messages.error(request, " origen y destino no deven ser iguales ")
             else:
                 print('la cantidad ingresada es mayor')
@@ -443,7 +452,15 @@ def accionDeEdicionStock(request):
 
     elif(request.POST['vacuna'] =="stock_vac_covid"):
         if(int(request.POST['cantidad']) > origen.stock_vac_covid):
-            print('la cantidad ingresada es mayor')
+            ##print('la cantidad ingresada es mayor')
+            if(request.POST['origen'] == request.POST['destino'] ):
+
+                print('origen y destino no deben ser iguales ')
+                messages.error(request, " origen y destino no deven ser iguales ")
+            else:
+                print('la cantidad ingresada es mayor')
+                messages.error(request, " la cantidad ingresada es mayor")
+
             vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
             vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
             vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
@@ -457,6 +474,15 @@ def accionDeEdicionStock(request):
             destino.save()
     else:
         if(int(request.POST['cantidad']) > origen.stock_vac_gripe):
+
+            if(request.POST['origen'] == request.POST['destino'] ):
+
+                print('origen y destino no deben ser iguales ')
+                messages.error(request, " origen y destino no deven ser iguales ")
+            else:
+                print('la cantidad ingresada es mayor')
+                messages.error(request, " la cantidad ingresada es mayor")
+
             vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
             vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
             vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
