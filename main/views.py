@@ -505,11 +505,11 @@ def accionDeEdicionStock(request):
 def eliminarVacunador(request):
     administradorList= Vacunador.objects.all()
 
-    if (administradorList.exists()):
-        print('')
+#    if (administradorList.exists()):
+#        print('')
 
-    else:
-        messages.error(request, " no hay vacunadores en el listado")
+#    else:
+#        messages.error(request, " no hay vacunadores en el listado")
 
     return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
 
@@ -1306,5 +1306,6 @@ def listados_usuarios(request):
     vacunadoresList= Vacunador.objects.all()
 
     PacienteList= Paciente.objects.all()
+    
 
     return render(request,"main/listados-users.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList,"paciente":PacienteList})

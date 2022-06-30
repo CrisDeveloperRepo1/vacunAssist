@@ -91,7 +91,9 @@
 
         </tr>
         {% endfor%}
-
+        {% if not paciente %}
+        <td colspan="5" style="text-align: center">No hay pacientes para mostrar</td>
+        {% endif %}
       </tbody>
     </table>
     <h2>Listado Vacunadores</h2>
@@ -121,7 +123,9 @@
 
       </tr>
       {% endfor%}
-
+      {% if not vacunadores %}
+      <td colspan="5" style="text-align: center">No hay vacunadores para mostrar</td>
+      {% endif %}
     </tbody>
   </table>
     <h2>Listado Administradores</h2>
@@ -150,7 +154,9 @@
 
   </tr>
   {% endfor%}
-
+  {% if not administradores %}
+  <td colspan="5" style="text-align: center">No hay administradores para mostrar</td>
+  {% endif %}
 </tbody>
 </table>
 
