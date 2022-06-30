@@ -1299,3 +1299,12 @@ def validarDni(request):
                 return render(request, "main/validar-dni.html")
         except ObjectDoesNotExist:
                 return render(request, "main/validar-dni.html")
+
+def listados_usuarios(request):
+    administradorList= Administrador.objects.all()
+
+    vacunadoresList= Vacunador.objects.all()
+
+    PacienteList= Paciente.objects.all()
+
+    return render(request,"main/listados-users.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList,"paciente":PacienteList})

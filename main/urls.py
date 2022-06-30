@@ -41,7 +41,7 @@ urlpatterns = [
     path('empezarAsignacionTurno/<int:dni>', views.empezarAsignacionTurno, name= 'empezarAsignacionTurno' ),
     path('eliminarVacunador/', views.eliminarVacunador, name= 'eliminarVacunador' ),
     path('eliminarSolicitud/<int:dni>', views.eliminarSolicitud , name="eliminarSolicitud"),
-
+    path('listados-de-usuarios/', views.listados_usuarios, name= 'listados_usuarios' ),
 
     path('eliminar_Admin/<int:id>/<str:nombre>',views.eliminar_Admin),
 
