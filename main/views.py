@@ -1300,12 +1300,13 @@ def validarDni(request):
         except ObjectDoesNotExist:
                 return render(request, "main/validar-dni.html")
 
-def listados_usuarios(request):
-    administradorList= Administrador.objects.all()
-
-    vacunadoresList= Vacunador.objects.all()
-
+def lista_pacientes(request):
     PacienteList= Paciente.objects.all()
-    
+    return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})
 
-    return render(request,"main/listados-users.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList,"paciente":PacienteList})
+def lista_administradores(request):
+    administradorList= Administrador.objects.all() 
+    return render(request,"main/listado-administradores.html",{"administradores" : administradorList})
+def lista_vacunadores(request):
+    vacunadoresList= Vacunador.objects.all()
+    return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList})

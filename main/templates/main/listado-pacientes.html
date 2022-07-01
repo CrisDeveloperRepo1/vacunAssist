@@ -43,8 +43,6 @@
 
         </script> -->
         <div class="center">
-            <br>
-        <h2> Usuarios del sistema </h2> </div> 
         <div class="container py-4">
           <div class="row">
             <div class="col-md-4">
@@ -57,14 +55,12 @@
                 <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
                     <option value="" disabled selected>Elija el filtro</option>
                     <option value="Dni">DNI</option>
-                    <option value="Apellido">Apellido</option>
-                    <option value="Nombre">Nombre</option>
                     <option value="Vacunatorio">Vacunatorio</option>
                   </select>
                 </div>
             </div>
             <div class="left">
-              <h2>Listado Pacientes</h2> 
+              <h2>Pacientes</h2> 
                 </div>
             </div>
 <div class="table-responsive">
@@ -73,11 +69,9 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Apellido</th>
-          <th>Nombre</th>
-          <th>Dni</th>
-
+        <th style="text-align: left">#</th>
+        <th style="text-align: left">Dni</th>
+        <th style="text-align: left"> Zona </th>
         <tr>
 
       </thead>
@@ -85,9 +79,8 @@
         {% for c in paciente %}
         <tr>
           <td>{{forloop.counter}}</td>
-          <td>{{c.paciente_apellido}} </td>
-          <td> {{c.paciente_nombre}}</td>
           <td>{{c.paciente_dni}}</td>
+          <td> {{c.paciente_zona}}</td>
 
         </tr>
         {% endfor%}
@@ -96,95 +89,32 @@
         {% endif %}
       </tbody>
     </table>
-    <h2>Listado Vacunadores</h2>
-<div class="table-responsive">
-
-
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Apellido</th>
-        <th>Nombre</th>
-        <th>Dni</th>
-        <th>Vacunatorio</th>
-
-      <tr>
-
-    </thead>
-    <tbody>
-      {% for c in vacunadores %}
-      <tr>
-        <td>{{forloop.counter}}</td>
-        <td>{{c.vacunador_apellido}} </td>
-        <td> {{c.vacunador_nombre}}</td>
-        <td>{{c.vacunador_dni}}</td>
-        <td>{{c.vacunador_zona}}</td>
-
-      </tr>
-      {% endfor%}
-      {% if not vacunadores %}
-      <td colspan="5" style="text-align: center">No hay vacunadores para mostrar</td>
-      {% endif %}
-    </tbody>
-  </table>
-    <h2>Listado Administradores</h2>
-<div class="table-responsive">
-
-
-<table class="table table-striped">
-<thead>
-  <tr>
-    <th>#</th>
-    <th>Apellido</th>
-    <th>Nombre</th>
-    <th>Dni</th>
-    <th>Vacunatorio</th>
-  <tr>
-
-</thead>
-<tbody>
-  {% for c in administradores %}
-  <tr>
-    <td>{{forloop.counter}}</td>
-    <td>{{c.administrador_apellido}} </td>
-    <td> {{c.administrador_nombre}}</td>
-    <td>{{c.administrador_dni}}</td>
-    <td>{{c.administrador_zona}}</td>
-
-  </tr>
-  {% endfor%}
-  {% if not administradores %}
-  <td colspan="5" style="text-align: center">No hay administradores para mostrar</td>
-  {% endif %}
-</tbody>
-</table>
 
     {% if messages %}
-      {% for message in messages %}
-      <!-- {% if message.tags == 'success' %}
-      <script type = "text/javascript">
-      M.toast({html: '{{message}}',
-      classes: 'green rounded',
-      displayLength:2000,
-    })
+    {% for message in messages %}
+    <!-- {% if message.tags == 'success' %}
+    <script type = "text/javascript">
+    M.toast({html: '{{message}}',
+    classes: 'green rounded',
+    displayLength:2000,
+  })
 
-  </script>
-  {% endif %} -->
+</script>
+{% endif %} -->
 
-    {% if message.tags == 'error' %}
-      {{message}}
-      <script type = "text/javascript">
+  {% if message.tags == 'error' %}
+    {{message}}
+    <script type = "text/javascript">
 
-           M.toast({html: '{{message}}',
-           classes: 'red rounded',
-           displayLength:2000,
-           })
+         M.toast({html: '{{message}}',
+         classes: 'red rounded',
+         displayLength:2000,
+         })
 
-     </script>
+   </script>
 
 
-  {% endif %}
+{% endif %}
 
 
 
@@ -196,46 +126,21 @@ displayLength:2000,
 
 </script> -->
 
-     {% endfor %}
+   {% endfor %}
 
 
 
 {% endif %}
-    <!-- <script type = "text/javascript">
-        M.toast({html: 'fgf',
-        classes: 'red rounded',
-        displayLength:2000,
-      })
+  <!-- <script type = "text/javascript">
+      M.toast({html: 'fgf',
+      classes: 'red rounded',
+      displayLength:2000,
+    })
 
-   </script> -->
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-      </body>
-
-      <!-- <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Vacunadores</th>
-            <tr>
-
-          </thead>
-          <tbody>
-            {% for c in administradores %}
-            <tr>
-              <td>{{c.administrador_apellido}} </td>
-              <td> {{c.administrador_nombre}}</td>
-              <td>{{c.administrador_dni}}</td>
+ </script> -->
 
 
-            </tr>
-            {% endfor%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-          </tbody>
-        </table>
-
-
-      </div> -->
+    </body>

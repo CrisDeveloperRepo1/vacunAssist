@@ -41,8 +41,9 @@ urlpatterns = [
     path('empezarAsignacionTurno/<int:dni>', views.empezarAsignacionTurno, name= 'empezarAsignacionTurno' ),
     path('eliminarVacunador/', views.eliminarVacunador, name= 'eliminarVacunador' ),
     path('eliminarSolicitud/<int:dni>', views.eliminarSolicitud , name="eliminarSolicitud"),
-    path('listados-de-usuarios/', views.listados_usuarios, name= 'listados_usuarios' ),
-
+    path('lista-de-administradores/', views.lista_administradores, name= 'lista_administradores' ),
+    path('lista-de-vacunadores/', views.lista_vacunadores, name= 'lista_vacunadores' ),
+    path('lista-de-pacientes/', views.lista_pacientes, name= 'lista_pacientes' ),
     path('eliminar_Admin/<int:id>/<str:nombre>',views.eliminar_Admin),
 
     path('accounts/login/', views.login1, name= 'login' ),

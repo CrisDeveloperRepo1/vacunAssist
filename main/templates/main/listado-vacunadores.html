@@ -42,14 +42,27 @@
            M.toast({html: 'I am a toast!', classes: 'rounded'});
 
         </script> -->
-
+        <div class="center">
         <div class="container py-4">
           <div class="row">
             <div class="col-md-4">
 
             </div>
             <div class="col-md-12">
-              <h2>Listado Vacunadores</h2>
+                <div class="right">
+                <div class="col-md-12">
+                    <label>Filtrar por: </label>
+                <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
+                    <option value="" disabled selected>Elija el filtro</option>
+                    <option value="Dni">DNI</option>
+                    <option value="Vacunatorio">Vacunatorio</option>
+                  </select>
+                </div>
+            </div>
+            <div class="left">
+              <h2>Vacunadores</h2> 
+                </div>
+            </div>
 <div class="table-responsive">
 
 
@@ -59,56 +72,49 @@
           <th style="text-align: left">#</th>
           <th style="text-align: left">Dni</th>
           <th style="text-align: left"> Zona </th>
-          <th colspan="2">Opciones</th>
-
         <tr>
 
       </thead>
       <tbody>
-        {% for c in administradores %}
+        {% for c in Vacunadores %}
         <tr>
           <td>{{forloop.counter}}</td>
-          <td>{{c.vacunador_apellido}} </td>
-          <td> {{c.vacunador_nombre}}</td>
           <td>{{c.vacunador_dni}}</td>
-          <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td>
-          <td><a href="/eliminar_Admin/{{c.vacunador_dni}}/{{c.vacunador_nombre}}" class="btn btn-block btn-danger">Eliminar</a></td>
-
+          <td> {{c.vacunador_zona}}</td>
 
         </tr>
         {% endfor%}
-        {% if not administradores %}
-        <td colspan="5" style="text-align: center">No hay vacunadores para mostrar</td>
+        {% if not paciente %}
+        <td colspan="5" style="text-align: center">No hay pacientes para mostrar</td>
         {% endif %}
-
       </tbody>
     </table>
 
     {% if messages %}
-      {% for message in messages %}
-      <!-- {% if message.tags == 'success' %}
-      <script type = "text/javascript">
-      M.toast({html: '{{message}}',
-      classes: 'green rounded',
-      displayLength:2000,
-    })
+    {% for message in messages %}
+    <!-- {% if message.tags == 'success' %}
+    <script type = "text/javascript">
+    M.toast({html: '{{message}}',
+    classes: 'green rounded',
+    displayLength:2000,
+  })
 
-  </script>
-  {% endif %} -->
+</script>
+{% endif %} -->
 
-    {% if message.tags == 'error' %}
-      {{message}}
-      <script type = "text/javascript">
+  {% if message.tags == 'error' %}
+    {{message}}
+    <script type = "text/javascript">
 
-           M.toast({html: '{{message}}',
-           classes: 'red rounded',
-           displayLength:2000,
-           })
+         M.toast({html: '{{message}}',
+         classes: 'red rounded',
+         displayLength:2000,
+         })
 
-     </script>
+   </script>
 
 
-  {% endif %}
+{% endif %}
 
 
 
@@ -120,46 +126,21 @@ displayLength:2000,
 
 </script> -->
 
-     {% endfor %}
+   {% endfor %}
 
 
 
 {% endif %}
-    <!-- <script type = "text/javascript">
-        M.toast({html: 'fgf',
-        classes: 'red rounded',
-        displayLength:2000,
-      })
+  <!-- <script type = "text/javascript">
+      M.toast({html: 'fgf',
+      classes: 'red rounded',
+      displayLength:2000,
+    })
 
-   </script> -->
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-      </body>
-
-      <!-- <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Vacunadores</th>
-            <tr>
-
-          </thead>
-          <tbody>
-            {% for c in administradores %}
-            <tr>
-              <td>{{c.administrador_apellido}} </td>
-              <td> {{c.administrador_nombre}}</td>
-              <td>{{c.administrador_dni}}</td>
+ </script> -->
 
 
-            </tr>
-            {% endfor%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-          </tbody>
-        </table>
-
-
-      </div> -->
+    </body>
