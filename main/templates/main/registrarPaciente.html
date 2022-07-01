@@ -18,7 +18,6 @@ input[type=number] { -moz-appearance:textfield; }
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
 
-
     <title></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -43,11 +42,12 @@ input[type=number] { -moz-appearance:textfield; }
     <div class="row justify-content-center align-items-center">
 
         <h2> Registro </h2>
-          <div class="card">
+          <div class="card" >
+            <h1> Codigo Único: {{codigo}} </h1>
             <div class="card-body">
               <form  action="/registroPaciente/" method="post">{% csrf_token %}
 
-                <div class="input-field col s12 m6" style="margin: 0px 0px 0px 0px">
+                <div class="input-field col s12 m3" style="margin: 0px 0px 0px 0px">
                 <div class="form-group">
                   <input type="text" id="nombre" name="nombre" clas="form-control" placeholder="Nombre" minlength="3" maxlength="20" required>
                 </div>
@@ -57,7 +57,7 @@ input[type=number] { -moz-appearance:textfield; }
                 </div>
 
                 <div class="form-group">
-                  <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
+                  <select  id= "vacunatorio" class="browser-default"   name="vacunatorio">
                     <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
                     <option value="Cementerio Municipal">Cementerio Municipal</option>
                     <option value="Terminal de Omnibús">Terminal de Omnibús</option>
@@ -81,52 +81,107 @@ input[type=number] { -moz-appearance:textfield; }
                    <input input type="date" id="fechaesperada" name="fechaesperada">
                  </div>
                 </div>
-                <div class="input-field col s12 m6" required>
+                <div class="input-field col s12 m5" required>
                   <h3> Información sanitaria </h3>
 
                   <div class="form-group">
-                    <select id= "opcVacunaGripe" class="browser-default"   name="opcVacunaGripe">
-                      <option value="" disabled selected>¿este año se vacuno contra la gripe?</option>
+                    <select id= "opcVacunaGripe" class="browser-default"   name="opcVacunaGripe" required>
+                      <option value="" disabled selected>¿Este año se vacunó contra la gripe?</option>
                       <option value=2>no</option>
                       <option value=1>si</option>
 
                     </select>
                   </div>
                   <div class="form-group">
-                    <select id= "opcVacunaFA" class="browser-default"   name="opcVacunaFA">
-                      <option value="" disabled selected>¿esta vacunado contra la fiebre amarilla?</option>
+                    <select id= "opcVacunaFA" class="browser-default"   name="opcVacunaFA" required>
+                      <option value="" disabled selected>¿Está vacunado contra la fiebre amarilla?</option>
                       <option value=2>no</option>
                       <option value=1>si</option>
 
                     </select>
                   </div>
                   <div class="form-group">
-                    <select id= "opcVacunaCovidP1" class="browser-default"   name="opcVacunaCovidP1">
-                      <option value="" disabled selected>¿ya tiene la 1 dosis de la vacuna contra el covid?</option>
+                    <select id= "opcVacunaCovidP1" class="browser-default"   name="opcVacunaCovidP1" required>
+                      <option value="" disabled selected>¿Ya tiene la 1 dosis de la vacuna contra el covid?</option>
                       <option value=2>no</option>
                       <option value=1>si</option>
 
                     </select>
                   </div>
                   <div class="form-group">
-                    <select id= "opcVacunaCovidP2" class="browser-default"   name="opcVacunaCovidP2">
-                      <option value="" disabled selected>¿ya tiene la 2 dosis de la vacuna contra el covid?</option>
+                    <select  id= "opcVacunaCovidP2" class="browser-default"   name="opcVacunaCovidP2" required>
+                      <option value="" disabled selected>¿Ya tiene la 2 dosis de la vacuna contra el covid?</option>
                       <option value=2>no</option>
                       <option value=1>si</option>
-
                     </select>
                   </div>
-
-                 <div class="form-group">
-
-
+                </div>
+                <div class="input-field col s12 m4" >
+                  <h3> Enfermedades </h3>
+                  <div class="Form-group">
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Enfermedad Pulmonar Crónica</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Diabetes</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Obesidad</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in" />
+                      <span> Enfermedad Renal Crónica</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Enfermedades respiratorias</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Enfermedades cardíacas</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Obesidad (con índice de masa corporal mayor a 40 Kg/m2)</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input type="checkbox" class="filled-in"  />
+                      <span> Enfermedad renal crónica en diálisis o con expectativas de ingresar a diálisis en los siguientes seis meses
+                      </span>
+                    </label>
+                  </p>
+                  <p>
+                  <label>
+                    <input type="checkbox" class="filled-in"  />
+                    <span> Enfermedad Cardiovascular</span>
+                  </label>
+                </p>
+                  </div>
+                  
                 <div class="form-group">
                   <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
                   <div class="popup" id="popup">
                     <img src="{% static 'imagenes/tick.png' %}">
                     <h2> Registro Exitoso </h2>
-                    <h5> Hemos generado un código único, el cual debe ser guardado para poder iniciar sesión </h5>
-                    <h5> Codigo Único: {{codigo}} </h5>
+                    <h5> Hemos enviado un mail a su casilla de correo y generamos un código único que debe ser guardado para poder iniciar sesión </h5>
                     <p> Gracias por utilizar nuestro sistema de turnos </p>
                     <button type="submit" onclick="closePopup()"> Ok </button>
                   </div>
