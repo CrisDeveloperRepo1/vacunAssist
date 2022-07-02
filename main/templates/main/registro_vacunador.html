@@ -86,45 +86,46 @@ input {
       <form class="col s6">
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder="Nombre" id="nombre" type="text" class="validate" name="nombre">
-            <label for="nombre">Nombre</label>
+            <input placeholder="{{nombre}}" id="nombre" disabled type="text" class="validate" name="nombre">
+            <label for="nombre"> <span class="black-text text-darken-2"> Nombre </span></label>
           </div>
           <div class="input-field col s6">
-            <input placeholder="Apellido" id="apellido" type="text" class="validate" name="apellido">
-            <label for="apellido">Apellido</label>
+            <input placeholder="{{apellido}}" id="apellido" disabled type="text" class="validate" name="apellido">
+            <label for="apellido"> <span class="black-text text-darken-2"> Apellido </span></label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
             <input placeholder="Email" id="email" type="email" class="validate" name="email">
-            <label >Email</label>
+            <label > <span class="black-text text-darken-2"> Email </span></label>
           </div>
           <div class="input-field col s6">
-            <input placeholder="DNI" id="dni" type="tel" class="validate" name="dni">
-            <label for="dni">DNI</label>
+            <input placeholder="{{dni}}" id="dni" disabled type="tel" class="validate" name="dni">
+            <label for="dni"> <span class="black-text text-darken-2"> DNI </span></label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            <label for="birthday">Fecha de nacimiento:</label>
-        <input placeholder type="date" id="birthday" name="birthday" class="validate">
+            <label for="birthday"> <span class="black-text text-darken-2"> Fecha de nacimiento </span></label>
+        <input placeholder type="date" id="birthday" name="birthday" class="validate" max="{{fecha_min}}">
           </div>
         <div class="row">
           <div class="input-field col s6">
-
+            <!--<label >  <span class="black-text text-darken-2"> Vacunatorio  </span></label> -->
             <select type="text" id= "vacunatorio" class="browser-default"   name="vacunatorio">
               <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
               <option value="Cementerio Municipal">Cementerio Municipal</option>
               <option value="Terminal de Omnibús">Terminal de Omnibus</option>
               <option value="Municipalidad">Municipalidad</option>
             </select>
+           
            </div>
        </div>
        <div class="row">
         <div class="input-field col s6">
           <input placeholder="Contraseña" id="contraseña" type="password" class="validate" name="contraseña">
          <!-- <input placeholder="Contraseña" id="contraseña" type="text" class="validate" name="pasword"> -->
-         <label for="dni">Contraseña</label>
+         <label for="dni"> <span class="black-text text-darken-2"> Contraseña </span></label>
         </div>
       </div>
       </form>

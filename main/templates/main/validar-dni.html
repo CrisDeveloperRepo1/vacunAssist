@@ -79,7 +79,7 @@ input[type=number] { -moz-appearance:textfield; }
          <hr>
        <div class="center"
        style="background:#BCBCBC; margin: 10px 100px">
-       <form name='formulario' action ="/verficacionDni/" method='GET' style='text-align:center'>
+       <form name='formulario' action ="/validarDni/" method='GET' style='text-align:center'>
        <!-- <form name='formulario'  method='post' style='text-align:center'> -->
          <!-- Campo de entrada de usuario -->
          <font face='Verdana'><h6><strong>DNI</strong></h6></font>
@@ -94,25 +94,14 @@ input[type=number] { -moz-appearance:textfield; }
    </div>
    {% if messages %}
      {% for message in messages %}
-     <!-- {% if message.tags == 'success' %}
-     <script type = "text/javascript">
-     M.toast({html: '{{message}}',
-     classes: 'green rounded',
-     displayLength:2000,
-   })
-
- </script>
- {% endif %} -->
-
-   {% if message.tags == 'error' %}
-     <script type = "text/javascript">
-          M.toast({html: '{{message}}',
-          classes: 'red rounded',
-          displayLength:2000,
-          })
-
-    </script>
- {% endif %}
+      {% if message.tags == 'error' %}
+        <script type = "text/javascript">
+              M.toast({html: '{{message}}',
+              classes: 'red rounded',
+              displayLength:2000,
+              })
+        </script>
+    {% endif %}
 
 
 

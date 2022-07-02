@@ -8,6 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from matplotlib.style import context
+from numpy import datetime_as_string
 #from matplotlib.style import context
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio, Dni
 from django.contrib.auth.forms import UserCreationForm
@@ -37,9 +39,8 @@ from django.contrib.auth import login, authenticate,logout
 from.forms import CustomUserForm
 from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
 import math, random
-from datetime import datetime
-from datetime import datetime
-from datetime import date
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth import login, logout, authenticate
 
 # def inicio_admin(request):
@@ -97,9 +98,20 @@ def registrarVacunador (request):
 
 #### agregar metodo q devuelva el ultimo objeto de la tabla
     vacunador=Vacunador.objects.create(vacunador_nombre=nombre,vacunador_apellido=apellido,vacunador_fechaNac=fechaNac,vacunador_zona=zona,vacunador_dni=dni,vacunador_email=email,codigo=Codigo,contraseña=Contraseña)
+    
+    fecha = datetime.strptime(fechaNac, "%Y-%m-%d")
+    #resultado = (datetime.now().date().year - (fecha).year)
+    resultado = (datetime.now().date() + relativedelta(years=-2))
+    #resultado -= ((datetime.now().month) < (fecha.month)) and ((datetime.now().day) < (fecha.day)) 
+    #print(resultado)
 
     send_email_registro(email, Codigo, dni, nombre)
-    return render(request,"main/registro_vacunador.html")
+    context = {
+        'fecha_max': str(datetime.now().date()),
+        'fecha_min': str(resultado),
+    }
+    print("hola")
+    return render(request,"main/registro_vacunador.html", context)
 
 
 
@@ -1256,7 +1268,7 @@ def reset_pass(request):
 
 
 
-def verficacionDni(request):
+#def verficacionDni(request):
     #r=request.POST.get('dni')
     #request.POST.get("dni")
     #
@@ -1292,13 +1304,47 @@ def validarDni(request):
         dni= request.GET.get("dni")
         try:
             one = Dni.objects.get(num_dni = dni)
-            print(one.num_dni)
-            if int(one.num_dni) == dni:
-                print("entra al if")
-                messages.error(request, "Dni inválido")
-                return render(request, "main/validar-dni.html")
+            if one.num_dni == dni:
+                if Logeado.objects.filter(numId = 1).exists():
+                    #le tuve que asignar numid = 1 porque el logueado 
+                    # al momento de registrar un vacunador es un administrador
+                    try:
+                        vacun = Vacunador.objects.get(vacunador_dni = dni)
+                        messages.error(request, "El Dni ya está registrado")
+                        return render(request, "main/validar-dni.html")
+                    except ObjectDoesNotExist:
+                       # log = Dni.objects.get(num_dni = dni)
+                        resultado = (datetime.now().date() + relativedelta(years=-18))
+                        context = { 'dni': one.num_dni,
+                            'nombre': one.nombre,
+                            'apellido': one.apellido,
+                            'fecha_actual': str(datetime.now().date()),
+                            'fecha_min': str(resultado),
+                        }
+                        #print(str(resultado))
+                        return render(request, "main/registro_vacunador.html", context)
+                        
+                if Logeado.objects.filter(numId = 3).exists():
+                    try:
+                        paciente = Paciente.objects.get(paciente_dni = dni)
+                        messages.error(request, "El Dni ya está registrado")
+                        return render(request, "main/validar-dni.html")
+                    except ObjectDoesNotExist:
+                       log = Dni.objects.get(num_dni = dni)
+                       resultado = (datetime.now().date() + relativedelta(years=-18))
+                       context = { 'dni': one.num_dni,
+                            'nombre': one.nombre,
+                            'apellido': one.apellido,
+                            'fecha_actual': str(datetime.now().date()),
+                            'fecha_min': str(resultado),
+                        }
+                       #print(str(resultado))
+                       #print(log.num_dni + log.nombre + log.apellido)
+                       return render(request, "main/registrarPaciente.html", context)
         except ObjectDoesNotExist:
-                return render(request, "main/validar-dni.html")
+            if (dni != None):
+                messages.error(request, "El Dni es inválido ")
+            return render(request, "main/validar-dni.html")
 
 def lista_pacientes(request):
     PacienteList= Paciente.objects.all()

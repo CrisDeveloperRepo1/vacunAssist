@@ -48,14 +48,18 @@ input[type=number] { -moz-appearance:textfield; }
 
                 <div class="input-field col s12 m6" style="margin: 0px 0px 0px 0px">
                 <div class="form-group">
-                  <input type="text" id="nombre" name="nombre" clas="form-control" placeholder="Nombre" minlength="3" maxlength="20" required>
+                  
+                  <label >  <span class="black-text text-darken-2"> Nombre  </span></label>
+                  <input type="text" id="nombre" name="nombre" clas="form-control" placeholder="{{nombre}}" minlength="3" maxlength="20" required disabled>
                 </div>
 
                 <div class="form-group">
-                  <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="Apellido" minlength="1" maxlength="50" required>
+                  <label >  <span class="black-text text-darken-2"> Apellido  </span></label>
+                  <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="{{apellido}}" minlength="1" maxlength="50" required disabled>
                 </div>
 
                 <div class="form-group">
+                  <label >  <span class="black-text text-darken-2"> Vacunatorio  </span></label>
                   <select  id= "vacunatorio" class="browser-default"   name="vacunatorio">
                     <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
                     <option value="Cementerio Municipal">Cementerio Municipal</option>
@@ -65,51 +69,59 @@ input[type=number] { -moz-appearance:textfield; }
                 </div>
                 <br>
                 <div class="form-group">
-                   <input type="number" id="dni" name="dni" clas="form-control" placeholder="DNI"  minlength="8" maxlength="8" required>
+                  <label >  <span class="black-text text-darken-2"> DNI  </span></label>
+                   <input type="number" id="dni" name="dni" clas="form-control" placeholder="{{dni}}"  minlength="8" maxlength="8" required disabled>
                 </div>
 
                  <div class="form-group">
+                  <label >  <span class="black-text text-darken-2"> Contraseña  </span></label>
                    <input type="text" id="Contraseña" name="Contraseña" clas="form-control" placeholder="contraseña"  minlength="4" required>
                 </div>
 
                  <div class="form-group">
+                  <label >  <span class="black-text text-darken-2"> Email  </span></label>
                    <input type="text" id="email" name="email" clas="form-control" placeholder="E-mail"  maxlength="50" required>
                  </div>
 
                  <div class="form-group">
-                   <input input type="date" id="fechaesperada" name="fechaesperada">
+                  <label >  <span class="black-text text-darken-2"> Fecha de nacimiento  </span></label>
+                   <input input type="date" id="fechaesperada" name="fechaesperada" max="{{fecha_actual}}" >
                  </div>
                 </div>
                 <div class="input-field col s12 m6" required>
                   <h3> Información sanitaria </h3>
 
                   <div class="form-group">
+                    <label >  <span class="black-text text-darken-2"> ¿Este año se vacunó contra la gripe?  </span></label>
                     <select id= "opcVacunaGripe" class="browser-default"   name="opcVacunaGripe" required>
-                      <option value="" disabled selected>¿Este año se vacunó contra la gripe?</option>
+                      <option value="" disabled selected>Elija una opción </option>
                       <option value=2>no</option>
                       <option value=1>si</option>
 
                     </select>
                   </div>
                   <div class="form-group">
+                    <label >  <span class="black-text text-darken-2"> ¿Está vacunado contra la fiebre amarilla?  </span></label>
                     <select id= "opcVacunaFA" class="browser-default"   name="opcVacunaFA" required>
-                      <option value="" disabled selected>¿Está vacunado contra la fiebre amarilla?</option>
+                      <option value="" disabled selected> Elija una opción </option>
                       <option value=2>no</option>
                       <option value=1>si</option>
 
                     </select>
                   </div>
                   <div class="form-group">
+                    <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
                     <select id= "opcVacunaCovidP1" class="browser-default"   name="opcVacunaCovidP1" required>
-                      <option value="" disabled selected>¿Ya tiene la 1 dosis de la vacuna contra el covid?</option>
+                      <option value="" disabled selected> Elija una opción </option>
                       <option value=2>no</option>
                       <option value=1>si</option>
 
                     </select>
                   </div>
                   <div class="form-group">
+                   <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label> 
                     <select  id= "opcVacunaCovidP2" class="browser-default"   name="opcVacunaCovidP2" required>
-                      <option value="" disabled selected>¿Ya tiene la 2 dosis de la vacuna contra el covid?</option>
+                      <option value="" disabled selected> Elija una opción</option>
                       <option value=2>no</option>
                       <option value=1>si</option>
                     </select>
