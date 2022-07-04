@@ -206,6 +206,16 @@ def inicioPaciente(request):
     #
     # return render(request, "main/inicioPaciente.html",{"codigo": OTP})
 ############ REGISTRO DE PACIENTE ##########################################################
+
+def fin_reg_paciente_st (request):
+    return render (request, "main/registrarPaciente.html")
+
+def reg_paciente_st (request):
+    return render(request, "main/registro-paciente-sin-turno.html")
+
+def inicio_vacuandor (request):
+    return render(request, "main/inicio-vacunador.html")
+
 def registrarPaciente(request):
     return render(request, "main/registrarPaciente.html")
 def registroPaciente(request):
@@ -771,7 +781,7 @@ def compararCodigo(request):
 
                                         #mensaje= request.GET["pass"]
 
-                                            return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
+                                            return render(request,"main/inicio-vacunador.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
                                         else:
 
                                             messages.error(request, "codigo invalido")
@@ -1341,6 +1351,23 @@ def validarDni(request):
                        #print(str(resultado))
                        #print(log.num_dni + log.nombre + log.apellido)
                        return render(request, "main/registrarPaciente.html", context)
+                if Logeado.objects.filter(numId = 2).exists():
+                    try:
+                        paciente = Paciente.objects.get(paciente_dni = dni)
+                        messages.error(request, "El Dni ya está registrado")
+                        return render(request, "main/validar-dni.html")
+                    except ObjectDoesNotExist:
+                       log = Dni.objects.get(num_dni = dni)
+                       resultado = (datetime.now().date() + relativedelta(years=-18))
+                       context = { 'dni': one.num_dni,
+                            'nombre': one.nombre,
+                            'apellido': one.apellido,
+                            'fecha_actual': str(datetime.now().date()),
+                            'fecha_min': str(resultado),
+                        }
+                       #print(str(resultado))
+                       #print(log.num_dni + log.nombre + log.apellido)
+                       return render(request, "main/registro-paciente-sin-turno.html", context)
         except ObjectDoesNotExist:
             if (dni != None):
                 messages.error(request, "El Dni es inválido ")

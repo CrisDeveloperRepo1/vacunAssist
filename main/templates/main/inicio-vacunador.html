@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link rel="stylesheet" href="estilos.css">
+  	<link rel="preconnect" href="https://fonts.googleapis.com">
+  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+
+
+    <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+
+
+    <title></title>
+
+    <nav>
+        <div class="nav-wrapper  light-green">
+          <a href="/" class="brand-logo">
+            <img src="{% static 'imagenes/Logo_VacunAssist_recortado.png' %}" class="img-fluid" width="100" height="66">
+          <div class="right"  style="margin: 9px 0px 0px 10px">
+            <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
+            </div>
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med"></a>
+            <li><a href="/login/">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
+      <style>
+
+        .logo-image{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          overflow: ;
+          margin-top: -6px;
+      }
+        caja {
+            border: 20px solid ##888987;
+            }
+
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 70%;
+        }
+
+        td, th {
+          border: 1px solid #000000;
+          text-align: left;
+          padding: 2px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #BABCB7;
+        }
+
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #888987;
+            border-color:#86D03A;
+            border-radius: 10px;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 20px 1px;
+            cursor: pointer;
+          }
+
+
+          fieldset {
+            background-color: #eeeeee;
+            display: block;
+            width: 70%;
+            border: 2px groove (internal value);
+          }
+
+          legend {
+            background-color: gray;
+          }
+
+          input {
+            margin: 5px;
+          }
+
+        </style>
+  </head>
+  <!-- bgcolor="#8bc34a" -->
+  <body bgcolor="FFFFFF">
+
+
+  
+  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+
+  <!-- Page Content goes here -->
+  <!-- <div class="center">
+
+         <form method='GET' action="/sumarTotales/">
+
+               <input type="submit" value="Ver Stock">
+         </form>
+        <form method='GET' action="/editarStockVacunatorio/">
+                <input type="submit" value="Actualizar Stock">
+        </form>
+
+
+
+
+    </form>
+    <! <div class="row justify-content-center align-items-center">
+         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4"> 
+
+
+  </div> -->
+  
+  <div class="center" style=" width: 90%; height: 70%; 
+              background-color: #DFDEDE ; border: 5px;
+              margin: 50px;
+              padding: 0.1%;
+              border-radius: 50px;
+              box-shadow: 10px 10px 40px 10px rgba(0, 0, 0, 0.4);">
+    <div class="row justify-content-center align-items-center">
+      <h2><FONT FACE="Verdana" style="margin: 0.5px">Menú</FONT></h2>
+      <hr>
+      <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="row">
+          <div class="input-field col s12" style="margin:2px">
+            <td><a href="/evaluarTurno/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px">Registrar Asistencia</a></td>
+            <th colspan="2"> </th><td><a href="/validarDni/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Nuevo Paciente</a></td>
+            <th colspan="2"> </th><td><a href="/eliminarVacunador/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Ver Turnos </a></td>
+          <!--  <th colspan="2"> </th><td><a href="/validarDni/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Nuevo Vacunador </a></td>
+            <th colspan="2"> </th><td><a href="/registroVacunador/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Editar Perfil </a></td>
+          </div>
+          <div class="input-field col s12" style="margin:2px">
+            <th colspan="2"> </th><td><a href="/lista-de-vacunadores/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Ver Vacunadores </a></td>
+            <th colspan="2"> </th><td><a href="/lista-de-pacientes/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Ver Pacientes </a></td>
+            <th colspan="2"> </th><td><a href="/lista-de-administradores/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin:10px"> Ver Administradores </a></td>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!---
+
+        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+          <caption >
+
+            <div class="left"><h6> Vacunadores </h6></div>
+            <!--<div class="right">
+              <select name="opciones">
+                    <option value="dni">DNI</option>
+                    <option value="vacunatorio">Vacunatorio</option>
+                    <option value="apeynom">Apellido</option>
+                    <option value="rol">Rol</option>
+              </select>
+            </div> -->
+          <!--
+          </caption>
+          <tr style="background-color:#86D03A">
+              <th>Apellido </th>
+              <th>Nombre</th>
+              <th>Vacunatorio</th>
+              <th>DNI</th>
+          </tr>
+        <div class="vacunadores">
+          {% for v in vacunadores %}
+              <div class="Vacunador">
+                <tr style="background-color:#CBCBCB, #B0B0B0">
+                  <th>{{v.vacunador_apellido}} </th>
+                  <th>{{v.vacunador_nombre}}</th>
+                  <th>{{v.vacunador_zona}}</th>
+                  <th>{{v.vacunador_dni}}</th>
+                </tr>
+              </div>
+          {% endfor %}
+        </div>
+      </table>
+      <br>
+        <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+          <caption >
+            <div class="left"><h6> Administradores </h6></div>
+
+            <!-- <div class="right">
+              <label for="filt_admin">Filtrar por:</label>
+              <select name="filt_admin" id="filt_admin">
+                <option value="Nombre">Nombre</option>
+                <option value="Apellido">Apellido</option>
+                <option value="dni">dni</option>
+              </select>
+            </div> -->
+          <!--
+          </caption>
+          <tr style="background-color:#86D03A">
+              <th>Apellido </th>
+              <th>Nombre</th>
+              <th>DNI</th>
+          </tr>
+          <div class="administradores">
+            {% for a in administradores %}
+            <div class="Administrador">
+              <tr style="background-color:#CBCBCB, #B0B0B0">
+                <td>{{a.administrador_apellido}} </td>
+                <td> {{a.administrador_nombre}}</td>
+                <td>{{a.administrador_dni}}</td>
+             </tr>
+            </div>
+            {% endfor %}
+
+
+          </div>
+
+
+
+        </table>
+
+        <br>
+          <table id:"tableUsers" style="background-color:#D6D8D2; margin: 0 auto;">
+            <caption >
+              <div class="left"><h6> Pacientes </h6></div>
+
+              <!-- <div class="right">
+                <label for="filt_admin">Filtrar por:</label>
+                <select name="filt_admin" id="filt_admin">
+                  <option value="Nombre">Nombre</option>
+                  <option value="Apellido">Apellido</option>
+                  <option value="dni">dni</option>
+                </select>
+              </div> -->
+            <!--
+            </caption>
+            <tr style="background-color:#86D03A">
+                <th>Apellido </th>
+                <th>Nombre</th>
+                <th>DNI</th>
+            </tr>
+            <div class="administradores">
+              {% for a in paciente %}
+              <div class="Administrador">
+                <tr style="background-color:#CBCBCB, #B0B0B0">
+                  <td>{{a.paciente_apellido}} </td>
+                  <td> {{a.paciente_nombre}}</td>
+                  <td>{{a.paciente_dni}}</td>
+               </tr>
+              </div>
+              {% endfor %}
+
+
+            </div>
+
+
+
+          </table>
+
+
+        <div class="">
+
+
+        </div>
+
+
+
+    <!--<div class= "left">
+        <p>
+       <img src="{% static 'imagenes/Logo.png' %}"  width="200" height="179">
+        </p>
+      </div>-->
+    <!-- Compiled and minified JavaScript -->
+    <div class="center">
+           <form method='GET' action="/eliminarVacunador/">
+
+
+           </form>
+
+           <body>
+             <div class="container py-4">
+               <div class="row">
+                 <div class="col-md-4">
+                   <tr>
+                     <body>
+                     </body>
+
+
+
+
+                   </tr>
+
+                 </div>
+                 <div class="col-md-12">
+
+     <div class="table-responsive">
+       <tr>
+
+
+
+
+       </tr>
+
+
+         <table class="table table-striped">
+
+           <tbody>
+             <tr>
+
+
+
+
+
+             </tr>
+
+
+
+
+           </tbody>
+         </table>
+
+
+
+
+
+
+
+
+
+
+
+           </body>
+
+
+
+
+
+    </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
+
+
+
+
+</html>

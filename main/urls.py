@@ -19,6 +19,9 @@ urlpatterns = [
     path('inicioPaciente/', views.inicioPaciente,name= 'inicioPaciente'),
     path('loginPaciente/', views.loginPaciente , name="loginPaciente"),
     path('evaluarTurno/', views.evaluarTurno , name="evaluarTurno"),
+    path('inicioVacunador/', views.inicio_vacuandor, name= 'inicioVacunador'),
+    path('registrarPacienteST/', views.reg_paciente_st , name="registrarVacunador"),
+    path('finRegistroPacienteST/', views.fin_reg_paciente_st , name="registrarVacunador"),
 
     path('accionDeEdicionStock/', views.accionDeEdicionStock , name="accionDeEdicionStock"),
     path('registrarVacunador/', views.registrarVacunador , name="registrarVacunador"),
