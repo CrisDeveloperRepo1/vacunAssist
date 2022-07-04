@@ -1,16 +1,16 @@
 from email import message
 from random import random
-#from certifi import contents
+from certifi import contents
 import django
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-# from attr import fields
+from attr import fields
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from matplotlib.style import context
 from numpy import datetime_as_string
-#from matplotlib.style import context
+from matplotlib.style import context
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio, Dni
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -23,7 +23,7 @@ from email import message
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm
-# from attr import fields
+from attr import fields
 from django.conf import settings
 
 from django.shortcuts import render
@@ -43,8 +43,7 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth import login, logout, authenticate
 
-# def inicio_admin(request):
-#     # data2= {
+# def inicio_admin(request#     # data2= gfffikuj
 #     #   'form' :PacienteRegistro()
 #     # }
 #     # if request.method == 'POST':
@@ -81,6 +80,7 @@ from django.contrib.auth import login, logout, authenticate
 def registrarVacunador (request):
     admin=Administrador.objects.get(administrador_dni=12345678)
     #nombre=request.POST['nombre']
+
     apellido=request.POST['apellido']
     # admin.administrador_apellido=request.POST['apellido']
     # admin.save()
@@ -98,11 +98,11 @@ def registrarVacunador (request):
 
 #### agregar metodo q devuelva el ultimo objeto de la tabla
     vacunador=Vacunador.objects.create(vacunador_nombre=nombre,vacunador_apellido=apellido,vacunador_fechaNac=fechaNac,vacunador_zona=zona,vacunador_dni=dni,vacunador_email=email,codigo=Codigo,contraseña=Contraseña)
-    
+
     fecha = datetime.strptime(fechaNac, "%Y-%m-%d")
     #resultado = (datetime.now().date().year - (fecha).year)
     resultado = (datetime.now().date() + relativedelta(years=-2))
-    #resultado -= ((datetime.now().month) < (fecha.month)) and ((datetime.now().day) < (fecha.day)) 
+    #resultado -= ((datetime.now().month) < (fecha.month)) and ((datetime.now().day) < (fecha.day))
     #print(resultado)
 
     send_email_registro(email, Codigo, dni, nombre)
@@ -1306,7 +1306,7 @@ def validarDni(request):
             one = Dni.objects.get(num_dni = dni)
             if one.num_dni == dni:
                 if Logeado.objects.filter(numId = 1).exists():
-                    #le tuve que asignar numid = 1 porque el logueado 
+                    #le tuve que asignar numid = 1 porque el logueado
                     # al momento de registrar un vacunador es un administrador
                     try:
                         vacun = Vacunador.objects.get(vacunador_dni = dni)
@@ -1323,7 +1323,7 @@ def validarDni(request):
                         }
                         #print(str(resultado))
                         return render(request, "main/registro_vacunador.html", context)
-                        
+
                 if Logeado.objects.filter(numId = 3).exists():
                     try:
                         paciente = Paciente.objects.get(paciente_dni = dni)
@@ -1351,7 +1351,7 @@ def lista_pacientes(request):
     return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})
 
 def lista_administradores(request):
-    administradorList= Administrador.objects.all() 
+    administradorList= Administrador.objects.all()
     return render(request,"main/listado-administradores.html",{"administradores" : administradorList})
 def lista_vacunadores(request):
     vacunadoresList= Vacunador.objects.all()
