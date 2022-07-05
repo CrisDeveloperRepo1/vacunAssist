@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from matplotlib.style import context
 from numpy import datetime_as_string
 from matplotlib.style import context
-from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio, Dni
+from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio, Dni, Paciente_ST
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
 from django.conf import settings
@@ -207,11 +207,102 @@ def inicioPaciente(request):
     # return render(request, "main/inicioPaciente.html",{"codigo": OTP})
 ############ REGISTRO DE PACIENTE ##########################################################
 
+def send_mail_pre_registro (email, dni, nombre):
+    context = {"mail" : email,
+               "dni" : dni,
+               "nombre" : nombre
+               }
+    template = get_template("main/correo-pre-registro.html")
+    content = template.render(context)
+
+    email = EmailMultiAlternatives (
+        "Finalización de registro en VacunAssist ",
+        "",
+        settings.EMAIL_HOST_USER,
+        [email]
+    )
+
+    email.attach_alternative(content, "text/html")
+    email.send()
+
+
 def fin_reg_paciente_st (request):
     return render (request, "main/registrarPaciente.html")
 
 def reg_paciente_st (request):
-    return render(request, "main/registro-paciente-sin-turno.html")
+    nombre=request.POST['nombre']
+    apellido=request.POST['apellido']
+    #fecha=request.POST['fechaesperada']
+    dni=request.POST['dni']
+    email=request.POST['email']
+    #zona=request.POST['vacunatorio']
+    #opGripe=request.POST['opcVacunaGripe']
+    #opFA=request.POST['opcVacunaFA']
+    #opCoviP1=request.POST['opcVacunaCovidP1']
+    #opCoviP2=request.POST['opcVacunaCovidP2']
+    opcion=request.POST["opcVacunas"]
+    
+    #Contraseña=request.POST['Contraseña']
+
+    inicio = datetime(2022, 6, 30)
+    final =  datetime(2022, 9, 28)
+
+
+
+    # random_date = inicio + (final - inicio) * random.random()
+    # vacFaTurno = random_date
+    random_turnoCovid = inicio + (final - inicio) * random.random()
+    random_gripe = inicio + (final - inicio) * random.random()
+    #vac_Gripe_turno=random_gripe
+    #vac_Covid_turno1= random_turnoCovid
+    #vac_Covid_turno2
+    #vac_Amarilla_turno= models.DateTimeField(null=True)
+
+    #print(random_date)
+    opGripe = opFA = opCoviP1 = opCoviP2 = 2
+    turnoGripe = turnoFiebre = turnoCovid1 = turnoCovid2 = None
+    asistenciaGripe = asistenciaCovid1 = asistenciaCovid2 = asistenciaFiebre= 2
+    if (opcion == "1"):
+        opGripe= 1
+        asistenciaGripe = 1
+        turnoGripe= datetime.now()
+    if (opcion == "2"):
+        opFA=1
+        asistenciaFiebre = 1
+        turnoFiebre= datetime.now()
+    if (opcion == "3"):
+        opCoviP1=1
+        asistenciaCovid1 = 1
+        turnoCovid1= datetime.now()
+    if (opcion == "4"):
+        opCoviP2=1
+        asistenciaCovid2 = 1
+        turnoCovid2= datetime.now()
+
+    Paciente_ST.objects.create(vac_Covid2_aplicada=opCoviP2,
+                                        vac_Covid1_aplicada=opCoviP1,
+                                        vac_Amarilla_aplicada=opFA,
+                                        vac_Gripe_aplicada=opGripe,
+                                        pacienteST_nombre=nombre,
+                                        pacienteST_apellido=apellido, 
+                                        pacienteST_dni=dni,
+                                        pacienteST_email=email,
+                                        vac_Gripe_turno= turnoGripe,
+                                        vac_Covid_turno1= turnoCovid1,
+                                        vac_Covid_turno2= turnoCovid2,
+                                        vac_Amarilla_turno= turnoFiebre,
+                                        vac_Covid1era_asistencia= asistenciaCovid1,
+                                        vac_Covid2da_asistencia= asistenciaCovid2,
+                                        vac_Amarilla_asistencia= asistenciaFiebre,
+                                        vac_Gripe_asistencia= asistenciaGripe
+                                        )
+    #messages.error(request, " El paciente ya exite")
+
+    send_mail_pre_registro(email, dni, nombre)
+    print( opcion)
+########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
+    ##########send_email_registro(email, codigo, dni, nombre )
+    return render(request, "main/registro-paciente-sin-turno.html", {'opc': 1})
 
 def inicio_vacuandor (request):
     return render(request, "main/inicio-vacunador.html")

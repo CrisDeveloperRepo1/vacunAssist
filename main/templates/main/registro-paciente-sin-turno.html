@@ -78,70 +78,81 @@ input {
 </table>
 <br>
 <!-- <form  action="/registroPaciente/" method="post">{% csrf_token %} -->
-<form  action="/registrarVacunador/" method="post">
+<form  action="/registrarPacienteST/" method="post">
   <fieldset >
     {% csrf_token %}
     <legend style="color:white; padding: 10px 15px">Nuevo Paciente</legend>
      <div class="row">
       <form class="col s6">
-        <div class="row">
-          <div class="input-field col s6">
-            <input type="text" class="validate" name="nombre" value="{{nombre}}"  readonly>
+        <div class="input-field col s12 m6" style="margin: 0px 0px 0px 0px">
+          <div >
             <label for="nombre"> <span class="black-text text-darken-2"> Nombre </span></label>
+            <input type="text" class="validate" name="nombre" value="{{nombre}}"  readonly>
           </div>
-          <div class="input-field col s6">
-            <input  type="text" class="validate" name="apellido" value="{{apellido}}" readonly >
+          <div >
             <label for="apellido"> <span class="black-text text-darken-2"> Apellido </span></label>
+            <input  type="text" class="validate" name="apellido" value="{{apellido}}" readonly >
           </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s6">
-            <input placeholder="Email" id="email" type="email" class="validate" name="email" required>
+          <div >
             <label > <span class="black-text text-darken-2"> Email </span></label>
+            <input placeholder="Email" id="email" type="email" class="validate" name="email" required>
           </div>
-          <div class="input-field col s6">
-            <input  id="dni" type="tel" class="validate" name="dni" value="{{dni}}" readonly>
+          <div >
             <label for="dni"> <span class="black-text text-darken-2"> DNI </span></label>
+            <input  id="dni" type="tel" class="validate" name="dni" value="{{dni}}" readonly>
           </div>
         </div>
-        <!--
-        <div class="row">
-          <div class="input-field col s6">
-            <label for="birthday"> <span class="black-text text-darken-2"> Fecha de nacimiento </span></label>
-        <input placeholder type="date" id="birthday" name="birthday" class="validate" max="{{fecha_min}}" required>
-          </div>
-        <div class="row">
-          <div class="input-field col s6">
-            <!--<label >  <span class="black-text text-darken-2"> Vacunatorio  </span></label> -->
-            <!--
-            <select type="text" id= "vacunatorio" class="browser-default"   name="vacunatorio" required>
-              <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
-              <option value="Cementerio Municipal">Cementerio Municipal</option>
-              <option value="Terminal de Omnibús">Terminal de Omnibus</option>
-              <option value="Municipalidad">Municipalidad</option>
-            </select>
+        <div class="input-field col s12 m6" style="margin: 0px 0px 0px 0px">
+          <h3 style="margin: 0 auto"> Información sanitaria </h3>
 
+          <!--<div >
+            <label >  <span class="black-text text-darken-2"> ¿Este año se vacunó contra la gripe?  </span></label>
+            <select id= "opcVacunaGripe" class="browser-default"   name="opcVacunaGripe" required>
+              <option value="" disabled selected>Elija una opción </option>
+              <option value=2>no</option>
+              <option value=1>si</option>
+
+            </select>
+          </div>
+          <div >
+            <label >  <span class="black-text text-darken-2"> ¿Está vacunado contra la fiebre amarilla?  </span></label>
+            <select id= "opcVacunaFA" class="browser-default"   name="opcVacunaFA" required>
+              <option value="" disabled selected> Elija una opción </option>
+              <option value=2>no</option>
+              <option value=1>si</option>
+
+            </select>
+          </div>
+          <div >
+            <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
+            <select id= "opcVacunaCovidP1" class="browser-default"   name="opcVacunaCovidP1" required>
+              <option value="" disabled selected> Elija una opción </option>
+              <option value=2>no</option>
+              <option value=1>si</option>
+
+            </select>
+          </div>
+          <div >
+           <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label> 
+            <select  id= "opcVacunaCovidP2" class="browser-default"   name="opcVacunaCovidP2" required>
+              <option value="" disabled selected> Elija una opción</option>
+              <option value=2>no</option>
+              <option value=1>si</option>
+            </select>
+          </div> -->
+          <div >
+            <label >  <span class="black-text text-darken-2">Elija la vacuna que le aplicó el paciente </span> </label> 
+             <select  id= "opcVacunas" class="browser-default"   name="opcVacunas" required>
+               <option value="" disabled selected> Elija una opción</option>
+               <option value=1>Vacuand de la gripe</option>
+               <option value=2>Vacuna de la Fiebre amarilla</option>
+               <option value=3>Vacuan del Covid 19 (1era dosis)</option>
+               <option value=4>Vacuan del Covid 19 (2da dosis)</option>
+             </select>
            </div>
-       </div>
-       <div class="row">
-        <div class="input-field col s6">
-          <input placeholder="Contraseña" id="contraseña" type="password" class="validate" name="contraseña" required>
-         <!-- <input placeholder="Contraseña" id="contraseña" type="text" class="validate" name="pasword"> -->
-         <!--
-         <label for="dni"> <span class="black-text text-darken-2"> Contraseña </span></label>
-        </div>
-      </div>
-      </form> 
-    </div>
-        <!--  <input type="checkbox" name="vac_gripe" value="gripe">
-          <label for="información"> Vacuna de la gripe</label><br>
-          <input type="checkbox" name="vac_fa" value="fiebre ama">
-          <label for="información"> vacuna de la fiebre amarilla </label><br>
-          <input type="checkbox" name="vac_covid" value="covid1" checked>
-          <label for="información"> vacuna del covid 1era dosis</label><br>
-          <input type="checkbox" name="vac_covid" value="covid1" checked>
-          <label for="información"> vacuna del covid 2da dosis </label><br> -->
-          <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrar Paciente </button>
+          <div>
+          <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" style="margin: 10px 0px 0px 0px " > Registrar Paciente </button>
+          </div>
           <!-- <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button> -->
           <div class="popup" id="popup">
             <img src="{% static 'imagenes/tick.png' %}">
@@ -151,6 +162,7 @@ input {
             <p> Gracias por utilizar nuestro sistema de turnos </p> -->
             <button type="submit" onclick="closePopup()"> Ok </button>
           </div>
+        </div>
    </fieldset>
   </form>
 

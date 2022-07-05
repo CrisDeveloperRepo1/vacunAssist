@@ -5,7 +5,7 @@ from .models import Vacuna_Gripe
 from .models import Vacuna_Fiebre_Am
 from .models import Vacuna_Covid
 from .models import Vacunatorio, SolicitudTurnoFA
-from .models import Administrador,Logeado, TurnoFAAprobados, Dni
+from .models import Administrador,Logeado, TurnoFAAprobados, Dni, Paciente_ST
 
 
 # class VacunadoresList(admin.ModelAdmin):
@@ -45,4 +45,5 @@ admin.site.register(Logeado)
 admin.site.register(TurnoFAAprobados)
 admin.site.register(SolicitudTurnoFA)
 admin.site.register(Dni)
+admin.site.register(Paciente_ST)
 # Register your models here.
