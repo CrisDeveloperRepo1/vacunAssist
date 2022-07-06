@@ -53,6 +53,70 @@
   <div class= "caja-verde">
    <img src="{% static 'imagenes/Logo.png' %}" alt="fondo" >
   </div>
+  <div class="input-field col s12 m6" required>
+    <h3> Información sanitaria </h3>
+
+    <div class="form-group">
+      <label >  <span class="black-text text-darken-2"> ¿Este año se vacunó contra la gripe?  </span></label>
+      <select id= "cbxLenguajes" class="browser-default" onchange="activarcaja()" required>
+        <option value="javaScript" >Javascript </option>
+        <option value="c#">C#</option>
+        <option value="java">Java</option>
+
+      </select>
+      <script type="text/javascript">
+          function activarcaja(){
+
+            let cbxLenguajes= document.getElementById('cbxLenguajes');
+            let lenguaje = cbxLenguajes.value;
+            document.getElementById('lblLenguajeSeleccionado').innerText='bueno su seleccion es lenguaje ${lenguaje}.';
+          }
+
+      </script>
+
+    </div>
+    <div class="form-group">
+     <label >  <span class="black-text text-darken-2"> fecha de aplicacion,vacuna de la gripe </span></label>
+      <input input type="date" id="fechaGripe" name="fechaGripe" max="{{fecha_actual}}" value ="no" >
+    </div>
+    <div class="form-group">
+      <label >  <span class="black-text text-darken-2"> ¿Está vacunado contra la fiebre amarilla?  </span></label>
+      <select id= "opcVacunaFA" class="browser-default"   name="opcVacunaFA" required>
+        <option value="" disabled selected> Elija una opción </option>
+        <option value=2>no</option>
+        <option value=1>si</option>
+
+      </select>
+    </div>
+    <div class="form-group">
+      <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
+      <select id= "opcVacunaCovidP1" class="browser-default"   name="opcVacunaCovidP1" required>
+        <option value="" disabled selected> Elija una opción </option>
+        <option value=2>no</option>
+        <option value=1>si</option>
+
+      </select>
+    </div>
+    <div class="form-group">
+     <label >  <span class="black-text text-darken-2">fecha de aplicacion de  la vacuna </span></label>
+      <input input type="date" id="fechaesperada" name="fechaesperada" max="{{fecha_actual}}" >
+    </div>
+    <div class="form-group">
+     <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label>
+      <select  id= "opcVacunaCovidP2" class="browser-default"   name="opcVacunaCovidP2" required>
+        <option value="" disabled selected> Elija una opción</option>
+        <option value=2>no</option>
+        <option value=1>si</option>
+      </select>
+    </div>
+    <div class="form-group">
+     <label >  <span class="black-text text-darken-2">fecha de aplicacion de  la vacuna</span></label>
+      <input input type="date" id="fechaesperada" name="fechaesperada" max="{{fecha_actual}}" >
+    </div>
+  </div>
+
+
+
   </div>
 
     <!-- Compiled and minified JavaScript -->
