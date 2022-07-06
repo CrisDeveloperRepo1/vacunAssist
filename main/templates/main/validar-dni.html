@@ -51,7 +51,7 @@ input[type=number] { -moz-appearance:textfield; }
               <!-- <li><a href="sass.html">inicio</a></li>
               <li><a href="badges.html">registro</a></li> -->
               <!-- <li><a href="collapsible.html">entrar</a></li> -->
-              <li><a href="/login/">  Volver </a></li>
+              <li><a href="javascript: history.go(-1)">  Volver </a></li>
             </ul>
           </div>
         </div>
@@ -79,7 +79,7 @@ input[type=number] { -moz-appearance:textfield; }
          <hr>
        <div class="center"
        style="background:#BCBCBC; margin: 10px 100px">
-       <form name='formulario' action ="/validarDni/" method='GET' style='text-align:center'>
+       <form name='formulario' action ="{{dir}}" method='GET' style='text-align:center'>
        <!-- <form name='formulario'  method='post' style='text-align:center'> -->
          <!-- Campo de entrada de usuario -->
          <font face='Verdana'><h6><strong>DNI</strong></h6></font>

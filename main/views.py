@@ -227,7 +227,28 @@ def send_mail_pre_registro (email, dni, nombre):
 
 
 def fin_reg_paciente_st (request):
-    return render (request, "main/registrarPaciente.html")
+    return render (request, "main/registrarPaciente.html", context)
+    
+def validar_dni_st (request):
+    if (request.method == "GET"):
+        print("holaa22")
+        dni= request.GET.get("dni")
+        if Paciente_ST.objects.filter(pacienteST_dni = dni).exists() :
+            print("holaa12344444")
+            paciente = Paciente_ST.objects.get(pacienteST_dni = dni)
+            context = {
+                'nombre' : paciente.pacienteST_nombre,
+                'apellido' : paciente.pacienteST_apellido,
+                'dni' : paciente.pacienteST_dni, 
+                'mail' : paciente.pacienteST_email,
+                'dir' : "/validarDniST/"
+            }
+            return render (request, "main/registrarPaciente.html", context)
+        else:
+            if (dni != None):
+                messages.error(request, "El Dni es incorrecto")
+            return render(request, "main/validar-dni.html")
+
 
 def reg_paciente_st (request):
     nombre=request.POST['nombre']
@@ -296,13 +317,9 @@ def reg_paciente_st (request):
                                         vac_Amarilla_asistencia= asistenciaFiebre,
                                         vac_Gripe_asistencia= asistenciaGripe
                                         )
-    #messages.error(request, " El paciente ya exite")
 
     send_mail_pre_registro(email, dni, nombre)
-    print( opcion)
-########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
-    ##########send_email_registro(email, codigo, dni, nombre )
-    return render(request, "main/registro-paciente-sin-turno.html", {'opc': 1})
+    return render(request, "main/registro-paciente-sin-turno.html", {'opc': opcion})
 
 def inicio_vacuandor (request):
     return render(request, "main/inicio-vacunador.html")
@@ -1401,6 +1418,9 @@ def reset_pass(request):
 
 
 def validarDni(request):
+    contexto = {
+                'dir' : "/validarDni/"
+            }
     if (request.method == "GET"):
         dni= request.GET.get("dni")
         try:
@@ -1412,7 +1432,7 @@ def validarDni(request):
                     try:
                         vacun = Vacunador.objects.get(vacunador_dni = dni)
                         messages.error(request, "El Dni ya está registrado")
-                        return render(request, "main/validar-dni.html")
+                        return render(request, "main/validar-dni.html", contexto)
                     except ObjectDoesNotExist:
                        # log = Dni.objects.get(num_dni = dni)
                         resultado = (datetime.now().date() + relativedelta(years=-18))
@@ -1429,7 +1449,7 @@ def validarDni(request):
                     try:
                         paciente = Paciente.objects.get(paciente_dni = dni)
                         messages.error(request, "El Dni ya está registrado")
-                        return render(request, "main/validar-dni.html")
+                        return render(request, "main/validar-dni.html", contexto)
                     except ObjectDoesNotExist:
                        log = Dni.objects.get(num_dni = dni)
                        resultado = (datetime.now().date() + relativedelta(years=-18))
@@ -1444,9 +1464,17 @@ def validarDni(request):
                        return render(request, "main/registrarPaciente.html", context)
                 if Logeado.objects.filter(numId = 2).exists():
                     try:
-                        paciente = Paciente.objects.get(paciente_dni = dni)
-                        messages.error(request, "El Dni ya está registrado")
-                        return render(request, "main/validar-dni.html")
+                        print("hola entre en el logueado 2")
+                        if Paciente_ST.objects.filter(pacienteST_dni = dni).exists() :
+                            print ("entré al if del paciente")
+                            messages.error(request, "El Dni ya inició el pre registro")
+                        else: 
+                            if Paciente.objects.filter(paciente_dni = dni).exists() :
+                                print ("entré al else del paciente")
+                                messages.error(request, "El Dni ya está registrado")
+                        
+                            #messages.error(request, "El Dni ya inició l pre registro")
+                        return render(request, "main/validar-dni.html", contexto)
                     except ObjectDoesNotExist:
                        log = Dni.objects.get(num_dni = dni)
                        resultado = (datetime.now().date() + relativedelta(years=-18))
@@ -1458,12 +1486,14 @@ def validarDni(request):
                         }
                        #print(str(resultado))
                        #print(log.num_dni + log.nombre + log.apellido)
-                       return render(request, "main/registro-paciente-sin-turno.html", context)
+                       return render(request, "main/registro-paciente-sin-turno.html", context)    
+                        
         except ObjectDoesNotExist:
             if (dni != None):
                 messages.error(request, "El Dni es inválido ")
-            return render(request, "main/validar-dni.html")
+            return render(request, "main/validar-dni.html", contexto)
 
+        
 def lista_pacientes(request):
     PacienteList= Paciente.objects.all()
     return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})

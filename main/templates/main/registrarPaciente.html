@@ -50,12 +50,12 @@ input[type=number] { -moz-appearance:textfield; }
                 <div class="form-group">
                   
                   <label >  <span class="black-text text-darken-2"> Nombre  </span></label>
-                  <input type="text" id="nombre" name="nombre" clas="form-control" placeholder="{{nombre}}" minlength="3" maxlength="20" required disabled>
+                  <input type="text" id="nombre" value="{{nombre}}" name="nombre" clas="form-control" placeholder="" minlength="3" maxlength="20" required Readonly >
                 </div>
 
                 <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> Apellido  </span></label>
-                  <input type="text" id="apellido" name="apellido" clas="form-control" placeholder="{{apellido}}" minlength="1" maxlength="50" required disabled>
+                  <input type="text" id="apellido" name="apellido" clas="form-control" value="{{apellido}}" placeholder="" minlength="1" maxlength="50" required Readonly >
                 </div>
 
                 <div class="form-group">
@@ -70,7 +70,7 @@ input[type=number] { -moz-appearance:textfield; }
                 <br>
                 <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> DNI  </span></label>
-                   <input type="number" id="dni" name="dni" clas="form-control" placeholder="{{dni}}"  minlength="8" maxlength="8" required disabled>
+                   <input type="number" id="dni" value="{{dni}}" name="dni" clas="form-control" placeholder=""  minlength="8" maxlength="8" required Readonly>
                 </div>
 
                  <div class="form-group">
@@ -80,7 +80,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                  <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> Email  </span></label>
-                   <input type="text" id="email" name="email" clas="form-control" placeholder="E-mail"  maxlength="50" required>
+                   <input type="text" id="email" name="email" clas="form-control" placeholder="" value="{{mail}}"  maxlength="50" Readonly>
                  </div>
 
                  <div class="form-group">
