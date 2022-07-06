@@ -141,4 +141,26 @@ class Dni (models.Model):
     
     def __str__(self):
        return self.num_dni
+
+class Paciente_ST (models.Model):
+    opciones=((1, 'Si'), (2, 'No'))
+    pacienteST_dni= models.CharField(max_length=200)
+    pacienteST_nombre= models.CharField(max_length=200)
+    pacienteST_apellido= models.CharField(max_length=20)
+    pacienteST_email= models.EmailField(max_length=254)
+    vac_Gripe_aplicada=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Gripe_turno= models.DateTimeField(null=True)
+    vac_Gripe_asistencia=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Amarilla_aplicada=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Amarilla_turno= models.DateTimeField(null=True)
+    vac_Amarilla_asistencia=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Covid1_aplicada=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Covid2_aplicada=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Covid_turno1= models.DateTimeField(null=True)
+    vac_Covid_turno2= models.DateTimeField(null=True)
+    vac_Covid1era_asistencia=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Covid2da_asistencia=models.SmallIntegerField(choices=opciones,default=2)
+    
+    def __str__(self):
+       return self.pacienteST_dni
     
