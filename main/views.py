@@ -231,17 +231,20 @@ def fin_reg_paciente_st (request):
     
 def validar_dni_st (request):
     if (request.method == "GET"):
-        print("holaa22")
         dni= request.GET.get("dni")
         if Paciente_ST.objects.filter(pacienteST_dni = dni).exists() :
-            print("holaa12344444")
             paciente = Paciente_ST.objects.get(pacienteST_dni = dni)
             context = {
                 'nombre' : paciente.pacienteST_nombre,
                 'apellido' : paciente.pacienteST_apellido,
                 'dni' : paciente.pacienteST_dni, 
                 'mail' : paciente.pacienteST_email,
-                'dir' : "/validarDniST/"
+                'vac_covid1' : paciente.vac_Covid1_aplicada,
+                'vac_covid2' : paciente.vac_Covid2_aplicada,
+                'vac_amarilla' : paciente.vac_Amarilla_aplicada,
+                'vac_gripe' : paciente.vac_Gripe_aplicada,
+                'dir' : "/validarDniST/",
+                'fecha_actual': str(datetime.now().date()),
             }
             return render (request, "main/registrarPaciente.html", context)
         else:
@@ -346,14 +349,14 @@ def registroPaciente(request):
     # vacFaTurno = random_date
     random_turnoCovid = inicio + (final - inicio) * random.random()
     random_gripe = inicio + (final - inicio) * random.random()
+    random_turnoCovid2 = inicio + (final - inicio) * random.random()
     #vac_Gripe_turno=random_gripe
     #vac_Covid_turno1= random_turnoCovid
     #vac_Covid_turno2
     #vac_Amarilla_turno= models.DateTimeField(null=True)
 
     #print(random_date)
-
-
+    
 ########## GENERO EL CODIGO DE 4 DIGITOS #################################################
 
     digits = "0123456789"
@@ -366,9 +369,47 @@ def registroPaciente(request):
     digitos = '0123456789'
     longitud = 4  # La longitud que queremos
     codigo = ''.join(choice(digitos) for digito in range(longitud))
-
-
-    paciente=Paciente.objects.create(vac_Covid2_aplicada=opCoviP2,vac_Covid1_aplicada=opCoviP1,vac_Amarilla_aplicada=opFA,vac_Gripe_aplicada=opGripe,codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
+    
+    if Paciente_ST.objects.filter(pacienteST_dni = dni ).exists():
+        asistenciaGripe = asistenciaFiebre = asistenciaCovid1 = asistenciaCovid2 = 2
+        turno_fiebre= None
+        paciente_st = Paciente_ST.objects.get(pacienteST_dni = dni )
+        if (opGripe == "1"):
+            opGripe= 1
+            random_gripe= paciente_st.vac_Gripe_turno
+            asistenciaGripe = paciente_st.vac_Gripe_asistencia       
+            #turnoGripe= datetime.now()
+        if (opFA == "1"):
+            opFA= 1
+            turno_fiebre = paciente_st.vac_Amarilla_turno
+            asistenciaFiebre = paciente_st.vac_Amarilla_asistencia
+            #turnoFiebre= datetime.now()
+        if (opCoviP1 == "1"):
+            opCoviP1= 1
+            random_turnoCovid = paciente_st.vac_Covid_turno1
+            asistenciaCovid1 = paciente_st.vac_Covid1era_asistencia
+            #turnoCovid1= datetime.now()
+            if (opCoviP2 == "1"):
+                opCoviP2= 1
+                random_turnoCovid2 = paciente_st.vac_Covid_turno2
+                asistenciaCovid2 = paciente_st.vac_Covid2da_asistencia
+        else:
+            random_turnoCovid2= None
+                #turnoCovid2= datetime.now()
+        paciente=Paciente.objects.create(
+            vac_Gripe_turno=random_gripe, vac_Gripe_aplicada=opGripe, vac_Gripe_asistencia= asistenciaGripe,
+            vac_Covid_turno1= random_turnoCovid, vac_Covid1_aplicada=opCoviP1, vac_Covid1era_asistencia= asistenciaCovid1,
+            vac_Covid2_aplicada=opCoviP2, vac_Covid_turno2=random_turnoCovid2, vac_Covid2da_asistencia=asistenciaCovid2,
+            vac_Amarilla_aplicada=opFA, vac_Amarilla_turno=turno_fiebre, vac_Amarilla_asistencia=asistenciaFiebre,
+                                         codigo=codigo, contraseña=Contraseña,
+                                         paciente_nombre=nombre, paciente_apellido=apellido,
+                                         paciente_fechaNac=fecha, paciente_zona=zona,
+                                         paciente_dni=dni, paciente_email=email,
+                                         )
+        paciente_st.delete()
+    else:
+        paciente=Paciente.objects.create(vac_Covid2_aplicada=opCoviP2,vac_Covid1_aplicada=opCoviP1,vac_Amarilla_aplicada=opFA,vac_Gripe_aplicada=opGripe,codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
+    
     #messages.error(request, " El paciente ya exite")
 
 
@@ -1463,30 +1504,28 @@ def validarDni(request):
                        #print(log.num_dni + log.nombre + log.apellido)
                        return render(request, "main/registrarPaciente.html", context)
                 if Logeado.objects.filter(numId = 2).exists():
-                    try:
-                        print("hola entre en el logueado 2")
-                        if Paciente_ST.objects.filter(pacienteST_dni = dni).exists() :
-                            print ("entré al if del paciente")
-                            messages.error(request, "El Dni ya inició el pre registro")
-                        else: 
-                            if Paciente.objects.filter(paciente_dni = dni).exists() :
-                                print ("entré al else del paciente")
-                                messages.error(request, "El Dni ya está registrado")
-                        
-                            #messages.error(request, "El Dni ya inició l pre registro")
+                    print("hola entre en el logueado 2")
+                    if Paciente_ST.objects.filter(pacienteST_dni = dni).exists() :
+                        print ("entré al if del paciente")
+                        messages.error(request, "El Dni ya inició el pre registro")
                         return render(request, "main/validar-dni.html", contexto)
-                    except ObjectDoesNotExist:
-                       log = Dni.objects.get(num_dni = dni)
-                       resultado = (datetime.now().date() + relativedelta(years=-18))
-                       context = { 'dni': one.num_dni,
-                            'nombre': one.nombre,
-                            'apellido': one.apellido,
-                            'fecha_actual': str(datetime.now().date()),
-                            'fecha_min': str(resultado),
-                        }
-                       #print(str(resultado))
-                       #print(log.num_dni + log.nombre + log.apellido)
-                       return render(request, "main/registro-paciente-sin-turno.html", context)    
+                    else: 
+                        if Paciente.objects.filter(paciente_dni = dni).exists() :
+                            print ("entré al else del paciente")
+                            messages.error(request, "El Dni ya está registrado")
+                            return render(request, "main/validar-dni.html", contexto)
+                        
+                    log = Dni.objects.get(num_dni = dni)
+                    resultado = (datetime.now().date() + relativedelta(years=-18))
+                    context = { 'dni': one.num_dni,
+                        'nombre': one.nombre,
+                        'apellido': one.apellido,
+                        'fecha_actual': str(datetime.now().date()),
+                        'fecha_min': str(resultado),
+                    }
+                    #print(str(resultado))
+                    #print(log.num_dni + log.nombre + log.apellido)
+                    return render(request, "main/registro-paciente-sin-turno.html", context)    
                         
         except ObjectDoesNotExist:
             if (dni != None):

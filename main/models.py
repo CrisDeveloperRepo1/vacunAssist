@@ -65,7 +65,7 @@ class Paciente(models.Model):
     paciente_email= models.EmailField(max_length=254)
     vac_Gripe_aplicada=models.SmallIntegerField(choices=opciones,default=2)
     vac_Gripe_turno= models.DateTimeField(null=True)
-    vac_Amarilla_asistencia=models.SmallIntegerField(choices=opciones,default=2)
+    vac_Gripe_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Amarilla_aplicada=models.SmallIntegerField(choices=opciones,default=2)
     vac_Amarilla_turno= models.DateTimeField(null=True)
     vac_Amarilla_asistencia=models.SmallIntegerField(choices=opciones,default=2)

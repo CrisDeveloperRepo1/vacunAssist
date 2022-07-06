@@ -60,7 +60,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                 <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> Vacunatorio  </span></label>
-                  <select  id= "vacunatorio" class="browser-default"   name="vacunatorio">
+                  <select  id= "vacunatorio" class="browser-default" autofocus   name="vacunatorio">
                     <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
                     <option value="Cementerio Municipal">Cementerio Municipal</option>
                     <option value="Terminal de Omnibús">Terminal de Omnibús</option>
@@ -90,40 +90,53 @@ input[type=number] { -moz-appearance:textfield; }
                 </div>
                 <div class="input-field col s12 m6" required>
                   <h3> Información sanitaria </h3>
-
+                  
                   <div class="form-group">
                     <label >  <span class="black-text text-darken-2"> ¿Este año se vacunó contra la gripe?  </span></label>
-                    <select id= "opcVacunaGripe" class="browser-default"   name="opcVacunaGripe" required>
+                    <select id= "opcVacunaGripe" class="browser-default"   name="opcVacunaGripe" value=1 Readonly required>
+                      {% if vac_gripe  == 1 %}
+                      <option value=1 selected >Si</option>
+                      {% else %}
                       <option value="" disabled selected>Elija una opción </option>
-                      <option value=2>no</option>
-                      <option value=1>si</option>
-
+                      <option value=2>No</option>
+                      <option value=1>Si</option>
+                      {% endif %}
                     </select>
                   </div>
                   <div class="form-group">
                     <label >  <span class="black-text text-darken-2"> ¿Está vacunado contra la fiebre amarilla?  </span></label>
                     <select id= "opcVacunaFA" class="browser-default"   name="opcVacunaFA" required>
-                      <option value="" disabled selected> Elija una opción </option>
-                      <option value=2>no</option>
-                      <option value=1>si</option>
-
+                      {% if vac_amarilla  == 1 %}
+                      <option value=1 selected >Si</option>
+                      {% else %}
+                      <option value="" disabled selected>Elija una opción </option>
+                      <option value=2>No</option>
+                      <option value=1>Si</option>
+                      {% endif %}
                     </select>
                   </div>
                   <div class="form-group">
-                    <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
+                    <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra doSis de la vacuna contra el covid?  </span></label>
                     <select id= "opcVacunaCovidP1" class="browser-default"   name="opcVacunaCovidP1" required>
-                      <option value="" disabled selected> Elija una opción </option>
-                      <option value=2>no</option>
-                      <option value=1>si</option>
-
+                      {% if vac_covid1  == 1 %}
+                      <option value=1 selected >Si</option>
+                      {% else %}
+                      <option value="" disabled selected>Elija una opción </option>
+                      <option value=2>No</option>
+                      <option value=1>Si</option>
+                      {% endif %}
                     </select>
                   </div>
                   <div class="form-group">
-                   <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label> 
+                   <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da doSis de la vacuna contra el covid? </span> </label> 
                     <select  id= "opcVacunaCovidP2" class="browser-default"   name="opcVacunaCovidP2" required>
-                      <option value="" disabled selected> Elija una opción</option>
-                      <option value=2>no</option>
-                      <option value=1>si</option>
+                      {% if vac_covid2  == 1 %}
+                      <option value=1 selected >Si</option>
+                      {% else %}
+                      <option value="" disabled selected>Elija una opción </option>
+                      <option value=2>No</option>
+                      <option value=1>Si</option>
+                      {% endif %}
                     </select>
                   </div>
                 </div>
