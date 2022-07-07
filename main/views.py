@@ -1,11 +1,16 @@
 from email import message
 from random import random
+from certifi import contents
 import django
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from attr import fields
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from matplotlib.style import context
+from numpy import datetime_as_string
+from matplotlib.style import context
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio, Dni, Paciente_ST
 from django.contrib.auth.forms import UserCreationForm
 from .forms import vacunador_signUpForm
@@ -18,8 +23,8 @@ from email import message
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm
+from attr import fields
 from django.conf import settings
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Vacunador, Envio_de_correo, Administrador,Vacunatorio,Vacuna_Fiebre_Am,Vacuna_Covid,Paciente,SolicitudTurnoFA,Logeado,TurnoFAAprobados,Dni
@@ -34,9 +39,8 @@ from.forms import CustomUserForm
 from.forms import VacunadorRegistro,PacienteRegistro,vacunador_signUpForm
 import math, random
 from datetime import datetime, date
-from dateutil import relativedelta
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth import login, logout, authenticate
-
 # def inicio_admin(request#     # data2= gfffikuj
 #     #   'form' :PacienteRegistro()
 #     # }
