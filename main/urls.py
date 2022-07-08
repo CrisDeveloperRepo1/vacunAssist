@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView,PasswordResetDoneView
 from django.urls import path, re_path, include, reverse_lazy
-from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,Dni
+from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,Dni,editarPerfilAdmin,SaleInvoicePdfView
 
 
 app_name= 'main'
@@ -12,6 +12,9 @@ urlpatterns = [
     #path('', views.login1,name= 'homepage'),
     path('', views.main,name= 'main'),
     path('main/', views.main,name= 'main'),
+    path('editarPerfilAdmin/', views.editarPerfilAdmin,name= 'editarPerfilAdmin'),
+    path('SaleInvoicePdfView/', SaleInvoicePdfView.as_view(),name= 'sale_invoice_pdf'),
+    # path('notificacion/', views.notificacion,name= 'notificacion'),
 
     path('cancelarTurno/', views.cancelarTurno,name= 'cancelarTurno'),
     #path('compararCodigoPaciente/', views.compararCodigoPaciente,name= 'compararCodigoPaciente'),
@@ -23,7 +26,7 @@ urlpatterns = [
     path('registrarPacienteST/', views.reg_paciente_st , name="registrarVacunador"),
     path('finRegistroPacienteST/', views.fin_reg_paciente_st , name="registrarVacunador"),
     path('validarDniST/', views.validar_dni_st, name= 'validarDni' ),
-    
+
     path('accionDeEdicionStock/', views.accionDeEdicionStock , name="accionDeEdicionStock"),
     path('registrarVacunador/', views.registrarVacunador , name="registrarVacunador"),
 

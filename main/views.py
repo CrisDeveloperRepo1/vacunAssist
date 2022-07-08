@@ -1,6 +1,12 @@
 from email import message
+
+# from core.erp.forms import SaleForm
+# from core.erp.mixins import ValidatePermissionRequiredMixin
+from django.views.generic import CreateView, ListView , DeleteView, UpdateView, View
+# from core.erp.models import Sale, Product, DetSale
 from random import random
 from certifi import contents
+from django.views import View
 import django
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -43,6 +49,14 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth import login, logout, authenticate
 
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+
 # def inicio_admin(request#     # data2= gfffikuj
 #     #   'form' :PacienteRegistro()
 #     # }
@@ -77,6 +91,53 @@ from django.contrib.auth import login, logout, authenticate
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+class SaleInvoicePdfView(View):
+
+    def get(self, request, *args, **kwargs):
+        template = get_template("main/pdfPrueba.html")
+        context = {'title': 'mi primer pdf'}
+        html=template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+        #response['Content-Disposition'] = 'attachment; filename="comprobanteVacuna.pdf"'
+        pisa_status = pisa.CreatePDF(
+              html, dest=response)
+    # if error then show some funny view
+        # if pisa_status.err:
+        #    return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+
+
+def editarPerfilAdmin (request):
+    ### solo vista ########
+    usuario=Logeado.objects.get(numId=3)
+    paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+    context = { 'apellido': paciente.paciente_apellido,
+                'nombre': paciente.paciente_nombre,
+                'contraseña': paciente.contraseña,
+                'zona': paciente.paciente_zona,
+                'email': paciente.paciente_email,
+                    }
+
+
+    return render(request,"main/editarPerfilAdmin.html", context)
+def accionEditarPerfil (request):
+    usuario=Logeado.objects.get(numId=3)
+    apellido=request.POST['apellido']
+
+
+
+
+    paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+    context = { 'apellido': paciente.paciente_apellido,
+                'nombre': paciente.paciente_nombre,
+                'contraseña': paciente.contraseña,
+                'zona': paciente.paciente_zona,
+                'email': paciente.paciente_email,
+                    }
+
+
+    return render(request,"main/editarPerfilAdmin.html", context)
+
 def registrarVacunador (request):
     admin=Administrador.objects.get(administrador_dni=12345678)
     #nombre=request.POST['nombre']
@@ -228,7 +289,7 @@ def send_mail_pre_registro (email, dni, nombre):
 
 def fin_reg_paciente_st (request):
     return render (request, "main/registrarPaciente.html", context)
-    
+
 def validar_dni_st (request):
     if (request.method == "GET"):
         dni= request.GET.get("dni")
@@ -237,7 +298,7 @@ def validar_dni_st (request):
             context = {
                 'nombre' : paciente.pacienteST_nombre,
                 'apellido' : paciente.pacienteST_apellido,
-                'dni' : paciente.pacienteST_dni, 
+                'dni' : paciente.pacienteST_dni,
                 'mail' : paciente.pacienteST_email,
                 'vac_covid1' : paciente.vac_Covid1_aplicada,
                 'vac_covid2' : paciente.vac_Covid2_aplicada,
@@ -265,7 +326,7 @@ def reg_paciente_st (request):
     #opCoviP1=request.POST['opcVacunaCovidP1']
     #opCoviP2=request.POST['opcVacunaCovidP2']
     opcion=request.POST["opcVacunas"]
-    
+
     #Contraseña=request.POST['Contraseña']
 
     inicio = datetime(2022, 6, 30)
@@ -308,7 +369,7 @@ def reg_paciente_st (request):
                                         vac_Amarilla_aplicada=opFA,
                                         vac_Gripe_aplicada=opGripe,
                                         pacienteST_nombre=nombre,
-                                        pacienteST_apellido=apellido, 
+                                        pacienteST_apellido=apellido,
                                         pacienteST_dni=dni,
                                         pacienteST_email=email,
                                         vac_Gripe_turno= turnoGripe,
@@ -356,7 +417,7 @@ def registroPaciente(request):
     #vac_Amarilla_turno= models.DateTimeField(null=True)
 
     #print(random_date)
-    
+
 ########## GENERO EL CODIGO DE 4 DIGITOS #################################################
 
     digits = "0123456789"
@@ -369,7 +430,7 @@ def registroPaciente(request):
     digitos = '0123456789'
     longitud = 4  # La longitud que queremos
     codigo = ''.join(choice(digitos) for digito in range(longitud))
-    
+
     if Paciente_ST.objects.filter(pacienteST_dni = dni ).exists():
         asistenciaGripe = asistenciaFiebre = asistenciaCovid1 = asistenciaCovid2 = 2
         turno_fiebre= None
@@ -377,7 +438,7 @@ def registroPaciente(request):
         if (opGripe == "1"):
             opGripe= 1
             random_gripe= paciente_st.vac_Gripe_turno
-            asistenciaGripe = paciente_st.vac_Gripe_asistencia       
+            asistenciaGripe = paciente_st.vac_Gripe_asistencia
             #turnoGripe= datetime.now()
         if (opFA == "1"):
             opFA= 1
@@ -409,7 +470,7 @@ def registroPaciente(request):
         paciente_st.delete()
     else:
         paciente=Paciente.objects.create(vac_Covid2_aplicada=opCoviP2,vac_Covid1_aplicada=opCoviP1,vac_Amarilla_aplicada=opFA,vac_Gripe_aplicada=opGripe,codigo=codigo,contraseña=Contraseña,paciente_nombre=nombre,paciente_apellido=apellido,paciente_fechaNac=fecha,paciente_zona=zona,paciente_dni=dni,paciente_email=email,vac_Gripe_turno=random_gripe,vac_Covid_turno1= random_turnoCovid)
-    
+
     #messages.error(request, " El paciente ya exite")
 
 
@@ -1509,12 +1570,12 @@ def validarDni(request):
                         print ("entré al if del paciente")
                         messages.error(request, "El Dni ya inició el pre registro")
                         return render(request, "main/validar-dni.html", contexto)
-                    else: 
+                    else:
                         if Paciente.objects.filter(paciente_dni = dni).exists() :
                             print ("entré al else del paciente")
                             messages.error(request, "El Dni ya está registrado")
                             return render(request, "main/validar-dni.html", contexto)
-                        
+
                     log = Dni.objects.get(num_dni = dni)
                     resultado = (datetime.now().date() + relativedelta(years=-18))
                     context = { 'dni': one.num_dni,
@@ -1525,14 +1586,14 @@ def validarDni(request):
                     }
                     #print(str(resultado))
                     #print(log.num_dni + log.nombre + log.apellido)
-                    return render(request, "main/registro-paciente-sin-turno.html", context)    
-                        
+                    return render(request, "main/registro-paciente-sin-turno.html", context)
+
         except ObjectDoesNotExist:
             if (dni != None):
                 messages.error(request, "El Dni es inválido ")
             return render(request, "main/validar-dni.html", contexto)
 
-        
+
 def lista_pacientes(request):
     PacienteList= Paciente.objects.all()
     return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})

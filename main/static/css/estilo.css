@@ -45,20 +45,20 @@ left: 37%;
   border-radius: 6px;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.4);
   position: absolute;
-  top: 0;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.1);
   text-align: center;
   padding: 0 30px 30px;
   color: #333;
-  visibility: hidden;
+  visibility: visible;
   transition: transform 0.4, top 0.4s;
 }
 
 .open-popup {
   visibility: visible;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  /* top: 50%;
+  transform: translate(-50%, -50%) scale(1); */
 }
 
 .popup img {
@@ -86,4 +86,3 @@ left: 37%;
   cursor: pointer;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
 }
-
