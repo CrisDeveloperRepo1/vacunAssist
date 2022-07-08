@@ -10,7 +10,6 @@ from django.views import View
 import django
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from attr import fields
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -29,7 +28,6 @@ from email import message
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm
-from attr import fields
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse

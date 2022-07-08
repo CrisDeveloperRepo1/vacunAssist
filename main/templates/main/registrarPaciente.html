@@ -80,7 +80,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                  <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> Email  </span></label>
-                   <input type="text" id="email" name="email" clas="form-control" placeholder="" value="{{mail}}"  maxlength="50" Readonly>
+                   <input type="text" id="email" name="email" clas="form-control" placeholder="" value="{{mail}}"  maxlength="50" required>
                  </div>
 
                  <div class="form-group">
@@ -104,7 +104,7 @@ input[type=number] { -moz-appearance:textfield; }
                     </select>
                     <input input type="text" id="c"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
 
-                   <input input type="date" id="caja1" name="fechaesperada" disabled="" >
+                   <input input type="date" id="caja1" name="fechaesperada" max="{{fecha_actual}}" disabled="" >
                    <script type="text/javascript">
                        function activarcaja1(){
                          if(opcVacunaGripe.value==1){
@@ -136,7 +136,7 @@ input[type=number] { -moz-appearance:textfield; }
                     </select>
                   </div>
                   <div class="form-group">
-                    <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra doSis de la vacuna contra el covid?  </span></label>
+                    <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
                     <select id= "opcVacunaCovidP1" class="browser-default" onchange="activarcaja2()"  name="opcVacunaCovidP1" required>
                       {% if vac_covid1  == 1 %}
                       <option value=1 selected >Si</option>
@@ -149,7 +149,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                      <input input type="text" id="c2"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
 
-                    <input input type="date" id="caja2" name="fechaesperada" disabled="" >
+                    <input input type="date" id="caja2" name="fechaesperada" max="{{fecha_actual}}" disabled="" >
                     <script type="text/javascript">
                         function activarcaja2(){
                           if(opcVacunaCovidP1.value==1){
@@ -169,7 +169,7 @@ input[type=number] { -moz-appearance:textfield; }
                     </script>
                   </div>
                   <div class="form-group">
-                   <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da doSis de la vacuna contra el covid? </span> </label>
+                   <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label>
                     <select  id= "opcVacunaCovidP2" class="browser-default" onchange="activarcaja3()"  name="opcVacunaCovidP2" required>
                       {% if vac_covid2  == 1 %}
                       <option value=1 selected >Si</option>
@@ -183,7 +183,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                                    <input input type="text" id="c3"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
 
-                                  <input input type="date" id="caja3" name="fechaesperada" disabled="" >
+                                  <input input type="date" id="caja3" name="fechaesperada" max="{{fecha_actual}}" disabled="" >
                                   <script type="text/javascript">
                                       function activarcaja3(){
                                         if(opcVacunaCovidP2.value==1){
