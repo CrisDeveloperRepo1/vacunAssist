@@ -47,7 +47,7 @@ import math, random
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth import login, logout, authenticate
-<<<<<<< HEAD
+
 
 
 import os
@@ -57,8 +57,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
 
-=======
->>>>>>> 0c8ba3bf978b258efb7141fcadee85866c3b0abc
+
 # def inicio_admin(request#     # data2= gfffikuj
 #     #   'form' :PacienteRegistro()
 #     # }
@@ -107,38 +106,83 @@ class SaleInvoicePdfView(View):
         # if pisa_status.err:
         #    return HttpResponse('We had some errors <pre>' + html + '</pre>')
         return response
-
-
 def editarPerfilAdmin (request):
     ### solo vista ########
-    usuario=Logeado.objects.get(numId=3)
-    paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
-    context = { 'apellido': paciente.paciente_apellido,
-                'nombre': paciente.paciente_nombre,
+    usuario=Logeado.objects.get(numId=1)
+    paciente=Administrador.objects.get(administrador_dni=usuario.usuarioLogeado)
+    context = { 'apellido': paciente.administrador_apellido,
+                'nombre': paciente.administrador_nombre,
                 'contraseña': paciente.contraseña,
-                'zona': paciente.paciente_zona,
-                'email': paciente.paciente_email,
+                'zona': paciente.administrador_zona,
+                'email': paciente.administrador_email,
                     }
 
 
     return render(request,"main/editarPerfilAdmin.html", context)
 def accionEditarPerfil (request):
-    usuario=Logeado.objects.get(numId=3)
-    apellido=request.POST['apellido']
+    usuario=Administrador.objects.get(administrador_dni=12345678)
+    n=request.POST['nombre']
 
 
-
-
-    paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
-    context = { 'apellido': paciente.paciente_apellido,
-                'nombre': paciente.paciente_nombre,
-                'contraseña': paciente.contraseña,
-                'zona': paciente.paciente_zona,
-                'email': paciente.paciente_email,
+    z=request.POST['zona']
+    usuario.administrador_zona=z
+    usuario.administrador_nombre=n
+    usuario.save()
+    context = { 'apellido': usuario.administrador_apellido,
+                'nombre': usuario.administrador_nombre,
+                'contraseña': usuario.contraseña,
+                'zona': usuario.administrador_zona,
+                'email': usuario.administrador_email,
                     }
 
 
+    # usuario=Logeado.objects.get(numId=3)
+    # apellido=request.POST['apellido']
+    #
+    #
+    #
+    #
+    # paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+    # context = { 'apellido': paciente.paciente_apellido,
+    #             'nombre': paciente.paciente_nombre,
+    #             'contraseña': paciente.contraseña,
+    #             'zona': paciente.paciente_zona,
+    #             'email': paciente.paciente_email,
+    #                 }
+
+
     return render(request,"main/editarPerfilAdmin.html", context)
+
+# def editarPerfilAdmin (request):
+#     ### solo vista ########
+#     usuario=Logeado.objects.get(numId=3)
+#     paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+#     context = { 'apellido': paciente.paciente_apellido,
+#                 'nombre': paciente.paciente_nombre,
+#                 'contraseña': paciente.contraseña,
+#                 'zona': paciente.paciente_zona,
+#                 'email': paciente.paciente_email,
+#                     }
+#
+#
+#     return render(request,"main/editarPerfilAdmin.html", context)
+# def accionEditarPerfil (request):
+#     usuario=Logeado.objects.get(numId=3)
+#     apellido=request.POST['apellido']
+#
+#
+#
+#
+#     paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+#     context = { 'apellido': paciente.paciente_apellido,
+#                 'nombre': paciente.paciente_nombre,
+#                 'contraseña': paciente.contraseña,
+#                 'zona': paciente.paciente_zona,
+#                 'email': paciente.paciente_email,
+#                     }
+#
+#
+#     return render(request,"main/editarPerfilAdmin.html", context)
 
 def registrarVacunador (request):
     admin=Administrador.objects.get(administrador_dni=12345678)
@@ -290,13 +334,13 @@ def send_mail_pre_registro (email, dni, nombre):
 
 
 def fin_reg_paciente_st (request):
-<<<<<<< HEAD
+
     return render (request, "main/registrarPaciente.html", context)
 
-=======
+
     return render (request, "main/registrarPaciente.html")
-    
->>>>>>> 0c8ba3bf978b258efb7141fcadee85866c3b0abc
+
+
 def validar_dni_st (request):
     if (request.method == "GET"):
         dni= request.GET.get("dni")
@@ -662,7 +706,7 @@ def editarStockVacunatorio(request):
     return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 def accionDeEdicionStock(request):
     destino=Vacunatorio.objects.get(vacunatorio_zona=request.POST['destino'])
-    if(request.POST['vacuna'] == "stock_vac_fa" ): 
+    if(request.POST['vacuna'] == "stock_vac_fa" ):
         try:
             if (request.POST['disminuir'] == "disminuir"):
                 if(int(request.POST['cantidad']) > destino.stock_vac_fa):

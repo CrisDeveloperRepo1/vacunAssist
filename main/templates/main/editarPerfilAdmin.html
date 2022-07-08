@@ -113,7 +113,7 @@
 
 
 
-          <form  action="/evaluarTurno/" method="post">{% csrf_token %}>
+          <form  action="/accionEditarPerfil/" method="post">{% csrf_token %}>
 
 
 
@@ -122,7 +122,7 @@
             <div class="form-row">
               <div class="input-field col s12 m6">
                 <label for="inputZip">Nombre</label>
-                <input type="text" class="form-control" id="nombre" placeholder="{{nombre}}" value="{{nombre}}">
+                <input type="text" class="form-control" id="nombre" placeholder="{{nombre}}"  value="{{nombre}}"required  name='nombre' >
               </div>
               <div class="input-field col s12 m6">
                 <label for="inputZip">Apellido</label>
