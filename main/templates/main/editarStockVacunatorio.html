@@ -74,7 +74,7 @@
 
                <thead>
                  <tr>
-                  <th>#</th>
+                  <th></th>
 
                    <th>Stock vacunas FA </th>
                    <th>Stock vacunas Covid</th>
@@ -119,7 +119,7 @@
 
                <thead>
                  <tr>
-                  <th>#</th>
+                  <th></th>
 
                    <th>Stock vacunas FA </th>
                    <th>Stock vacunas Covid</th>
@@ -164,7 +164,7 @@
 
                <thead>
                  <tr>
-                  <th>#</th>
+                  <th></th>
 
                    <th>Stock vacunas FA </th>
                    <th>Stock vacunas Covid</th>
@@ -220,16 +220,6 @@
 
                 <div class="input-field col s12 m6" style="margin: 0px 0px 0px 0px">
 
-
-
-                <div class="form-group">
-                  <select id= "origen" class="browser-default"   name="origen" required>
-                    <option value="" disabled selected>Origen</option>
-                    <option value="Cementerio Municipal">Cementerio Municipal</option>
-                    <option value="Terminal de Omnibus">Terminal de Omnibús</option>
-                    <option value="Municipalidad">Municipalidad</option>
-                  </select>
-                </div>
                 <div class="form-group">
                   <select id= "destino" class="browser-default"   name="destino" required>
                     <option value="" disabled selected>Destino</option>
@@ -249,15 +239,13 @@
                     <option value="stock_vac_fa">Fiebre amarilla</option>
                   </select>
                 </div>
-
                 <div class="form-group">
-                  <input type="number" id="cantidad" name="cantidad" value="0" min="0" max="100"  required>
+                  <input type="number" id="cantidad" name="cantidad" value="0" min="0" max="100" required>
 
                 </div>
                 <div class="form-group">
 
-                    <button type="submit" class="btn btn-success btn-block text-white" > Guardar</button>
-
+                    <input type="submit" value="aumentar" class="btn btn-success btn-block text-white" id="aumentar" name="aumentar" >  <input type="submit" value="disminuir" class="btn btn-success btn-block text-white" id="disminui" name="disminuir" >
                   <!-- <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button> -->
                   <!-- <div class="popup" id="popup">
                     <img src="{% static 'imagenes/tick.png' %}">
