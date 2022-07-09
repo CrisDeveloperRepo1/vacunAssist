@@ -45,20 +45,68 @@
         <div class="center">
         <div class="container py-4">
           <div class="row">
-            <div class="col-md-4">
-
-            </div>
             <div class="col-md-12">
                 <div class="right">
-                <div class="col-md-12">
+                  <form method="POST">
+                    {% csrf_token %}
+                    <h6 style="margin: 0" for="filtrar">Filtrar por:</h6>
+                    <input list="lista" name="filtro" id="filtro" placeholder="Ingrese un DNI o Vacunatorio" >
+                    <datalist id="lista">
+                      {% comment %} <option value="" disabled selected>Elija el filtro</option> {% endcomment %}
+                      <optgroup label="Vacunatorio">
+                        <option value="Cementerio Municipal">Cementerio Municipal</option>
+                        <option value="Terminal de Omnibús">Terminal de Omnibús</option>
+                        <option value="Municipalidad">Municipalidad</option>
+                      </optgroup>
+                      <optgroup label="DNI">
+                        {% for c in pacientes %}
+                        <option value="{{c.paciente_dni}}">{{c.paciente_dni}}</option>
+                        {% endfor%}
+                      </optgroup>
+                    </select>
+                  </datalist>
+                    <input type="submit" value="Filtrar" id="filter" name="filter" >
+                    <a href='lista-de-pacientes/'>
+                    <input type="submit" id="limpiar" name="limpiar" value="Limpiar filtro" ></a>
+                  </form>
+                  {% comment %} <form action=" " method="POST">
+                    {% csrf_token %}
+                    {% if valor == 0 %}
                     <label>Filtrar por: </label>
-                <select id= "vacunatorio" class="browser-default"   name="vacunatorio">
-                    <option value="" disabled selected>Elija el filtro</option>
-                    <option value="Dni">DNI</option>
-                    <option value="Vacunatorio">Vacunatorio</option>
-                  </select>
+                    <select id= "filtro" class="browser-default"   name="filtro">
+                      <option value="" disabled selected>Elija el filtro</option>
+                      <option value="Dni">DNI</option>
+                      <option value="Vacunatorio">Vacunatorio</option>
+                    </select>
+                    <input type="submit" value="Filtrar">
+                    {% endif %}
+                     {% if valor == 1 %}
+                     <label>Filtrar por: </label>
+                     <select id= "filtro" class="browser-default"   name="filtro">
+                      <option value="Dni" selected>DNI</option>
+                      <option value="" disabled >Elija el filtro</option>
+                      <option value="Vacunatorio">Vacunatorio</option>
+                    </select>
+                    <input type="number" value="DNI" id="dni" name="dni">
+                    <input type="submit" value="Filtrar">
+                    <a href='/lista-de-vacunadores/'>
+                    <input type="submit" value="Limpiar filtro" id="limpiar" name="limpiar"> </a>
+                    {% endif%}
+                    {% if valor == 2 %}
+                     <label>Filtrar por: </label>
+                     <select id= "filtro" class="browser-default"   name="filtro">
+                      <option value="Vacunatorio" selected>Vacunatorio</option>
+                      <option value="Dni" >DNI</option>
+                      <option value="" disabled >Elija el filtro</option>
+                    </select>
+                    <input type="t" value="DNI" id="dni" name="dni">
+                    <input type="submit" value="Filtrar">
+                    <a href='/lista-de-vacunadores/'>
+                    <input type="submit" value="Limpiar filtro" id="limpiar" name="limpiar"> </a>
+                    {% endif%}
+
+                </form> {% endcomment %}
                 </div>
-            </div>
             <div class="left">
               <h2>Pacientes</h2> 
                 </div>
@@ -69,14 +117,15 @@
     <table class="table table-striped">
       <thead>
         <tr>
-        <th style="text-align: left">#</th>
-        <th style="text-align: left">Dni</th>
-        <th style="text-align: left"> Zona </th>
+          <th style="text-align: left">#</th>
+          <th style="text-align: left">Dni</th>
+          <th style="text-align: left"> Zona </th>
         <tr>
 
       </thead>
       <tbody>
-        {% for c in paciente %}
+        {% if valor == 0 %}
+        {% for c in pacientes %}
         <tr>
           <td>{{forloop.counter}}</td>
           <td>{{c.paciente_dni}}</td>
@@ -84,9 +133,36 @@
 
         </tr>
         {% endfor%}
-        {% if not paciente %}
+        {% if not pacientes %}
         <td colspan="5" style="text-align: center">No hay pacientes para mostrar</td>
         {% endif %}
+        {% endif %}
+        {% if valor == 1 %}
+        {% for c in por_dni %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{c.paciente_dni}}</td>
+          <td> {{c.paciente_zona}}</td>
+
+        </tr>
+        {% endfor%}
+        {% if not por_dni %}
+        <td colspan="5" style="text-align: center">No hay pacientes para mostrar</td>
+        {% endif %}
+        {% endif%}
+        {% if valor == 2 %}
+        {% for c in por_vacunatorio %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{c.paciente_dni}}</td>
+          <td> {{c.paciente_zona}}</td>
+
+        </tr>
+        {% endfor%}
+        {% if not por_vacunatorio %}
+        <td colspan="5" style="text-align: center">No hay pacientes para mostrar</td>
+        {% endif %}
+        {% endif%}
       </tbody>
     </table>
 

@@ -1,4 +1,5 @@
 from email import message
+from genericpath import exists
 
 # from core.erp.forms import SaleForm
 # from core.erp.mixins import ValidatePermissionRequiredMixin
@@ -1655,13 +1656,65 @@ def validarDni(request):
             return render(request, "main/validar-dni.html", contexto)
 
 
-def lista_pacientes(request):
+def lista_pacientes(request): 
     PacienteList= Paciente.objects.all()
-    return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})
+    print("0")
+    try:
+        if request.POST["filtro"] :
+            print(Paciente.objects.filter( paciente_dni =  request.POST["filtro"]).exists())
+            print(Paciente.objects.filter( paciente_zona =  request.POST["filtro"]).exists())
+            try:
+                if Paciente.objects.filter( paciente_dni =  request.POST["filtro"]).exists():
+                    print("1")
+                    por_dni = {Paciente.objects.get(paciente_dni = request.POST["filtro"])}
+                    if len(por_dni) != 0:
+                        return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'por_dni': por_dni, 'valor': 1})
+                    else:
+                        return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'por_dni': [], 'valor': 1})
+                else: 
+                    raise
+            except :
+                try:
+                    print(Paciente.objects.filter( paciente_zona =  request.POST["filtro"]).exists())
+                    if Paciente.objects.filter( paciente_zona =  request.POST["filtro"]).exists():
+                        print("2")
+                        por_vacunatorio= Paciente.objects.filter(paciente_zona = request.POST['filtro'])
+                        return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'por_vacunatorio': por_vacunatorio,  'valor': 2})
+                    else:
+                        return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'por_vacunatorio': [],  'valor': 2})
+                except :
+                    return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList,  'valor': 0})
+    except :
+        return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'valor': 0})
+    return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'valor': 0})
+
 
 def lista_administradores(request):
     administradorList= Administrador.objects.all()
     return render(request,"main/listado-administradores.html",{"administradores" : administradorList})
 def lista_vacunadores(request):
     vacunadoresList= Vacunador.objects.all()
-    return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList})
+    print("0")
+    try:
+        if request.POST["filtro"] :
+            print("entre al if de dni")
+            try:
+                if Vacunador.objects.filter( vacunador_dni =  request.POST["filtro"]).exists():
+                    print("1")
+                    por_dni = {Vacunador.objects.get(vacunador_dni = request.POST["filtro"])}
+                    return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'por_dni': por_dni, 'valor': 1})
+                else:
+                    return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'por_dni': [], 'valor': 1})
+            except ValueError:
+                try:
+                    if Vacunador.objects.filter( vacunador_zona =  request.POST["filtro"]).exists():
+                        print("1")
+                        por_vacunatorio= {Vacunador.objects.get(vacunador_zona = request.POST["filtro"])}
+                        return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'por_vacunatorio': por_vacunatorio,  'valor': 2})
+                    else:
+                        return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'por_vacunatorio': [],  'valor': 2})
+                except :
+                    return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList,  'valor': 0})
+    except :
+        return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'valor': 0})
+    return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'valor': 0})
