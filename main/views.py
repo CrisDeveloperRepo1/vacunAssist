@@ -56,7 +56,9 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
-
+from django.contrib.auth.forms import UserCreationForm
+from.forms import UserRegisterForm
+from django.contrib.auth.decorators import login_required
 
 # def inicio_admin(request#     # data2= gfffikuj
 #     #   'form' :PacienteRegistro()
@@ -92,6 +94,55 @@ from django.contrib.staticfiles import finders
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+
+def cerrarSesion(request):
+    logout(request)
+    #return render(request,'main/main.html')
+    return redirect('/login/')
+
+def login_request(request):
+    #if request.method =='POST':
+    #form =AuthenticationForm(request, data=request.POST)
+
+    # usuario=request.GET["dni"]
+    # contraseña=request.GET["pass"]
+    user= authenticate(username='cristian',password=7823)
+    login(request, user)
+    #return (request,'main/inicio_de_sesión.html')
+
+    # user= authenticate(username='cristian',password=7823)
+    # if user is not None:
+    #     login(request, user)
+    #     return (request,'main/register2.html')
+
+    return render(request,'main/editarStockVacunatorio.html')
+
+
+
+def loginRestringido(request):
+    return render(request,'main/loginRestringido.html')
+
+def register2(request):
+    # u=user.objects.get(Username='cristian')
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        #form.save()
+        if form.is_valid():
+            form.save()
+            #### hago prueba ###
+            admin=Administrador.objects.get(administrador_dni=12345678)
+            ap=request.POST['apellido']
+            #admin.administrador_apellido=form.cleaned_data['password1']
+            admin.administrador_apellido=ap
+            admin.save()
+            ##################
+            username = form.cleaned_data['username']
+            messages.success(request, f'Usuario{username} creado')
+            #return redirect('/login')
+    else:
+        form = UserRegisterForm()
+    context = {'form': form}
+    return render(request,'main/register2.html',context)
 class SaleInvoicePdfView(View):
 
     def get(self, request, *args, **kwargs):
@@ -183,7 +234,7 @@ def accionEditarPerfil (request):
 #
 #
 #     return render(request,"main/editarPerfilAdmin.html", context)
-
+@login_required(login_url='/login/')
 def registrarVacunador (request):
     admin=Administrador.objects.get(administrador_dni=12345678)
     #nombre=request.POST['nombre']
@@ -231,7 +282,7 @@ def cancelarTurno (request):
     paciente.vac_Amarilla_turno= None
     paciente.save()
     return render(request,"main/inicioPaciente.html",{"valor":2,"p":paciente})
-
+@login_required(login_url='/login/')
 def evaluarTurno(request):
     ListSolicitud= SolicitudTurnoFA.objects.all()
 
@@ -624,7 +675,7 @@ def sumarTotales(request):
         totalVC = totalVC + v.stock_vac_covid
         #,{"total":totalVFA}
     return render(request,"main/pruebas.html",{"vacunasFA":totalVFA,"vacunasG":totalVG,"vacunasC":totalVC,"Vacunatorios":VacunatorioList})
-
+@login_required(login_url='/login/')
 def actualizar_stock (request):
     return render(request, "main/actualizar.html")
 
@@ -642,7 +693,7 @@ def registro(request):
     form =UserCreationForm
     return render(request, "main/registro.html", {"form":form})
 # extenser el formulario para que pida email
-
+#@login_required(login_url='/loginRestringido/')
 def loginAdmin(request):
     try:
         one_entry = Logeado.objects.get(numId=1)
@@ -652,8 +703,9 @@ def loginAdmin(request):
         NumId=1
         usuario=Logeado.objects.create(usuarioLogeado=UsuarioLogeado,numId=NumId)
 
-
     return render(request, "main/inicio_de_sesión.html")
+    #return redirect('/validarUsuario/')
+    #return redirect("/validarUsuario/")
 def loginVacunador(request):
     try:
         one_entry = Logeado.objects.get(numId=2)
@@ -688,7 +740,7 @@ def login1(request):
     records=Logeado.objects.all()
     records.delete()
     return render(request, "main/inicio_de_sesión.html")
-
+@login_required(login_url='/login/')
 def editarStockVacunatorio(request):
 
     # administradorList= Vacunatorio.objects.all()
@@ -796,7 +848,7 @@ def accionDeEdicionStock(request):
 
 
 
-
+@login_required(login_url='/login/')
 def eliminarVacunador(request):
     administradorList= Vacunador.objects.all()
 
@@ -813,7 +865,7 @@ def eliminarVacunador(request):
 
 def verif(request):
     return render(request,"main/verif.html")
-
+@login_required(login_url='/login/')
 def inicio_admin(request):
     data2= {
       'form' :PacienteRegistro()
@@ -954,7 +1006,13 @@ def validarUsuario(request):
                 #     return render(request,"main/inicio_de_sesión.html")
             #if:
             if  request.GET["pass"] == one_entry.contraseña :
-                 return render(request,"main/verif.html")
+                #redirect("/verif/")
+                user= authenticate(username='cristian',password=7823)
+                login(request, user)
+                #return redirect("/inicio_admin/")
+
+                return render(request,"main/verif.html")
+
             else:
                 messages.error(request, " DNI o contraseña incorrecta")
                 return render(request,"main/inicio_de_sesión.html")
@@ -1013,7 +1071,7 @@ def validarUsuario(request):
 #             return render (request,"main/verif.html")
 
 
-
+@login_required(login_url='/login/')
 def compararCodigo(request):
         data2= {
           'form' :PacienteRegistro()
@@ -1034,7 +1092,10 @@ def compararCodigo(request):
                                         administradorList= Administrador.objects.all()
 
                                         vacunadorList= Vacunador.objects.all()
-                                        return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList,"paciente":PacienteList})
+                                        user= authenticate(username='cristian',password=7823)
+                                        login(request, user)
+                                        return redirect("/inicio_admin/")
+                                        #return render(request, "main/inicio_admin.html",{"administradores" : administradorList, "vacunadores" : vacunadorList,"paciente":PacienteList})
 
                                     #mensaje= request.GET["pass"]
 
@@ -1322,6 +1383,7 @@ def reg_vac(request):
     #            messages.error(request, form.error_messages[msg])
 
 # Create your views here.
+@login_required(login_url='/login/')
 def eliminar_vacunador(request):
     form= vacunador_signUpForm(request.POST or None)
 
@@ -1339,7 +1401,8 @@ def eliminar_vacunador(request):
     return render(request,  "main/eliminar_vacunador.html", context)
 
 def cerrar_sesion (request):
-    messages.info(request, "Tu sesión se cerró correctamente")
+    #logout(request)
+    #messages.info(request, "Tu sesión se cerró correctamente")
     return (request, "main/main.html")
 
     return redirect("main/login")
@@ -1656,14 +1719,15 @@ def validarDni(request):
                 messages.error(request, "El Dni es inválido ")
             return render(request, "main/validar-dni.html", contexto)
 
-
+@login_required(login_url='/login/')
 def lista_pacientes(request):
     PacienteList= Paciente.objects.all()
     return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})
-
+@login_required(login_url='/login/')
 def lista_administradores(request):
     administradorList= Administrador.objects.all()
     return render(request,"main/listado-administradores.html",{"administradores" : administradorList})
+@login_required(login_url='/login/')
 def lista_vacunadores(request):
     vacunadoresList= Vacunador.objects.all()
     return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList})

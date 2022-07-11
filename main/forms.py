@@ -12,6 +12,20 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
+class UserRegisterForm(UserCreationForm):
+    ### username ser la contraseña1 , por que los nombres de usuario deben ser unicos, y como vamos a tener dni repetidos , prefiero usar la contraseña como 
+    username = forms.CharField(label='DNI', min_length=5, max_length=150)
+    email = forms.EmailField()
+    #Username= forms.EmailField(label='Contraseña')
+    #### password1 sera el dni ####
+    password1= forms.CharField(label='Contraseña', widget=forms.PasswordInput )
+    password2= forms.CharField(label='Comfirma Contraseña', widget=forms.PasswordInput)
+    class Meta:
+        model = User
+        fields = ['username','email','password1','password2']
+        help_texts = {k:"" for k in fields}
+
+
 class PacienteRegistro(ModelForm):
     class Meta:
         model = Vacunador

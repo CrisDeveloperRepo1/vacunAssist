@@ -13,6 +13,13 @@ urlpatterns = [
     path('', views.main,name= 'main'),
     path('main/', views.main,name= 'main'),
     path('editarPerfilAdmin/', views.editarPerfilAdmin,name= 'editarPerfilAdmin'),
+    path('register2/', views.register2,name= 'register2'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('cerrarSesion/', views.cerrarSesion, name = "cerrarSesion"),
+
+    path('login_request/', views.login_request,name= 'login_request'),
+
+    path('loginRestringido/', views.loginRestringido,name= 'loginRestringido'),
 
     path('accionEditarPerfil/', views.accionEditarPerfil,name= 'accionEditarPerfil'),
     path('SaleInvoicePdfView/', SaleInvoicePdfView.as_view(),name= 'sale_invoice_pdf'),
@@ -79,10 +86,12 @@ urlpatterns = [
 #---------------------------------------------------------------------
 
 
+
     path('login/recuperar_Contraseña/' , views.recup_contra, name= "recuperar_Cont"),
     path('inicio_admin/nuevo_vac/' , views.reg_vac, name= "nuevo_vac"),
     path('inicio_admin/eliminar_vacun/' , views.eliminar_vacunador, name= "eliminar_vacunador"),
     path('logout/', views.cerrar_sesion, name = "logout"),
+    path('cerrar_sesion/', views.cerrar_sesion, name = "cerrar_sesion"),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name= "main/password_reset.html"), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name= "main/password_reset_sent.html"), name="password_reset_done"),

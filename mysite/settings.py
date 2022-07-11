@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 from pathlib import Path
+#from django.core.urlresolvers import reverse_lazy
+# from django.core.urlresolvers import reverse
+from django.urls import reverse_lazy
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -17,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_DIR = os.path.join(BASE_DIR,"static")
 
-
+#LOGIN_URL = reverse_lazy('register2')
 
 
 # Quick-start development settings - unsuitable for production

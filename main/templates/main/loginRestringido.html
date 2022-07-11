@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en" dir="ltr">
@@ -83,10 +88,11 @@ input[type=number] { -moz-appearance:textfield; }
           <hr>
         <div class="center"
         style="background:#BCBCBC; margin: 10px 100px">
-        <form name='formulario' action ="/validarUsuario/" method='GET' style='text-align:center'>
+        <form name='formulario' action ="/login_request/" method='GET' style='text-align:center'>
+
           <!-- Campo de entrada de usuario -->
           <font face='Verdana'><h6><strong>DNI</strong></h6></font>
-          <input type='number'name='dni' placeholder='12345678' Required style="background-color:white; " />
+          <input type='text'name='dni' placeholder='12345678' Required style="background-color:white; " />
           <!-- Campo de entrada de password -->
           <br>
           <font face='Verdana'><h6><strong>Contraseña</strong></h6></font>
