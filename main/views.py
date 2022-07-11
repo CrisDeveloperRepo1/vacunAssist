@@ -849,7 +849,33 @@ def accionDeEdicionStock(request):
 
 @login_required(login_url='/login/')
 def eliminarVacunador(request):
-    administradorList= Vacunador.objects.all()
+    vacunadoresList= Vacunador.objects.all()
+    print("0")
+    try:
+        if request.POST["filtro"] :
+            print("entre al if de dni")
+            try:
+                if Vacunador.objects.filter( vacunador_dni =  request.POST["filtro"]).exists():
+                    print("1")
+                    por_dni = {Vacunador.objects.get(vacunador_dni = request.POST["filtro"])}
+                    return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList, 'por_dni': por_dni, 'valor': 1})
+                else:
+                    return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList, 'por_dni': [], 'valor': 1})
+            except ValueError:
+                try:
+                    if Vacunador.objects.filter( vacunador_zona =  request.POST["filtro"]).exists():
+                        print("1")
+                        por_vacunatorio= {Vacunador.objects.get(vacunador_zona = request.POST["filtro"])}
+                        return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList, 'por_vacunatorio': por_vacunatorio,  'valor': 2})
+                    else:
+                        return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList, 'por_vacunatorio': [],  'valor': 2})
+                except :
+                    return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList,  'valor': 0})
+    except :
+        return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList, 'valor': 0})
+    return render(request,"main/eliminarVacunador.html",{"vacunadores" :vacunadoresList, 'valor': 0})
+
+    #administradorList= Vacunador.objects.all()
 
 #    if (administradorList.exists()):
 #        print('')
@@ -857,7 +883,7 @@ def eliminarVacunador(request):
 #    else:
 #        messages.error(request, " no hay vacunadores en el listado")
 
-    return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
+    #return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
 
     #return render(request,"main/inicio_admin.html",{"administradores" : administradorList,"vacunadores" :vacunadoresList})
 
@@ -1718,15 +1744,8 @@ def validarDni(request):
                 messages.error(request, "El Dni es inválido ")
             return render(request, "main/validar-dni.html", contexto)
 
-<<<<<<< HEAD
 @login_required(login_url='/login/')
 def lista_pacientes(request):
-    PacienteList= Paciente.objects.all()
-    return render(request,"main/listado-pacientes.html",{"paciente":PacienteList})
-@login_required(login_url='/login/')
-=======
-
-def lista_pacientes(request): 
     PacienteList= Paciente.objects.all()
     print("0")
     try:
@@ -1757,9 +1776,8 @@ def lista_pacientes(request):
     except :
         return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'valor': 0})
     return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'valor': 0})
+@login_required(login_url='/login/')
 
-
->>>>>>> 52c6604a8cff7061b0b5d6d0dce208146cb7b614
 def lista_administradores(request):
     administradorList= Administrador.objects.all()
     return render(request,"main/listado-administradores.html",{"administradores" : administradorList})

@@ -42,14 +42,38 @@
            M.toast({html: 'I am a toast!', classes: 'rounded'});
 
         </script> -->
-
+        <div class="center">
         <div class="container py-4">
           <div class="row">
-            <div class="col-md-4">
-
-            </div>
             <div class="col-md-12">
-              <h2>Listado Vacunadores</h2>
+                <div class="right">
+                  <form method="POST">
+                    {% csrf_token %}
+                    <h6 style="margin: 0" for="filtrar">Filtrar por:</h6>
+                    <input list="lista" name="filtro" id="filtro" placeholder="Ingrese un DNI o Vacunatorio" >
+                    <datalist id="lista">
+                      {% comment %} <option value="" disabled selected>Elija el filtro</option> {% endcomment %}
+                      <optgroup label="Vacunatorio">
+                        <option value="Cementerio Municipal">Cementerio Municipal</option>
+                        <option value="Terminal de Omnibús">Terminal de Omnibús</option>
+                        <option value="Municipalidad">Municipalidad</option>
+                      </optgroup>
+                      <optgroup label="DNI">
+                        {% for c in vacunadores %}
+                        <option value="{{c.vacunador_dni}}">{{c.vacunador_dni}}</option>
+                        {% endfor%}
+                      </optgroup>
+                    </select>
+                  </datalist>
+                    <input type="submit" value="Filtrar" id="filter" name="filter" >
+                    <a href='lista-de-vacunadores/'>
+                    <input type="submit" id="limpiar" name="limpiar" value="Limpiar filtro" ></a>
+                  </form>
+                </div>
+                <div class="left">
+                  <h2>Vacunadores</h2> 
+                    </div>
+                </div>
 <div class="table-responsive">
 
 
@@ -65,24 +89,58 @@
 
       </thead>
       <tbody>
-        {% for c in administradores %}
+        {% if valor == 0 %}
+        {% for c in vacunadores %}
         <tr>
           <td>{{forloop.counter}}</td>
-          <td>{{c.vacunador_apellido}} </td>
-          <td> {{c.vacunador_nombre}}</td>
           <td>{{c.vacunador_dni}}</td>
+          <td>{{c.vacunador_zona}}</td>
+          <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td>
+          <td><a href="/eliminar_Admin/{{c.vacunador_dni}}/{{c.vacunador_nombre}}" class="btn btn-block btn-danger">Eliminar</a></td>
+
+        </tr>
+        {% endfor%}
+        {% if not vacunadores %}
+        <td colspan="5" style="text-align: center">No hay vacunadores para mostrar</td>
+        {% endif %}
+        {% endif %}
+
+        {% if valor == 1 %}
+        {% for c in por_dni %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{c.vacunador_dni}}</td>
+          <td>{{c.vacunador_zona}}</td>
           <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td>
           <td><a href="/eliminar_Admin/{{c.vacunador_dni}}/{{c.vacunador_nombre}}" class="btn btn-block btn-danger">Eliminar</a></td>
 
 
         </tr>
         {% endfor%}
-        {% if not administradores %}
+        {% if not por_dni %}
         <td colspan="5" style="text-align: center">No hay vacunadores para mostrar</td>
+        {% endif %}
+        {% endif %}
+
+        {% if valor == 2 %}
+        {% for c in por_vacunatorio %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{c.vacunador_dni}}</td>
+          <td>{{c.vacunador_zona}}</td>
+          <td><a href="edicionVacunadores/{{c.dni}}" class="btn btn-block btn-info">Editar</a></td>
+          <td><a href="/eliminar_Admin/{{c.vacunador_dni}}/{{c.vacunador_nombre}}" class="btn btn-block btn-danger">Eliminar</a></td>
+
+        </tr>
+        {% endfor%}
+        {% if not por_vacunatorio %}
+        <td colspan="5" style="text-align: center">No hay vacunadores para mostrar</td>
+        {% endif %}
         {% endif %}
 
       </tbody>
     </table>
+  </div>
 
     {% if messages %}
       {% for message in messages %}
