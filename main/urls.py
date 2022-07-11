@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView,PasswordResetDoneView
 from django.urls import path, re_path, include, reverse_lazy
-from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,Dni,editarPerfilAdmin,SaleInvoicePdfView,accionEditarPerfil
+from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,Dni,editarPerfilAdmin,SaleInvoicePdfView,accionEditarPerfil,accionEditarPerfilPaciente,editarPerfilPaciente
 
 
 app_name= 'main'
@@ -16,6 +16,13 @@ urlpatterns = [
     path('register2/', views.register2,name= 'register2'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('cerrarSesion/', views.cerrarSesion, name = "cerrarSesion"),
+
+    path('editarPerfilAdmin/', views.editarPerfilAdmin, name = "editarPerfilAdmin"),
+    path('accionEditarPerfil/', views.accionEditarPerfil, name = "accionEditarPerfil"),
+    path('accionEditarPerfilPaciente/', views.accionEditarPerfilPaciente, name = "accionEditarPerfilPaciente"),
+
+    path('editarPerfilPaciente/', views.editarPerfilPaciente , name = "editarPerfilPaciente"),
+
 
     path('login_request/', views.login_request,name= 'login_request'),
 

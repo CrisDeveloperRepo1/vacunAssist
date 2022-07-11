@@ -156,6 +156,66 @@ class SaleInvoicePdfView(View):
         # if pisa_status.err:
         #    return HttpResponse('We had some errors <pre>' + html + '</pre>')
         return response
+
+############ editar paciente #################################################
+def editarPerfilPaciente (request):
+    ### solo vista ########
+    usuario=Logeado.objects.get(numId=3)
+    paciente=Paciente.objects.get(paciente_dni=usuario.usuarioLogeado)
+    context = { 'apellido': paciente.paciente_apellido,
+                'nombre': paciente.paciente_nombre,
+                'contraseña': paciente.contraseña,
+                'zona': paciente.paciente_zona,
+                'email': paciente.paciente_email,
+                    }
+
+
+    return render(request,"main/editarPerfilPaciente.html", context)
+def accionEditarPerfilPaciente (request):
+    L=Logeado.objects.get(numId=3)
+    usuario=Paciente.objects.get(paciente_dni=L.usuarioLogeado)
+    #usuario=Administrador.objects.get(administrador_dni=12345678)
+    #n=request.POST['nombre']
+
+    # n=request.POST['nombre']
+    # p=request.POST['apellido']
+    z=request.POST['zona']
+    e=request.POST['e']
+    c1=request.POST['c1']
+    c2=request.POST['c2']
+    v1=False
+
+    if( c1 != c2 ):
+        v1=True
+    else:
+        # usuario.paciente_nombre=n
+        # usuario.paciente_apellido=p
+        usuario.paciente_zona=z
+        usuario.paciente_email=e
+        usuario.contraseña=c1
+        usuario.save()
+
+
+
+    context = { 'apellido': usuario.paciente_apellido,
+                'nombre': usuario.paciente_nombre,
+                'contraseña': usuario.contraseña,
+                'zona': usuario.paciente_zona,
+                'email': usuario.paciente_email,
+                'v':v1,
+                    }
+
+
+
+
+    return render(request,"main/editarPerfilPaciente.html", context)
+
+
+
+
+
+
+#########################################################################################
 def editarPerfilAdmin (request):
     ### solo vista ########
     usuario=Logeado.objects.get(numId=1)
@@ -233,7 +293,7 @@ def accionEditarPerfil (request):
 #
 #
 #     return render(request,"main/editarPerfilAdmin.html", context)
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 def registrarVacunador (request):
     admin=Administrador.objects.get(administrador_dni=12345678)
     #nombre=request.POST['nombre']
@@ -1760,7 +1820,7 @@ def lista_pacientes(request):
                         return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'por_dni': por_dni, 'valor': 1})
                     else:
                         return render(request,"main/listado-pacientes.html",{"pacientes" :PacienteList, 'por_dni': [], 'valor': 1})
-                else: 
+                else:
                     raise
             except :
                 try:
