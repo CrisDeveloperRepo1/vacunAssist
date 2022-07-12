@@ -22,7 +22,8 @@ urlpatterns = [
     path('accionEditarPerfilPaciente/', views.accionEditarPerfilPaciente, name = "accionEditarPerfilPaciente"),
 
     path('editarPerfilPaciente/', views.editarPerfilPaciente , name = "editarPerfilPaciente"),
-
+    path('registrar_asistencia/', views.reg_asistencia , name = "registrarAsistencia"),
+    path('asistencia/<int:id>/<int:res>/<str:vac>',views.asistencia),
 
     path('login_request/', views.login_request,name= 'login_request'),
 

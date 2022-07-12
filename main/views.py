@@ -696,7 +696,7 @@ def eliminar_Admin(request,id,nombre):
     else:
         messages.error(request, " no hay vacunadores en el listado")
 
-    return render(request, "main/eliminarVacunador.html",{"administradores" : administradorList})
+    return render(request, "main/eliminarVacunador.html",{"vacunadores" : administradorList})
 
 def register(request,data2):
 
@@ -1868,3 +1868,83 @@ def lista_vacunadores(request):
     except :
         return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'valor': 0})
     return render(request,"main/listado-vacunadores.html",{"vacunadores" :vacunadoresList, 'valor': 0})
+
+
+def reg_asistencia (request):
+    fecha = date(2022, 9, 27)
+    pacientes_del_dia = Paciente.objects.all()
+    pacientes_gripe = []
+    pacientes_covid_1 = []
+    pacientes_covid_2 = []
+    pacientes_fa = []
+    for p in pacientes_del_dia:
+        if p.vac_Gripe_turno != None and p.vac_Gripe_turno.date() == fecha :
+            pacientes_gripe.append(p)
+        if  p.vac_Amarilla_turno != None and p.vac_Amarilla_turno.date() == fecha:
+            pacientes_fa.append(p)
+        if  p.vac_Covid_turno1!=  None and p.vac_Covid_turno1.date() == fecha:
+            pacientes_covid_1.append(p)
+        if  p.vac_Covid_turno2 != None and p.vac_Covid_turno2.date() == fecha:
+            pacientes_covid_2.append(p)
+    contexto = {
+        "pac_gripe": pacientes_gripe,
+        "pac_fa": pacientes_fa,
+        "pac_covid1": pacientes_covid_1,
+        "pac_covid2": pacientes_covid_2
+        }
+    return render (request, "main/registrar_asistencia.html", contexto)
+
+def asistencia(request,id, res, vac):
+    
+    admin=Paciente.objects.get(paciente_dni =id)
+    
+    if vac == "Gripe":
+        vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
+        if res == 1:
+            vacunatorio.stock_vac_gripe = vacunatorio.stock_vac_gripe - 1
+        admin.vac_Gripe_asistencia = res
+        admin.vac_Gripe_Aplicada = res
+    if vac == "fa":
+        vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
+        if res == 1:
+            vacunatorio.stock_vac_fa = vacunatorio.stock_vac_fa - 1
+        admin.vac_Amarilla_aplicada = res
+        admin.vac_Amarilla_asistencia = res
+    if vac == "c1":
+        vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
+        if res == 1:
+            vacunatorio.stock_vac_covid = vacunatorio.stock_vac_covid - 1
+        admin.vac_Covid1_aplicada = res
+        admin.vac_Gripe_asistencia = res
+    if vac == "c2":
+        vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
+        if res == 1:
+            vacunatorio.stock_vac_covid = vacunatorio.stock_vac_covid - 1
+        admin.vac_Covid2_aplicada = res
+        admin.vac_Covid1_asistencia = res
+    admin.save()
+    vacunatorio.save()
+
+    fecha = date(2022, 8, 26)
+    pacientes_del_dia = Paciente.objects.all()
+    pacientes_gripe = []
+    pacientes_covid_1 = []
+    pacientes_covid_2 = []
+    pacientes_fa = []
+    for p in pacientes_del_dia:
+        if p.vac_Gripe_turno != None and p.vac_Gripe_turno.date() == fecha :
+            pacientes_gripe.append(p)
+        if  p.vac_Amarilla_turno != None and p.vac_Amarilla_turno.date() == fecha:
+            pacientes_fa.append(p)
+        if  p.vac_Covid_turno1!=  None and p.vac_Covid_turno1.date() == fecha:
+            pacientes_covid_1.append(p)
+        if  p.vac_Covid_turno2 != None and p.vac_Covid_turno2.date() == fecha:
+            pacientes_covid_2.append(p)
+    contexto = {
+        "pac_gripe": pacientes_gripe,
+        "pac_fa": pacientes_fa,
+        "pac_covid1": pacientes_covid_1,
+        "pac_covid2": pacientes_covid_2
+        }
+    return render (request, "main/registrar_asistencia.html", contexto)
+
