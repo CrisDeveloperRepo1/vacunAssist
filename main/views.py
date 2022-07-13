@@ -1871,21 +1871,30 @@ def lista_vacunadores(request):
 
 
 def reg_asistencia (request):
-    fecha = date(2022, 9, 27)
-    pacientes_del_dia = Paciente.objects.all()
+    fecha = datetime.now().date()
+    log = Logeado.objects.all()
+    zona = Vacunador.objects.get(vacunador_dni = str(log[0].usuarioLogeado)).vacunador_zona
+    pacientes_del_dia = Paciente.objects.filter(paciente_zona = zona)
     pacientes_gripe = []
     pacientes_covid_1 = []
     pacientes_covid_2 = []
     pacientes_fa = []
+    print(pacientes_del_dia)
     for p in pacientes_del_dia:
-        if p.vac_Gripe_turno != None and p.vac_Gripe_turno.date() == fecha :
+        print(p.vac_Gripe_turno.date())
+        print(fecha)
+        if p.vac_Gripe_turno != None and p.paciente_zona == zona and p.vac_Gripe_turno.date() == fecha :
+            print("entró al if gripe")
             pacientes_gripe.append(p)
-        if  p.vac_Amarilla_turno != None and p.vac_Amarilla_turno.date() == fecha:
-            pacientes_fa.append(p)
-        if  p.vac_Covid_turno1!=  None and p.vac_Covid_turno1.date() == fecha:
-            pacientes_covid_1.append(p)
-        if  p.vac_Covid_turno2 != None and p.vac_Covid_turno2.date() == fecha:
-            pacientes_covid_2.append(p)
+        if  p.vac_Amarilla_turno != None and p.paciente_zona == zona and p.vac_Amarilla_turno.date() == fecha :
+                print("entró al if amarilla")
+                pacientes_fa.append(p)
+        if  p.vac_Covid_turno1!=  None and p.paciente_zona == zona and p.vac_Covid_turno1.date() == fecha :
+                print("entró al if covid")
+                pacientes_covid_1.append(p)
+        if  p.vac_Covid_turno2 != None and p.paciente_zona == zona and p.vac_Covid_turno2.date() == fecha :
+                print("entró al if covid222")
+                pacientes_covid_2.append(p)
     contexto = {
         "pac_gripe": pacientes_gripe,
         "pac_fa": pacientes_fa,
@@ -1903,7 +1912,7 @@ def asistencia(request,id, res, vac):
         if res == 1:
             vacunatorio.stock_vac_gripe = vacunatorio.stock_vac_gripe - 1
         admin.vac_Gripe_asistencia = res
-        admin.vac_Gripe_Aplicada = res
+        admin.vac_Gripe_aplicada = res
     if vac == "fa":
         vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
         if res == 1:
@@ -1915,17 +1924,17 @@ def asistencia(request,id, res, vac):
         if res == 1:
             vacunatorio.stock_vac_covid = vacunatorio.stock_vac_covid - 1
         admin.vac_Covid1_aplicada = res
-        admin.vac_Gripe_asistencia = res
+        admin.vac_Covid1era_asistencia = res
     if vac == "c2":
         vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
         if res == 1:
             vacunatorio.stock_vac_covid = vacunatorio.stock_vac_covid - 1
         admin.vac_Covid2_aplicada = res
-        admin.vac_Covid1_asistencia = res
+        admin.vac_Covid2da_asistencia = res
     admin.save()
     vacunatorio.save()
 
-    fecha = date(2022, 8, 26)
+    fecha = datetime.now().date()
     pacientes_del_dia = Paciente.objects.all()
     pacientes_gripe = []
     pacientes_covid_1 = []
@@ -1948,3 +1957,31 @@ def asistencia(request,id, res, vac):
         }
     return render (request, "main/registrar_asistencia.html", contexto)
 
+def ver_turnos (request):
+    fecha = datetime.now().date()
+    log = Logeado.objects.all()
+    zona = Vacunador.objects.get(vacunador_dni = str(log[0].usuarioLogeado)).vacunador_zona
+    pacientes_del_dia = Paciente.objects.filter(paciente_zona = zona)
+    
+    pacientes_gripe = []
+    pacientes_fa = []
+    pacientes_covid_1 = []
+    pacientes_covid_2 = []
+    
+    print(pacientes_del_dia)
+    for p in pacientes_del_dia:
+        if p.vac_Gripe_turno != None and (p.vac_Gripe_turno.date() == fecha or p.vac_Gripe_turno.date() > fecha):
+            pacientes_gripe.append(p)
+        if  p.vac_Amarilla_turno != None and (p.vac_Amarilla_turno.date() == fecha or p.vac_Amarilla_turno.date() > fecha):
+            pacientes_fa.append(p)
+        if  p.vac_Covid_turno1!=  None and (p.vac_Covid_turno1.date() == fecha or p.vac_Covid_turno1.date() > fecha):
+            pacientes_covid_1.append(p)
+        if  p.vac_Covid_turno2 != None and (p.vac_Covid_turno2.date() == fecha or p.vac_Covid_turno2.date() > fecha):
+            pacientes_covid_2.append(p)
+    contexto = {
+        "pac_gripe": pacientes_gripe,
+        "pac_fa": pacientes_fa,
+        "pac_covid1": pacientes_covid_1,
+        "pac_covid2": pacientes_covid_2
+        }
+    return render (request, "main/ver-turnos.html", contexto)

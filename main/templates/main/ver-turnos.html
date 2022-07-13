@@ -71,23 +71,20 @@
                   </form>
                 </div>
                 <div class="left">
-                  <h2>Turnos del día</h2> 
+                  <h2>Turnos </h2> 
                     </div>
                 </div>
 <div class="table-responsive">
 
-    <div class="center" style="margin: 10px 0px 0px 0px">
-    <p style="background:#A5A4A4; color:white"> Si el paciente no asistió no debe realizar ninguna acción </p>
-    </div>
-    <table class="table table-striped" style="margin: 0px auto">
+
+    <table class="table table-striped">
       <thead>
-        <tr >
+        <tr margin= "0 auto">
           <th style="text-align: left">#</th>
           <th style="text-align: left">Dni</th>
           <th style="text-align: left"> Zona </th>
           <th style="text-align: left"> Vacuna </th>
           <th style="text-align: left"> Turno </th>
-          <th colspan="2">Asistencia</th>
 
         <tr>
 
@@ -100,16 +97,10 @@
           <td>{{c.paciente_zona}}</td>
           <td> Gripe</td>
           <td>{{c.vac_Gripe_turno}}</td>
-          {% if c.vac_Gripe_asistencia == 2 %}
-          <td class="center"><a href="/asistencia/{{c.paciente_dni}}/{{1}}/{{"Gripe"}}" class="btn btn-block btn-info">Si</a></td>
-          {% comment %} <td ><a href="/asistencia/{{c.paciente_dni}}/{{2}}/{{"Gripe"}}" class="btn btn-block btn-danger">No</a></td>   {% endcomment %}
-          {% else %}
-          <td class="center"> Asistencia registrada </td>
-          {% endif %}
         </tr>
         {% endfor%}
-        {% if not pac_gripe  and not pac_covid1 and not pac_covid2 and not pac_fa %}
-        <td colspan="6" style="text-align: center">No hay turnos para mostrar</td>
+        {% if not pac_gripe  and not pac_covid1 and not pac_covid2 and not pac_fa%}
+        <td colspan="6" style="text-align: center">No hay pacientes para mostrar</td>
         {% endif %}
         {% for c in pac_fa %}
         <tr>
@@ -118,13 +109,6 @@
           <td>{{c.paciente_zona}}</td>
           <td> Fiebre Amarilla </td>
           <td>{{c.vac_Amarilla_turno}}</td>
-          {% if c.vac_Amarilla_asistencia == 2 %}
-          <td class="center" ><a href="/asistencia/{{c.paciente_dni}}/{{1}}/{{"fa"}}" class="btn btn-block btn-info">Si</a></td>
-          {% comment %} <td><a href="/asistencia/{{c.paciente_dni}}/{{2}}/{{"fa"}}" class="btn btn-block btn-danger">No</a></td>   {% endcomment %}
-          {% else %}
-          <td class="center">Asistencia registrada</td>
-          {% endif %}
-
         </tr>
         {% endfor%}
 
@@ -135,12 +119,6 @@
           <td>{{c.paciente_zona}}</td>
           <td> Covid-19 (1era dosis) </td>
           <td>{{c.vac_Covid_turno1}}</td>
-          {% if c.vac_Covid1era_asistencia == 2 %}
-          <td class="center"><a href="/asistencia/{{c.paciente_dni}}/{{1}}/{{"c1"}}" class="btn btn-block btn-info">Si</a></td>
-          {% comment %} <td><a href="/asistencia/{{c.paciente_dni}}/{{2}}/{{"c1"}}" class="btn btn-block btn-danger">No</a></td>   {% endcomment %}
-          {% else %}
-          <td class="center">Asistencia registrada</td>
-          {% endif %}
         </tr>
         {% endfor%}
 
@@ -151,12 +129,6 @@
           <td>{{c.paciente_zona}}</td>
           <td> Covid-19 (2da dosis) </td>
           <td>{{c.vac_Covid_turno2}}</td>
-          {% if c.vac_Covid2da_asistencia == 2 %}
-          <td class="center" ><a href="/asistencia/{{c.paciente_dni}}/{{1}}/{{"c2"}}" class="btn btn-block btn-info">Si</a></td>
-          {% comment %} <td><a href="/asistencia/{{c.paciente_dni}}/{{2}}/{{"c2"}}" class="btn btn-block btn-danger">No</a></td>   {% endcomment %}
-          {% else %}
-          <td class="center" >Asistencia registrada</td>
-          {% endif %}
         </tr>
         {% endfor%}
 
