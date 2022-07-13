@@ -1957,7 +1957,7 @@ def asistencia(request,id, res, vac):
         }
     return render (request, "main/registrar_asistencia.html", contexto)
 
-def ver_turnos (request):
+def ver_turnos_v (request):
     fecha = datetime.now().date()
     log = Logeado.objects.all()
     zona = Vacunador.objects.get(vacunador_dni = str(log[0].usuarioLogeado)).vacunador_zona
@@ -1985,3 +1985,30 @@ def ver_turnos (request):
         "pac_covid2": pacientes_covid_2
         }
     return render (request, "main/ver-turnos.html", contexto)
+
+def ver_turnos_admin(request):
+    fecha = datetime.now().date()
+    pacientes_del_dia = Paciente.objects.all()
+    
+    pacientes_gripe = []
+    pacientes_fa = []
+    pacientes_covid_1 = []
+    pacientes_covid_2 = []
+    
+    print(pacientes_del_dia)
+    for p in pacientes_del_dia:
+        if p.vac_Gripe_turno != None and (p.vac_Gripe_turno.date() == fecha or p.vac_Gripe_turno.date() > fecha):
+            pacientes_gripe.append(p)
+        if  p.vac_Amarilla_turno != None and (p.vac_Amarilla_turno.date() == fecha or p.vac_Amarilla_turno.date() > fecha):
+            pacientes_fa.append(p)
+        if  p.vac_Covid_turno1!=  None and (p.vac_Covid_turno1.date() == fecha or p.vac_Covid_turno1.date() > fecha):
+            pacientes_covid_1.append(p)
+        if  p.vac_Covid_turno2 != None and (p.vac_Covid_turno2.date() == fecha or p.vac_Covid_turno2.date() > fecha):
+            pacientes_covid_2.append(p)
+    contexto = {
+        "pac_gripe": pacientes_gripe,
+        "pac_fa": pacientes_fa,
+        "pac_covid1": pacientes_covid_1,
+        "pac_covid2": pacientes_covid_2
+        }
+    return render (request, "main/todos-los-turnos.html", contexto)

@@ -24,7 +24,9 @@ urlpatterns = [
     path('editarPerfilPaciente/', views.editarPerfilPaciente , name = "editarPerfilPaciente"),
     path('registrar_asistencia/', views.reg_asistencia , name = "registrarAsistencia"),
     path('asistencia/<int:id>/<int:res>/<str:vac>',views.asistencia),
-    path('ver_turnos_v/',views.ver_turnos),
+    path('ver_turnos_v/',views.ver_turnos_v),
+    path('ver_turnos_admin/',views.ver_turnos_admin),
+
 
     path('login_request/', views.login_request,name= 'login_request'),
 
