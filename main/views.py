@@ -545,6 +545,7 @@ def reg_paciente_st (request):
                                         )
 
     send_mail_pre_registro(email, dni, nombre)
+    return render(request, "main/popup-preregistro.html")
     return render(request, "main/registro-paciente-sin-turno.html", {'opc': opcion})
 
 def inicio_vacuandor (request):
