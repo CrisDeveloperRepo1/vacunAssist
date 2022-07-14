@@ -265,14 +265,14 @@ input[type=number] { -moz-appearance:textfield; }
                   </div> -->
 
                 <div class="form-group">
-                  <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
-                  <div class="popup" id="popup">
+                  <button type="submit" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
+                  {% comment %} <div class="popup" id="popup">
                     <img src="{% static 'imagenes/tick.png' %}">
                     <h2> Registro Exitoso </h2>
                     <h5> Hemos enviado un mail a su casilla de correo y generamos un código único que debe ser guardado para poder iniciar sesión </h5>
                     <p> Gracias por utilizar nuestro sistema de turnos </p>
                     <button type="submit" onclick="closePopup()"> Ok </button>
-                  </div>
+                  </div> {% endcomment %}
                 </div>
 
               </div>

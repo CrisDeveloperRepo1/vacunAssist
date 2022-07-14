@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+
+
+    <!-- bgcolor="#8bc34a" -->
+
+    <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+
+
+</html>
+
+<style>
+  input[type=button], input[type=submit], input[type=reset] {
+    background-color: #888987;
+    border-color:#86D03A;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin: 20px 0px;
+    cursor: pointer;
+  }
+
+fieldset {
+  background-color: #eeeeee;
+  display: block;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 10px;
+  border: 2px groove (internal value);
+}
+
+legend {
+  background-color: gray;
+}
+
+input {
+  margin: 5px;
+}
+</style>
+
+
+  <head>
+    <meta charset="utf-8">
+    <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
+
+    <title></title>
+    <nav>
+        <div class="nav-wrapper  light-green">
+           <a href="/" class="brand-logo">
+            <img src="{% static 'imagenes/Logo_VacunAssist_recortado.png' %}" class="img-fluid" width="100" height="66">
+          <div class="right"  style="margin: 9px 0px 0px 10px">
+            <h6>Sistema de turnos para vacunatorios de la Ciudad de La Plata</h6>
+            </div>
+          </a>
+          <div class="right">
+            <a href="#" class="brand-logo"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="javascript: history.go(-1)">Volver</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
+
+  </head>
+
+  <!-- bgcolor="#8bc34a" -->
+  <body bgcolor="FFFFFF" >
+
+  </div>
+</table>
+<br>
+<!-- <form  action="/registroPaciente/" method="post">{% csrf_token %} -->
+<form  action="/inicioVacunador" method="post">
+    {% csrf_token%}
+          <!-- <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button> -->
+          <div class="popup" id="popup">
+            <img src="{% static 'imagenes/tick.png' %}">
+            <h2> Registro Exitoso </h2>
+            <h5> Se inicó el registro del paciente. Recuerde informarle que debe finalizar el registro  </h5>
+            {% comment %} <p> Gracias por utilizar nuestro sistema de turnos </p> {% endcomment %}
+            <button type="submit" > Ok </button>
+          </div>
+        </div>
+  </form>
+
+  <script>
+    let popup = document.getElementById("popup")
+
+    function openPopup() {
+      popup.classList.add("open-popup")
+    }
+    function closePopup() {
+      popup.classList.remove("open-popup")
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+  </body>
+</html>

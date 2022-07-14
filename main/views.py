@@ -323,6 +323,7 @@ def registrarVacunador (request):
     #print(resultado)
 
     send_email_registro(email, Codigo, dni, nombre)
+    return render(request,"main/registro-exitoso.html", {"codigo": Codigo, "dir":"/inicio_admin/"})
     context = {
         'fecha_max': str(datetime.now().date()),
         'fecha_min': str(resultado),
@@ -563,7 +564,8 @@ def registroPaciente(request):
     opCoviP1=request.POST['opcVacunaCovidP1']
     opCoviP2=request.POST['opcVacunaCovidP2']
     Contraseña=request.POST['Contraseña']
-
+    print("holaaa jdnenewl")
+    print(request.POST)
     inicio = datetime(2022, 6, 30)
     final =  datetime(2022, 9, 28)
 
@@ -586,7 +588,6 @@ def registroPaciente(request):
     for i in range(4) :
         OTP += digits[math.floor(random.random() * 10)]
     codigo=OTP
-
 
     digitos = '0123456789'
     longitud = 4  # La longitud que queremos
@@ -635,10 +636,8 @@ def registroPaciente(request):
     #messages.error(request, " El paciente ya exite")
 
 
-
-
-
     send_email_registro(email, codigo, dni, nombre)
+    return render(request, "main/registro-exitoso.html", {'codigo': codigo, "dir": "/"})
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
     ##########send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
@@ -1415,7 +1414,7 @@ def reg_vac(request):
             digitos = '1234567890'
             longitud = 4  # La longitud que queremos
             codigo = ''.join(choice(digitos) for digito in range(longitud))
-            send_email_registro(mail, codigo)
+            send_email_registro(mail, codigo, dni, nombre)
             context={
                 'form': form,
                 'codigo' : codigo,
@@ -2012,3 +2011,6 @@ def ver_turnos_admin(request):
         "pac_covid2": pacientes_covid_2
         }
     return render (request, "main/todos-los-turnos.html", contexto)
+
+def reg_exitoso (request):
+    return render (request, 'main/registro-exitoso.html')
