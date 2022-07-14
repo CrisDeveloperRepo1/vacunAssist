@@ -133,12 +133,12 @@ class Envio_de_correo (models.Model):
 
     def __str__(self):
         return self.name
-    
+
 class Dni (models.Model):
     num_dni= models.CharField(max_length=200)
     nombre= models.CharField(max_length=200)
     apellido= models.CharField(max_length=20)
-    
+
     def __str__(self):
        return self.num_dni
 
@@ -160,7 +160,6 @@ class Paciente_ST (models.Model):
     vac_Covid_turno2= models.DateTimeField(null=True)
     vac_Covid1era_asistencia=models.SmallIntegerField(choices=opciones,default=2)
     vac_Covid2da_asistencia=models.SmallIntegerField(choices=opciones,default=2)
-    
+
     def __str__(self):
        return self.pacienteST_dni
-    

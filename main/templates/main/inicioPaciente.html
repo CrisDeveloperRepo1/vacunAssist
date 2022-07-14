@@ -1,22 +1,28 @@
+
+{{context.edad}}
+{{context}}
+
+
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="en" dir="ltr">
+
+    <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
+
+
+</html>
+
   <head>
+
+
 
     <meta charset="utf-8">
     <!-- Compiled and minified CSS -->
     <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link type='text/css' href="{% static 'css/estilo.css' %}" rel="stylesheet" />
-        <link  href="fontawesone/fontawesome-free-6.1.1-web/css/all.min.css" rel="stylesheet" >
-          <link  href="{% static 'fontawesome/fontawesome-free-6.1.1-web/css/all.min.css' %}" rel="stylesheet" >
-
-
 
     <title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
     <nav>
         <div class="nav-wrapper  light-green">
 
@@ -29,202 +35,468 @@
           </a>
           <ul id="nav-mobile" class="right hide-on-med">
 
-          <li><a href="JavaScript: history.go(-2)">Cerrar Sesión</a></li>
+          <li><a href="/login/">Cerrar Sesión</a></li>
           </ul>
         </div>
       </nav>
 
+      <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
 
-      <body>
+  </head>
+  <!-- bgcolor="#8bc34a" -->
+  <body>
 
-<div class="container">
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title"> Vacuna Covid</span>
-          <p> Turno: asignado
-          </p>
-          <p> Fecha : {{p.vac_Covid_turno1}}
-
-          </p>
-        </div>
-        <div class="card-action">
-
-        </div>
-      </div>
+  <!-- <img src= "{% static 'Logo.png' % }" alt="VacunAssist" > -->
 
 
+    <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    </div>
-    <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">Vacuna Gripe</span>
-          <p> Turno: asignado
-          </p>
-          <p> Fecha : {{p.vac_Gripe_turno}}
-          </p>
-        </div>
-        <div class="card-action">
+  {% if edad >= 60 %}
+        <div class="container">
+          <div class="row">
+            <div class="col s12 m4">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title"> Vacuna Gripe</span>
+                  {% if estG == 3 %}
 
-        </div>
-      </div>
+                     <p> Usted ya se dio la vacuna
+                     </p>
+                     <p>
+
+                    </p>
+                  {% elif estG == 2 or estG == 1  %}
+
+                    <p> Turno: asignado
+                    </p>
+                    <p> Fecha : {{fechaG}}
+
+                    </p>
 
 
-
-    </div>
-
-    <div class="col s12 m6">
-      {% if valor == 3 %}
-
-
-      {% else %}
-
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Vacuna Fiebre Amarilla</span>
+                  {% endif %}
 
 
 
 
-
-              {% if valor == 1 %}
-
-              <p>Usted ya solicitó un turno </p>
-                 {% if p.vac_Amarilla_turno == none %}
-                    <p>Turno : no asignado</p>
-                 {% else %}
-                    <p> Estado del turno : asignado</p>
-                    <p> Fecha : {{p.vac_Amarilla_turno}}
-                 {% endif%}
-
-              {% else %}
-                {% if p.vac_Amarilla_turno != none %}
-                <p> Estado del turno : asignado</p>
-                <p> Fecha : {{p.vac_Amarilla_turno}}
-
-                {% else %}
-                   <p>Usted todavía no solicitó un turno   </p>
-                {% endif%}
+                </div>
+                <div class="card-action">
+                  {% if estG == 2  or estG == 1 %}
+                     <h7><a href="/cancelarTurno/"> Cancelar turno </a> </h7>
 
 
+                  {% endif %}
 
-
-
-              {% endif %}
-
-
-            </div>
-            <div class="card-action">
-              {% if valor == 2 %}
-                {% if p.vac_Amarilla_turno != none %}
-                   <h7><a href="/cancelarTurno/">Cancelar turno </a> </h7>
-                {% else %}
-                   <h7><a href="/solicitarTurnoFA/">Solicitar turno</a> </h7>
-
-                {% endif %}
-
-
-              {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                </div>
+              </div>
 
 
 
             </div>
+
+            <div class="col s12 m4">
+              <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Vacuna covid19</span>
+
+                  {% if estC == 3 %}
+
+                     <p> Usted ya tiene las 2 dosis de la vacuna
+                     </p>
+                     <p>
+
+                    </p>
+                  {% elif estC == 2  %}
+
+                    <p> Turno: asignado
+                    </p>
+                    <p> 2 dosis covi19
+                    </p>
+                    <p> Fecha : {{fechaC1}}
+
+                    </p>
+
+                  {% elif estC == 1  %}
+
+                      <p> Turno: asignado
+                      </p>
+                      <p> 1 dosis covi19
+                      </p>
+                      <p> Fecha : {{fechaC2}}
+
+                      </p>
+                  {% endif %}
+
+                  <p> Turno: asignado
+                  </p>
+                  <p> Fecha : {{p.vac_Gripe_turno}}
+                  </p>
+                </div>
+                <div class="card-action">
+
+                  {% if estG == 2  or estG == 1 %}
+                     <h7><a href="/cancelarTurno/"> Cancelar turno </a> </h7>
+
+
+                  {% endif %}
+
+                </div>
+              </div>
+
+
+
             </div>
-          <!-- </div>  ########## -->
 
-       {% endif %}
+</div>
+</div>
+ <!-- fin cards paciente >60 -->
 
-    <center>
+ {% elif edad >= 18 and edad < 60 %}
+       <div class="container">
+         <div class="row">
+           <div class="col s12 m4">
+             <div class="card blue-grey darken-1">
+               <div class="card-content white-text">
+                 <span class="card-title"> Vacuna Gripe</span>
+                 {% if estG == 3 %}
+
+                    <p> Usted ya se dio la vacuna
+                    </p>
+                    <p>
+
+                   </p>
+                 {% elif estG == 2 or estG == 1  %}
+
+                   <p> Turno: asignado
+                   </p>
+                   <p> Fecha : {{fechaG}}
+
+                   </p>
 
 
-             <div class="input-field col s12" style="margin:2px">
-               <th colspan="2"> </th><td><a href="/editarPerfilPaciente/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> Editar Pefil </a></td>
-               <th colspan="2"> </th><td><a href="/SaleInvoicePdfView/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> solicitar Certificados </a></td>
+                 {% endif %}
 
+
+
+
+               </div>
+               <div class="card-action">
+                 {% if estG == 2  or estG == 1 %}
+                    <h7><a href="/cancelarTurno/"> Cancelar turno </a> </h7>
+
+
+                 {% endif %}
+
+               </div>
              </div>
 
 
 
-    </center>
+           </div>
 
-  </div>
+           <div class="col s12 m4">
+             <div class="card blue-grey darken-1">
+               <div class="card-content white-text">
+                 <span class="card-title">Vacuna covid19</span>
+
+                 {% if estC == 3 %}
+
+                    <p> Usted ya tiene las 2 dosis de la vacuna
+                    </p>
+                    <p>
+
+                   </p>
+                 {% elif estC == 2  %}
+
+                   <p> Turno: asignado
+                   </p>
+                   <p> 1 dosis covi19
+                   </p>
+                   <p> Fecha : {{fechaC1}}
+
+                   </p>
+
+                 {% elif estC == 1  %}
+
+                     <p> Turno: asignado
+                     </p>
+                     <p> 2 dosis covi19
+                     </p>
+                     <p> Fecha : {{fechaC2}}
+
+                     </p>
+                 {% endif %}
+
+
+               <div class="card-action">
+
+                 {% if estG == 2  or estG == 1 %}
+                    <h7><a href="/cancelarTurno/"> Cancelar turno </a> </h7>
+
+
+                 {% endif %}
+
+               </div>
+             </div>
 
 
 
-
-
-
-
-
-  </div>
+           </div>
 
 </div>
 
 
-{% if messages %}
-  {% for message in messages %}
-  <!-- {% if message.tags == 'success' %}
-  <script type = "text/javascript">
-  M.toast({html: '{{message}}',
-  classes: 'green rounded',
-  displayLength:2000,
-})
+<div class="col s12 m4">
+  <div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+      <span class="card-title">Vacuna fiebre amarilla </span>
 
-</script>
-{% endif %} -->
+      {% if estFA == 4 %}
 
-{% if message.tags == 'error' %}
-  <script type = "text/javascript">
-       M.toast({html: '{{message}}',
-       classes: 'green rounded',
-       displayLength:2000,
-       })
+         <p> Turno : no solicitado
+         </p>
+         <p>
 
- </script>
- <p>TURNO SOLICITADO</p>
+        </p>
+      {% elif estC == 3  %}
+
+        <p> usted esta vacunado contra la fiebre amarilla
+        </p>
+
+
+      {% elif estC == 2  %}
+
+          <p> Turno: asignado
+          </p>
+
+          <p> Fecha : {{fechaFA}}
+
+          </p>
+
+
+      {% elif estC == 1  %}
+
+            <p> Turno: no  asignado
+            </p>
+
+
+
+      {% endif %}
+
+
+    <div class="card-action">
+
+      {% if estFA == 4 %}
+         <h7><a href="/cancelarTurno/"> solictar turno </a> </h7>
+
+      {% elif estFA == 2 %}
+            <h7><a href="/cancelarTurno/"> cancelar Turno </a> </h7>
+
+
+      {% endif %}
+
+    </div>
+  </div>
+
+
+
+</div>
+
+</div>
+
+
+<!-- fin cards mayores de 18 pero menores de 60 -->
+</div>
+</div>
+
+ <!-- fin cards mayores de 18 pero menores de 60 -->
+
+ {% elif edad < 18 %}
+       <div class="container">
+         <div class="row">
+           <div class="col s12 m4">
+             <div class="card blue-grey darken-1">
+               <div class="card-content white-text">
+                 <span class="card-title"> Vacuna Gripe</span>
+
+                 {% if estG == 1 %}
+
+                    <p> Usted ya se dio la vacuna este año
+                    </p>
+                    <p>
+
+                   </p>
+                 {% elif estG == 2 or estG == 1  %}
+
+                   <p> Turno: asignado
+                   </p>
+                   <p> Fecha : {{fechaG}}  {{estG}}
+
+                   </p>
+
+
+                 {% endif %}
+
+
+
+
+               </div>
+               <div class="card-action">
+                 {% if estG == 2  or estG == 3 %}
+                    <h7><a href="/cancelarTurno/"> Cancelar turno </a> </h7>
+
+
+                 {% endif %}
+
+               </div>
+             </div>
+
+
+
+           </div>
+
+           <div class="col s12 m4">
+             <div class="card blue-grey darken-1">
+               <div class="card-content white-text">
+                 <span class="card-title">Vacuna covid19</span>
+
+                 {% if estC == 3 %}
+
+                    <p> las personas menores de 18 años no pueden vacunarse contra el covid19
+                    </p>
+                    <p>
+
+                   </p>
+
+                 {% endif %}
+
+
+               <div class="card-action">
+
+
+
+               </div>
+             </div>
+
+
+
+           </div>
+
+</div>
+
+
+<div class="col s12 m4">
+  <div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+      <span class="card-title">Vacuna fiebre amarilla </span>
+
+      {% if estFA == 4 %}
+
+         <p> Turno : no solicitado
+         </p>
+         <p>
+
+        </p>
+      {% elif estFA == 3  %}
+
+        <p> usted esta vacunado contra la fiebre amarilla
+        </p>
+      
+
+
+
+      {% elif estFA == 2  %}
+
+          <p> Turno: asignado
+          </p>
+
+          <p> Fecha : {{fechaFA}}
+
+          </p>
+
+
+      {% elif estFA == 1  %}
+
+            <p> Turno: no  asignado
+            </p>
+
+
+
+      {% endif %}
+
+
+    <div class="card-action">
+
+      {% if estFA == 4 %}
+         <h7><a href="/cancelarTurno/"> solictar turno </a> </h7>
+
+      {% elif estFA == 2 %}
+            <h7><a href="/cancelarTurno/"> cancelar Turno </a> </h7>
+
+
+      {% endif %}
+
+    </div>
+  </div>
+
+
+
+</div>
+
+</div>
+
+
+<!-- fin cards menores de 18  -->
+</div>
+</div>
+
+
 {% endif %}
 
+        {% if messages %}
+          {% for message in messages %}
+          <!-- {% if message.tags == 'success' %}
+          <script type = "text/javascript">
+          M.toast({html: '{{message}}',
+          classes: 'green rounded',
+          displayLength:2000,
+        })
+
+      </script>
+      {% endif %} -->
+
+        {% if message.tags == 'error' %}
+          <script type = "text/javascript">
+               M.toast({html: '{{message}}',
+               classes: 'red rounded',
+               displayLength:2000,
+               })
+
+         </script>
+      {% endif %}
 
 
-<!-- <script type = "text/javascript">
-M.toast({html: '{{message}}',
-classes: 'red rounded',
-displayLength:2000,
-})
 
-</script> -->
+    <!-- <script type = "text/javascript">
+    M.toast({html: '{{message}}',
+    classes: 'red rounded',
+    displayLength:2000,
+  })
 
- {% endfor %}
+  </script> -->
 
-
-
-{% endif %}
+         {% endfor %}
 
 
 
+    {% endif %}
+        <!-- <script type = "text/javascript">
+            M.toast({html: 'fgf',
+            classes: 'red rounded',
+            displayLength:2000,
+          })
 
-<i class="fa-solid fa-user-tie"  style=""></i></i>
-<i class="fa-solid fa-user" style="color:#FFFFFF; width:25; height:25;"></i></i>
-
-
-
-      </body>
+       </script> -->
+  </body>
+</html>

@@ -60,7 +60,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                 <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> Vacunatorio  </span></label>
-                  <select  id= "vacunatorio" class="browser-default" autofocus   name="vacunatorio">
+                  <select  id= "vacunatorio" name="vacunatorio" class="browser-default" autofocus   name="vacunatorio" required>
                     <option value="" disabled selected>Elija su vacunatorio mas cercano</option>
                     <option value="Cementerio Municipal">Cementerio Municipal</option>
                     <option value="Terminal de Omnibús">Terminal de Omnibús</option>
@@ -70,7 +70,7 @@ input[type=number] { -moz-appearance:textfield; }
                 <br>
                 <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> DNI  </span></label>
-                   <input type="number" id="dni" value="{{dni}}" name="dni" clas="form-control" placeholder=""  minlength="8" maxlength="8" required Readonly>
+                   <input type="number" id="dni" value="{{dni}}" name="dni" clas="form-control" placeholder=""  minlength="8" maxlength="8" required readonly>
                 </div>
 
                  <div class="form-group">
@@ -85,7 +85,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                  <div class="form-group">
                   <label >  <span class="black-text text-darken-2"> Fecha de nacimiento  </span></label>
-                   <input input type="date" id="fechaesperada" name="fechaesperada" max="{{fecha_actual}}" >
+                   <input  type="date" id="fechaesperada" name="fechaesperada" max="{{fecha_actual}}" >
                  </div>
                 </div>
                 <div class="input-field col s12 m6" required>
@@ -104,7 +104,7 @@ input[type=number] { -moz-appearance:textfield; }
                     </select>
                     <input input type="text" id="c"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
 
-                   <input input type="date" id="caja1" name="fechaesperada" max="{{fecha_actual}}" disabled="" >
+                   <input input type="date" id="caja1" name="caja1" max="{{fecha_actual}}" disabled="" >
                    <script type="text/javascript">
                        function activarcaja1(){
                          if(opcVacunaGripe.value==1){
@@ -149,7 +149,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                      <input input type="text" id="c2"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
 
-                    <input input type="date" id="caja2" name="fechaesperada" max="{{fecha_actual}}" disabled="" >
+                    <input input type="date" id="caja2" value=2 name="fechaesperada" max="{{fecha_actual}}" disabled=""  required>
                     <script type="text/javascript">
                         function activarcaja2(){
                           if(opcVacunaCovidP1.value==1){
@@ -265,14 +265,14 @@ input[type=number] { -moz-appearance:textfield; }
                   </div> -->
 
                 <div class="form-group">
-                  <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" > Registrarse </button>
-                  <div class="popup" id="popup">
+                  <button type="submit" class="btn btn-success btn-block text-white"  > Registrarse </button>
+                  <!-- <div class="popup" id="popup">
                     <img src="{% static 'imagenes/tick.png' %}">
                     <h2> Registro Exitoso </h2>
                     <h5> Hemos enviado un mail a su casilla de correo y generamos un código único que debe ser guardado para poder iniciar sesión </h5>
                     <p> Gracias por utilizar nuestro sistema de turnos </p>
                     <button type="submit" onclick="closePopup()"> Ok </button>
-                  </div>
+                  </div> -->
                 </div>
 
               </div>
@@ -288,7 +288,7 @@ input[type=number] { -moz-appearance:textfield; }
 
 
 
-<script>
+<!-- <script>
  let popup = document.getElementById("popup")
 
  function openPopup() {
@@ -297,7 +297,7 @@ input[type=number] { -moz-appearance:textfield; }
  function closePopup() {
    popup.classList.remove("open-popup")
  }
-</script>
+</script> -->
 
 
 <script src="{% static 'js/noback.js' %}"></script>

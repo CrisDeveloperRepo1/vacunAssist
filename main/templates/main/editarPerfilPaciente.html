@@ -195,9 +195,15 @@
 
                 <select id= "zona" class="browser-default"   name="zona" required>
                   <option value="{{zona}}" > Actual ({{zona}})</option>
-                  <option value="Cementerio Municipal">Cementerio Municipal</option>
+                  {% if '{{zona}}' == "Municipalidad"  %}
+
+                  {% else %}
+                     <option value="Municipalidad">Municipalidad</option>
+
+                  {% endif %}
                   <option value="Terminal de Omnibus">Terminal de Omnibús</option>
-                  <option value="Municipalidad">Municipalidad</option>
+                  <option value="Cementerio Municipal">Cementerio Municipal</option>
+
                 </select>
               </div>
 

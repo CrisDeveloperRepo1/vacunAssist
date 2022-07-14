@@ -93,6 +93,211 @@ from django.contrib.auth.decorators import login_required
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+def pantallaInicioPaciente(request):
+    one = Logeado.objects.get(numId=3)
+    one = Logeado.objects.get(numId=3)
+    ##### ahora 3 tipos de usuarios
+
+
+    one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+    today = date.today()
+    estG=0
+    estC=0
+    estFA=0
+    age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+    if (age>=60):
+        estG=1
+        estC=1
+        if (one_entry.vac_Gripe_aplicada == 1):
+            estG=1 ### mostrar usted ya tiene la vacuna de la gripe por este año
+
+            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+            if (tiempo >= 1):
+                estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
+
+                inicio = datetime(2022, 6, 30)
+                final =  datetime(2022, 9, 28)
+                    # random_date = inicio + (final - inicio) * random.random()
+                    # vacFaTurno = random_date
+                #random_turnoCovid = inicio + (final - inicio) * random.random()
+                random_gripe = inicio + (final - inicio) * random.random()
+                ### sacar la asistencia
+                one_entry.vac_Gripe_aplicada=2
+                one_entry.vac_Gripe_turno=random_gripe
+                one_entry.save()
+
+        if (one_entry.vac_Gripe_aplicada == 2):
+            estG=3
+            ######## MOSTRAR LA FECHA DEL turno de la gripe  y habilitar boton cancelar
+
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 1):
+            estC=3
+            ### usted ya tiene las 2 dosis del covid
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 2):
+            estC=2
+            ########## mostrar la fecha del turno del covid segunda dosis y habilitar boton cancelar
+             ### puede ser que no te muestre el turno de la segunda dosis si no fue generado en el registrar paciente
+
+        if (one_entry.vac_Covid1_aplicada == 2):
+            estC=1
+            ### mostrar la fecha del turno covid primera dosis y habilitar boton cancelar
+
+
+
+        context = {'estG':estG,
+                  'estC':estC,
+                  'estFA':estFA,
+                  'fechaG':one_entry.vac_Gripe_turno,
+                  'fechaC1':one_entry.vac_Covid_turno1,
+                  'fechaC2':one_entry.vac_Covid_turno2,
+                  'edad':age,
+
+            }
+        return render(request, "main/inicioPaciente.html",context)
+    if (age<60 & age >=18):
+
+        estG=0
+        estC=0
+        estFA=0
+        if (one_entry.vac_Gripe_aplicada == 1):
+            estG=3 ### mostrar usted ya tiene la vacuna de la gripe por este año
+
+            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+            if (tiempo >= 1):
+                estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
+
+                inicio = datetime(2022, 6, 30)
+                final =  datetime(2022, 9, 28)
+                    # random_date = inicio + (final - inicio) * random.random()
+                    # vacFaTurno = random_date
+                #random_turnoCovid = inicio + (final - inicio) * random.random()
+                random_gripe = inicio + (final - inicio) * random.random()
+                one_entry.vac_Gripe_turno=random_gripe;
+                one_entry.save()
+
+        if (one_entry.vac_Gripe_aplicada == 2):
+            estG=1
+            ######## MOSTRAR LA FECHA DEL turno de la gripe  y habilitar boton cancelar
+
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 1):
+            estC=3
+            ### usted ya tiene las 2 dosis del covid
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 2):
+            estC=2
+            ########## mostrar la fecha del turno del covid segunda dosis y habilitar boton cancelar
+            ## ojo q tengas asignada la fecha del turno para la segunda dosis
+
+        if (one_entry.vac_Covid1_aplicada == 2):
+            estC=1
+            ### mostrar la fecha del turno covid primera dosis y la opcion canelar
+########## fa ##########
+
+        if (one_entry.vac_Amarilla_aplicada == 2):
+            estFA=4
+            ########  habilitar boton solicitar TurnoFA y info turno no asignado
+
+        if (one_entry.vac_Amarilla_aplicada == 1 ):
+            estFA=3
+            ### usted ya tiene aplicada la vacuna de la fa no tener boton habilitado
+
+        if (one_entry.vac_Amarilla_aplicada == 2 & TurnoFAAprobados.objects.filter(dni = one_entry.paciente_dni ).exists() & one_entry.vac_Amarilla_aplicada == 2):
+            estFA=2
+            ########## mostrar la fecha del turno y habilitar el boton cancelar
+
+        if (one_entry.vac_Amarilla_aplicada == 2  & SolicitudTurnoFA.objects.filter(dni = one_entry.paciente_dni ).exists()):
+            estFA=1
+            ### mostrar solo turno solicitado , turno no asignado sin boton cancelar
+
+
+
+
+        context = {'estG':estG,
+                  'estC':estC,
+                  'estFA':estFA,
+                  'fechaG':one_entry.vac_Gripe_turno,
+                  'fechaC1':one_entry.vac_Covid_turno1,
+                  'fechaC2':one_entry.vac_Covid_turno2,
+                  'fechaFA':one_entry.vac_Amarilla_turno,
+                  'edad':age,
+
+            }
+        return render(request, "main/inicioPaciente.html",context)
+
+
+    if (age<18):
+
+        estG=2
+        estC=2
+        estFA=2
+        if (one_entry.vac_Gripe_aplicada == 1):
+            estG=1 ### mostrar usted ya tiene la vacuna de la gripe por este año
+
+            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+            if (tiempo >= 1):
+                estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
+
+                inicio = datetime(2022, 6, 30)
+                final =  datetime(2022, 9, 28)
+                    # random_date = inicio + (final - inicio) * random.random()
+                    # vacFaTurno = random_date
+                #random_turnoCovid = inicio + (final - inicio) * random.random()
+                random_gripe = inicio + (final - inicio) * random.random()
+                one_entry.vac_Gripe_turno=random_gripe;
+                one_entry.save()
+
+        if (one_entry.vac_Gripe_aplicada == 2):
+            estG=3
+            ######## MOSTRAR LA FECHA DEL turno de la gripe  y habilitar boton cancelar
+
+########## fa ##########
+
+        if (one_entry.vac_Amarilla_aplicada == 2):
+            estFA=4
+            ########  habilitar boton solicitar TurnoFA y info turno no asignado
+
+        if (one_entry.vac_Amarilla_aplicada == 1 ):
+            estFA=3
+            ### usted ya tiene aplicada la vacuna de la fa no tener boton habilitado
+
+        if (one_entry.vac_Amarilla_aplicada == 2 & TurnoFAAprobados.objects.filter(dni = one_entry.paciente_dni ).exists()):
+            estFA=2
+            ########## mostrar la fecha del turno y habilitar el boton cancelar
+
+        if (one_entry.vac_Amarilla_aplicada == 2  & SolicitudTurnoFA.objects.filter(dni = one_entry.paciente_dni ).exists()):
+            estFA=1
+            ### mostrar solo turno solicitado , turno no asignado sin boton cancelar
+
+        context = {'estG':estG,
+                  'estC':estC,
+                  'estFA':estFA,
+                  'fechaG':one_entry.vac_Gripe_turno,
+                  'fechaC1':one_entry.vac_Covid_turno1,
+                  'fechaC2':one_entry.vac_Covid_turno2,
+                  'fechaFA':one_entry.vac_Amarilla_turno,
+                  'edad':age,
+
+            }
+        return render(request, "main/inicioPaciente.html",context)
+
+
+
+
+    # one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+    # context = {'estG':3,
+    #               'estC':4,
+    #               'estFA':4,
+    #               'fechaG':one_entry.vac_Gripe_turno,
+    #               'fechaC1':one_entry.vac_Covid_turno1,
+    #               'fechaC2':one_entry.vac_Covid_turno2,
+    #               'fechaFA':one_entry.vac_Amarilla_turno,
+    #               'edad':60,
+    #
+    #         }
+    #
+    #
+    # return render(request,'main/inicioPaciente.html',context)
+
+
 
 def cerrarSesion(request):
     logout(request)
@@ -387,41 +592,221 @@ def solicitarTurnoFA(request):
 
 def inicioPaciente(request):
 
+
+
+
+
     one = Logeado.objects.get(numId=3)
+    ##### ahora 3 tipos de usuarios
 
 
     one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
     today = date.today()
-
+    estG=0
+    estC=0
+    estFA=0
     age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
-    if (age >= 60):
-        return render(request, "main/inicioPaciente.html",{"valor":3, "p":one_entry})
+    if (age>=60):
+        estG=1
+        estC=1
+        if (one_entry.vac_Gripe_aplicada == 1):
+            estG=1 ### mostrar usted ya tiene la vacuna de la gripe por este año
 
-    else:
+            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+            if (tiempo >= 1):
+                estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
 
-###########################################
-        try:
+                inicio = datetime(2022, 6, 30)
+                final =  datetime(2022, 9, 28)
+                    # random_date = inicio + (final - inicio) * random.random()
+                    # vacFaTurno = random_date
+                #random_turnoCovid = inicio + (final - inicio) * random.random()
+                random_gripe = inicio + (final - inicio) * random.random()
+                ### sacar la asistencia
+                one_entry.vac_Gripe_aplicada=2
+                one_entry.vac_Gripe_turno=random_gripe
+                one_entry.save()
+
+        if (one_entry.vac_Gripe_aplicada == 2):
+            estG=3
+            ######## MOSTRAR LA FECHA DEL turno de la gripe  y habilitar boton cancelar
+
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 1):
+            estC=3
+            ### usted ya tiene las 2 dosis del covid
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 2):
+            estC=2
+            ########## mostrar la fecha del turno del covid segunda dosis y habilitar boton cancelar
+             ### puede ser que no te muestre el turno de la segunda dosis si no fue generado en el registrar paciente
+
+        if (one_entry.vac_Covid1_aplicada == 2):
+            estC=1
+            ### mostrar la fecha del turno covid primera dosis y habilitar boton cancelar
 
 
-            one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+
+        context = {'estG':estG,
+                  'estC':estC,
+                  'estFA':estFA,
+                  'fechaG':one_entry.vac_Gripe_turno,
+                  'fechaC1':one_entry.vac_Covid_turno1,
+                  'fechaC2':one_entry.vac_Covid_turno2,
+                  'edad':age,
+
+            }
+        return render(request, "main/inicioPaciente.html",context)
+    if (age<60 & age >=18):
+
+        estG=0
+        estC=0
+        estFA=0
+        if (one_entry.vac_Gripe_aplicada == 1):
+            estG=3 ### mostrar usted ya tiene la vacuna de la gripe por este año
+
+            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+            if (tiempo >= 1):
+                estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
+
+                inicio = datetime(2022, 6, 30)
+                final =  datetime(2022, 9, 28)
+                    # random_date = inicio + (final - inicio) * random.random()
+                    # vacFaTurno = random_date
+                #random_turnoCovid = inicio + (final - inicio) * random.random()
+                random_gripe = inicio + (final - inicio) * random.random()
+                one_entry.vac_Gripe_turno=random_gripe;
+                one_entry.save()
+
+        if (one_entry.vac_Gripe_aplicada == 2):
+            estG=1
+            ######## MOSTRAR LA FECHA DEL turno de la gripe  y habilitar boton cancelar
+
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 1):
+            estC=3
+            ### usted ya tiene las 2 dosis del covid
+        if (one_entry.vac_Covid1_aplicada == 1 &  one_entry.vac_Covid2_aplicada == 2):
+            estC=2
+            ########## mostrar la fecha del turno del covid segunda dosis y habilitar boton cancelar
+            ## ojo q tengas asignada la fecha del turno para la segunda dosis
+
+        if (one_entry.vac_Covid1_aplicada == 2):
+            estC=1
+            ### mostrar la fecha del turno covid primera dosis y la opcion canelar
+########## fa ##########
+
+        if (one_entry.vac_Amarilla_aplicada == 2):
+            estFA=4
+            ########  habilitar boton solicitar TurnoFA y info turno no asignado
+
+        if (one_entry.vac_Amarilla_aplicada == 1 ):
+            estFA=3
+            ### usted ya tiene aplicada la vacuna de la fa no tener boton habilitado
+
+        if (one_entry.vac_Amarilla_aplicada == 2 & TurnoFAAprobados.objects.filter(dni = one_entry.paciente_dni ).exists() & one_entry.vac_Amarilla_aplicada == 2):
+            estFA=2
+            ########## mostrar la fecha del turno y habilitar el boton cancelar
+
+        if (one_entry.vac_Amarilla_aplicada == 2  & SolicitudTurnoFA.objects.filter(dni = one_entry.paciente_dni ).exists()):
+            estFA=1
+            ### mostrar solo turno solicitado , turno no asignado sin boton cancelar
 
 
-            return render(request, "main/inicioPaciente.html",{"valor":1, "p":one_entry})
-
-                # dni=models.IntegerField()
-                # numId=models.IntegerField()
-                # email= models.EmailField(max_length=254
-
-        except ObjectDoesNotExist:
 
 
-            return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
+        context = {'estG':estG,
+                  'estC':estC,
+                  'estFA':estFA,
+                  'fechaG':one_entry.vac_Gripe_turno,
+                  'fechaC1':one_entry.vac_Covid_turno1,
+                  'fechaC2':one_entry.vac_Covid_turno2,
+                  'fechaFA':one_entry.vac_Amarilla_turno,
+                  'edad':age,
+
+            }
+        return render(request, "main/inicioPaciente.html",context)
+
+
+    if (age<18):
+
+        estG=2
+        estC=2
+        estFA=2
+        if (one_entry.vac_Gripe_aplicada == 1):
+            estG=1 ### mostrar usted ya tiene la vacuna de la gripe por este año
+
+            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+            if (tiempo >= 1):
+                estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
+
+                inicio = datetime(2022, 6, 30)
+                final =  datetime(2022, 9, 28)
+                    # random_date = inicio + (final - inicio) * random.random()
+                    # vacFaTurno = random_date
+                #random_turnoCovid = inicio + (final - inicio) * random.random()
+                random_gripe = inicio + (final - inicio) * random.random()
+                one_entry.vac_Gripe_turno=random_gripe;
+                one_entry.save()
+
+        if (one_entry.vac_Gripe_aplicada == 2):
+            estG=3
+            ######## MOSTRAR LA FECHA DEL turno de la gripe  y habilitar boton cancelar
+
+########## fa ##########
+
+        if (one_entry.vac_Amarilla_aplicada == 2):
+            estG=4
+            ########  habilitar boton solicitar TurnoFA y info turno no asignado
+
+        if (one_entry.vac_Amarilla_aplicada == 1 ):
+            estC=3
+            ### usted ya tiene aplicada la vacuna de la fa no tener boton habilitado
+
+        if (one_entry.vac_Amarilla_aplicada == 2 & TurnoFAAprobados.objects.filter(dni = one_entry.paciente_dni ).exists()):
+            estC=2
+            ########## mostrar la fecha del turno y habilitar el boton cancelar
+
+        if (one_entry.vac_Covid1_aplicada == 2  & SolicitudTurnoFA.objects.filter(dni = one_entry.paciente_dni ).exists()):
+            estC=1
+            ### mostrar solo turno solicitado , turno no asignado sin boton cancelar
+
+        context = {'estG':estG,
+                  'estC':estC,
+                  'estFA':estFA,
+                  'fechaG':one_entry.vac_Gripe_turno,
+                  'fechaC1':one_entry.vac_Covid_turno1,
+                  'fechaC2':one_entry.vac_Covid_turno2,
+                  'fechaFA':one_entry.vac_Amarilla_turno,
+                  'age':2323,
+
+            }
+        return render(request, "main/inicioPaciente.html",context)
+
+
+
+############################################################
+#     if (age >= 60):
+#         return render(request, "main/inicioPaciente.html",{"valor":3, "p":one_entry})
+#
+#     else:
+#
+
+#         try:
+#
+#
+#             one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
+#
+#
+#             return render(request, "main/inicioPaciente.html",{"valor":1, "p":one_entry})
+#
+#                 # dni=models.IntegerField()
+#                 # numId=models.IntegerField()
+#                 # email= models.EmailField(max_length=254
+#
+#         except ObjectDoesNotExist:
+#
+#
+#             return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
 ###############################################
-    # f='f'
-    # OTP=''
-    # OTP=2332
-    #
-    # return render(request, "main/inicioPaciente.html",{"codigo": OTP})
+
 ############ REGISTRO DE PACIENTE ##########################################################
 
 def send_mail_pre_registro (email, dni, nombre):
@@ -563,15 +948,62 @@ def registroPaciente(request):
     opCoviP1=request.POST['opcVacunaCovidP1']
     opCoviP2=request.POST['opcVacunaCovidP2']
     Contraseña=request.POST['Contraseña']
-
-    inicio = datetime(2022, 6, 30)
+    dni=request.POST['dni']
+    inicio = datetime(2022, 7, 15)
     final =  datetime(2022, 9, 28)
-
-    # random_date = inicio + (final - inicio) * random.random()
-    # vacFaTurno = random_date
+    one = Logeado.objects.get(numId=3)
+    today = date.today()
+    # edad=today.year - fecha.year - ((today.month, today.day) < (fecha.month, fecha.day))
     random_turnoCovid = inicio + (final - inicio) * random.random()
     random_gripe = inicio + (final - inicio) * random.random()
     random_turnoCovid2 = inicio + (final - inicio) * random.random()
+################# opcion gripe paciente #################
+    # if (opGripe == 2):
+    #     random_gripe = inicio + (final - inicio) * random.random()
+    # if(opGripe == 1):
+    #     fechaTurnoGripe=request.POST['caja1']
+    #     today = date.today()
+    #     tiempoPasadoTurno = today.year - fechaTurnoGripe.year - ((today.month, today.day) < (fechaTurnoGripe.month, fechaTurnoGripe.day))
+    #     if(tiempoPasadoTurno >= 1 ):
+    #         random_gripe = inicio + (final - inicio) * random.random()
+    #     else:
+    #         one_entry = Paciente.objects.get(paciente_dni=dni)
+##################opcion covid#####################################
+    # if (edad >= 18):
+    #     if (opCoviP1 == 2):
+    #         random_turnoCovid = inicio + (final - inicio) * random.random()
+    #     if(opCoviP1 == 1 & opCoviP2 == 2):
+    #         random_turnoCovid=request.POST['caja2']
+    #         random_turnoCovid2= inicio + (final - inicio) * random.random()
+        # fechaTurnoGripe=request.POST['caja1']
+        # today = date.today()
+        # tiempoPasadoTurno = today.year - fechaTurnoGripe.year - ((today.month, today.day) < (fechaTurnoGripe.month, fechaTurnoGripe.day))
+        # if(tiempoPasadoTurno >= 1 ):
+        #     random_gripe = inicio + (final - inicio) * random.random()
+        # else:
+        #     one_entry = Paciente.objects.get(paciente_dni=dni)
+
+    #opG=request.POST["opcVacunaGripe"]
+    # if(opG == 1):
+    # ad=Administrador.objects.get(administrador_dni=12345678)
+    # ad.administrador_apellido=valorF
+    # ad.save()
+#######################################
+
+    ##### ahora 3 tipos de usuarios
+
+
+    # one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
+    # today = date.today()
+    #
+    # age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+    # if (age >= 60):
+##############################################
+
+
+    # random_date = inicio + (final - inicio) * random.random()
+    # vacFaTurno = random_date
+
     #vac_Gripe_turno=random_gripe
     #vac_Covid_turno1= random_turnoCovid
     #vac_Covid_turno2
@@ -618,6 +1050,7 @@ def registroPaciente(request):
         else:
             random_turnoCovid2= None
                 #turnoCovid2= datetime.now()
+        #### si el paciente ya tiene la primera dosis y no tiene la segunda , asignar un turno para la segunda dosis
         paciente=Paciente.objects.create(
             vac_Gripe_turno=random_gripe, vac_Gripe_aplicada=opGripe, vac_Gripe_asistencia= asistenciaGripe,
             vac_Covid_turno1= random_turnoCovid, vac_Covid1_aplicada=opCoviP1, vac_Covid1era_asistencia= asistenciaCovid1,
@@ -1213,17 +1646,18 @@ def compararCodigo(request):
                                             print('')
 
                                             today = date.today()
+                                            return redirect('/pantallaInicioPaciente/')
 
                                             age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
                                             if (age >= 60):
-                                                return render(request, "main/inicioPaciente.html",{"valor":3,"p":one_entry})
+                                                return render(request, "main/inicioPaciente.html",{"valor":3,"p":one_entry,'edad':25})
                                             else:
 
                                                 try:
                                                     pasa= SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
-                                                    return render(request, "main/inicioPaciente.html",{"valor":1,"p":one_entry})
+                                                    return render(request, "main/inicioPaciente.html",{"valor":1,"p":one_entry ,'edad':25})
                                                 except ObjectDoesNotExist:
-                                                    return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
+                                                    return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry,'edad':25})
 
 
 #############################################################
