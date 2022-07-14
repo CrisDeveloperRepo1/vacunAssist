@@ -181,9 +181,14 @@ def accionEditarPerfilPaciente (request):
     # p=request.POST['apellido']
     z=request.POST['zona']
     e=request.POST['e']
+    ca=request.POST["cactual"]
     c1=request.POST['c1']
     c2=request.POST['c2']
     v1=False
+
+    act=False
+    if ca == usuario.contraseña:
+        act=True
 
     if( c1 != c2 ):
         v1=True
@@ -203,6 +208,7 @@ def accionEditarPerfilPaciente (request):
                 'zona': usuario.paciente_zona,
                 'email': usuario.paciente_email,
                 'v':v1,
+                'actual': act
                     }
 
 
@@ -1037,7 +1043,7 @@ def validarUsuario(request):
 
             except ObjectDoesNotExist:
 
-                    messages.error(request, "  No pertenece a un usuario del sistema")
+                    messages.error(request, "DNI o contraseña incorrecta")
                     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
 
         except ObjectDoesNotExist:
@@ -1052,7 +1058,7 @@ def validarUsuario(request):
                     contraseña= one_entry.contraseña
                 except ObjectDoesNotExist:
 
-                    messages.error(request, " DNI o contraseña incorrecta")
+                    messages.error(request, "DNI o contraseña incorrecta")
                     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
 
             except ObjectDoesNotExist:
@@ -1064,6 +1070,10 @@ def validarUsuario(request):
                    one_entry = Paciente.objects.get(paciente_dni = request.GET["dni"])
                    contraseña= one_entry.contraseña
                    print(request.GET["dni"])
+                   if contraseña != request.GET["pass"]:
+                     messages.error(request, "DNI o contraseña incorrecta")
+                     return render(request,"main/inicio_de_sesión.html",{"codigo" : 3}) # vuelvo a la pagina
+    #####
                    # try:
                    #    one_entry = Paciente.objects.get(paciente_dni = request.GET["dni"])
                    #    contraseña= one_entry.contraseña
@@ -1074,7 +1084,7 @@ def validarUsuario(request):
                    #     return render(request,"main/inicio_de_sesión.html") # vuelvo a la pagina
                 except ObjectDoesNotExist:
                     print('')
-                    messages.error(request, "  No pertenece a un usuario del sistema")
+                    messages.error(request, "DNI o contraseña incorrecta")
                     return render(request,"main/inicio_de_sesión.html",{"codigo" : 3}) # vuelvo a la pagina
 #####
 
@@ -1163,7 +1173,7 @@ def validarUsuario(request):
 #             return render (request,"main/verif.html")
 
 
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 def compararCodigo(request):
         data2= {
           'form' :PacienteRegistro()
