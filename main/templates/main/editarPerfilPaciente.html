@@ -140,8 +140,20 @@
 
               <div class="input-field col s12 m6">
                 <!-- <center><p style="color:green;";>contraseña valida</p></center> -->
-                <label for="inputPassword4"   class="control-label" for="inputSuccess">contraseña</label>
-                <input type="Password" class="form-control" id="c1" name="c1"  value="{{contraseña}}" required>
+                
+                {% if actual == False %}
+                <label for="inputPassword4"  class="control-label" for="inputSuccess" style="color:red;"> La contraseña actual ingresada es inválida </label>
+                {% else %}
+                <label for="inputPassword4"   class="control-label" for="inputSuccess">Contraseña actual </label>
+                {% endif %}
+                <input type="Password" class="form-control" id="cactual" name="cactual"   required minlength="6">
+    
+
+              </div>
+              <div class="input-field col s12 m6">
+                <!-- <center><p style="color:green;";>contraseña valida</p></center> -->
+                <label for="inputPassword4"   class="control-label" for="inputSuccess">Nueva contraseña</label>
+                <input type="Password" class="form-control" id="c1" name="c1"  required minlength="6">
               </div>
 
               <div class="input-field col s12 m6">
@@ -177,7 +189,7 @@
 
                   {% endif%}
 
-                <input type="Password" class="form-control" id="c2" name="c2" value="{{contraseña}}"  required>
+                <input type="Password" class="form-control" id="c2" name="c2" minlength="6"  required>
 
               </div>
 

@@ -23,6 +23,10 @@ urlpatterns = [
     path('accionEditarPerfilPaciente/', views.accionEditarPerfilPaciente, name = "accionEditarPerfilPaciente"),
 
     path('editarPerfilPaciente/', views.editarPerfilPaciente , name = "editarPerfilPaciente"),
+    path('registrar_asistencia/', views.reg_asistencia , name = "registrarAsistencia"),
+    path('asistencia/<int:id>/<int:res>/<str:vac>',views.asistencia),
+    path('ver_turnos_v/',views.ver_turnos_v),
+    path('ver_turnos_admin/',views.ver_turnos_admin),
 
 
     path('login_request/', views.login_request,name= 'login_request'),
@@ -43,6 +47,7 @@ urlpatterns = [
     path('registrarPacienteST/', views.reg_paciente_st , name="registrarVacunador"),
     path('finRegistroPacienteST/', views.fin_reg_paciente_st , name="registrarVacunador"),
     path('validarDniST/', views.validar_dni_st, name= 'validarDni' ),
+    path('registro_exitoso/', views.reg_exitoso, name= 'registroexitoso' ),
 
     path('accionDeEdicionStock/', views.accionDeEdicionStock , name="accionDeEdicionStock"),
     path('registrarVacunador/', views.registrarVacunador , name="registrarVacunador"),

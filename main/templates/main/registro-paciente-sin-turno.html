@@ -151,20 +151,21 @@ input {
              </select>
            </div>
           <div>
-          <button type="button" class="btn btn-success btn-block text-white" onclick="openPopup()" style="margin: 10px 0px 0px 0px " > Registrar Paciente </button>
+          <button name="enviar" id="enviar" type="submit" class="btn btn-success btn-block text-white"  style="margin: 10px 0px 0px 0px " > Registrar Paciente </button>
           </div>
           <!-- <button  type="button" class="btn" onclick="openPopup()" > Registrar Vacunador </button> -->
-          <div class="popup" id="popup">
-            <img src="{% static 'imagenes/tick.png' %}">
-            <h2> Registro Exitoso </h2>
-            <h5> Se inicó el registro del paciente. Recuerde informarle que debe finalizar el registro  </h5>
-            <!-- <h5> Codigo Único: {{codigo}} </h5> 
-            <p> Gracias por utilizar nuestro sistema de turnos </p> -->
-            <button type="submit" onclick="closePopup()"> Ok </button>
-          </div>
+
         </div>
    </fieldset>
   </form>
+  {% comment %} <div class="popup" id="popup">
+    <img src="{% static 'imagenes/tick.png' %}">
+    <h2> Registro Exitoso </h2>
+    <h5> Se inicó el registro del paciente. Recuerde informarle que debe finalizar el registro  </h5>
+    <!-- <h5> Codigo Único: {{codigo}} </h5> 
+    <p> Gracias por utilizar nuestro sistema de turnos </p> -->
+    <button type="button" onclick="closePopup()"> Ok </button>
+  </div> {% endcomment %}
 
   <script>
     let popup = document.getElementById("popup")
