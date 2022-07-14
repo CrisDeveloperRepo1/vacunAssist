@@ -393,30 +393,37 @@ def inicioPaciente(request):
 
     one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
     today = date.today()
-
+    valorCov = 0
     age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+    print(age)
     if (age >= 60):
-        return render(request, "main/inicioPaciente.html",{"valor":3, "p":one_entry})
+        return render(request, "main/inicioPaciente.html",{"valorcovid": valorCov, "valor":3, "p":one_entry})
 
     else:
 
 ###########################################
         try:
-
-
+           
             one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
 
 
-            return render(request, "main/inicioPaciente.html",{"valor":1, "p":one_entry})
+            return render(request, "main/inicioPaciente.html",{"valorcovid": valorCov, "valor":1, "p":one_entry})
+        
 
                 # dni=models.IntegerField()
                 # numId=models.IntegerField()
                 # email= models.EmailField(max_length=254
 
         except ObjectDoesNotExist:
+            if (age < 18):
+                print("entró al if menor de 188888")
+                one_entry.vac_Covid_turno1 = None
+                one_entry.save()
+                return render(request, "main/inicioPaciente.html",{"valor":2, 
+                                                                   "p":one_entry,
+                                                                   "valorcovid": valorCov})
 
-
-            return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
+            return render(request, "main/inicioPaciente.html",{"valorcovid": valorCov, "valor":2,"p":one_entry})
 ###############################################
     # f='f'
     # OTP=''
@@ -808,7 +815,7 @@ def editarStockVacunatorio(request):
     #one_entry = Logeado.objects.get(numId=2)
     vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
     vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
     # Cementerio Municipal
     # Municipalidad
     # Terminal de Omnibús
@@ -1215,6 +1222,9 @@ def compararCodigo(request):
                                             today = date.today()
 
                                             age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
+                                            if (age < 18):
+                                                one_entry.vac_Covid_turno1= None
+                                                one_entry.save()
                                             if (age >= 60):
                                                 return render(request, "main/inicioPaciente.html",{"valor":3,"p":one_entry})
                                             else:
@@ -1412,6 +1422,8 @@ def reg_vac(request):
             message.send()
         if request.method == "POST":
             mail = request.POST.get("mail")
+            dni = request.POST.get("dni")
+            nombre = request.POST.get("nombre")
             digitos = '1234567890'
             longitud = 4  # La longitud que queremos
             codigo = ''.join(choice(digitos) for digito in range(longitud))
