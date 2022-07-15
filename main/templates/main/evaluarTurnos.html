@@ -119,7 +119,7 @@
                              <div class="card-body">
                                <form  action="/AsignarTurno/" method="post">{% csrf_token %}
                                  <div class="form-group">
-                                   <input type="datetime-local" id="fechaesperada" name="fechaesperada" min="2022-01-01" max="2022-12-31" required >
+                                  <input type="datetime-local" id="fechaesperada" culture="es-ES" name="fechaesperada" min="2022-07-18T08:00:00" required >
                                  </div>
 
                                  <div class="form-group">

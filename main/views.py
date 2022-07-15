@@ -1207,7 +1207,7 @@ def registroPaciente(request):
 
 
     send_email_registro(email, codigo, dni, nombre)
-    return render(request, "main/registro-exitoso.html", {'codigo': codigo, "dir": "/"})
+    return render(request, "main/registro-exitoso.html", {'codigo': codigo, "dir": "/", "fecha_min": fecha})
 ########## PASO EL CODIGO EN LA VARIABLE CODIGO  PARA PODER IMPRIMIRLO EN EN CODIGO HTML #############
     ##########send_email_registro(email, codigo, dni, nombre )
     return render(request,'main/registrarPaciente.html',{'codigo': codigo})
@@ -1217,7 +1217,7 @@ def registroPaciente(request):
 def empezarAsignacionTurno (request,dni):
     ListSolicitud= SolicitudTurnoFA.objects.all()
 
-    return render(request, "main/evaluarTurnos.html",{"turnos":ListSolicitud,"valor":1,"asignacionDNI":dni})
+    return render(request, "main/evaluarTurnos.html",{"turnos":ListSolicitud,"valor":1,"asignacionDNI":dni, 'fecha_actual': str(datetime.now().date())})
 ################### Asignar turno FA
 def AsignarTurno (request):
     ListSolicitud= SolicitudTurnoFA.objects.all()
@@ -1391,19 +1391,19 @@ def accionDeEdicionStock(request):
     if(request.POST['vacuna'] == "stock_vac_fa" ):
         try:
             if (request.POST['disminuir'] == "disminuir"):
-                if(int(request.POST['cantidad']) > destino.stock_vac_fa):
+                if(int(request.POST['cantidad']) > destino.stock_vac_fa or int(request.POST['cantidad']) == destino.stock_vac_fa  ):
                     print('la cantidad ingresada es mayor')
                     messages.error(request, " la cantidad ingresada es mayor")
 
                     vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
                     vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-                    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+                    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
                     stock = destino.stock_vac_fa
                     print(stock)
                     return render(request, "main/editarStockVacunatorio.html",{ "vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
                 else:
-                    destino.stock_vac_fa=destino.stock_vac_fa-int(request.POST['cantidad'])
+                    destino.stock_vac_fa= destino.stock_vac_fa-int(request.POST['cantidad'])
                     destino.save()
                     # destino.stock_vac_fa=destino.stock_vac_fa+int(request.POST['cantidad'])
                     # destino.save()
@@ -1416,21 +1416,20 @@ def accionDeEdicionStock(request):
                 destino.save()
                 vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
                 vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-                vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+                vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
                 return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
 
     elif (request.POST['vacuna'] =="stock_vac_covid"):
         try:
             if (request.POST['disminuir'] == "disminuir"):
-                if(int(request.POST['cantidad']) > destino.stock_vac_fa):
+                if(int(request.POST['cantidad']) > destino.stock_vac_covid or int(request.POST['cantidad']) == destino.stock_vac_covid):
                     print('la cantidad ingresada es mayor')
                     messages.error(request, " la cantidad ingresada es mayor")
 
                     vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
                     vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-                    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
-
+                    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
                     return render(request, "main/editarStockVacunatorio.html",{"destino": destino, "vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
                 else:
@@ -1442,20 +1441,20 @@ def accionDeEdicionStock(request):
                 destino.save()
                 vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
                 vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-                vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+                vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
                 return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
 
     else:
         try:
             if (request.POST['disminuir'] == "disminuir"):
-                if(int(request.POST['cantidad']) > destino.stock_vac_gripe):
+                if(int(request.POST['cantidad']) > destino.stock_vac_gripe or int(request.POST['cantidad']) == destino.stock_vac_gripe):
                     print('la cantidad ingresada es mayor')
                     messages.error(request, " la cantidad ingresada es mayor")
 
                     vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
                     vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-                    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+                    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
                     return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
                 else:
@@ -1466,14 +1465,14 @@ def accionDeEdicionStock(request):
             destino.save()
             vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
             vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
-            vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
+            vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
 
             return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
     vacunatorioCementerio=Vacunatorio.objects.get(vacunatorio_zona='Cementerio Municipal')
     vacunatorioMunicipalidad=Vacunatorio.objects.get(vacunatorio_zona='Municipalidad')
     vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibus')
-
+    vacunatorioTerminal=Vacunatorio.objects.get(vacunatorio_zona='Terminal de Omnibús')
     return render(request, "main/editarStockVacunatorio.html",{"vacunatorioC":vacunatorioCementerio,"vacunatorioMuni":vacunatorioMunicipalidad,"vacunatorioTerm":vacunatorioTerminal})
 
 
@@ -2144,7 +2143,7 @@ def reset_codigo(request):
                 usuario= Administrador.objects.get(administrador_dni = request.POST.get("dni"))
                 email= usuario.administrador_email
                 if (mail != email):
-                    messages.error(request, "el mail ingresado no pertenece a un usuario Administrador")
+                    messages.error(request, "El mail ingresado es incorrecto")
                     return render(request, "main/recuperar-codigo.html")
 
 
@@ -2153,7 +2152,7 @@ def reset_codigo(request):
                     usuario= Vacunador.objects.get(vacunador_dni = request.POST.get("dni"))
                     email= usuario.vacunador_email
                     if (mail != email):
-                        messages.error(request, "el mail ingresado no pertenece a un usuario Vacunador")
+                        messages.error(request, "El mail ingresado es incorrecto")
                         return render(request, "main/recuperar-codigo.html")
 
                 except ObjectDoesNotExist:
@@ -2161,17 +2160,17 @@ def reset_codigo(request):
                         usuario= Paciente.objects.get(paciente_dni = request.POST.get("dni"))
                         email= usuario.paciente_email
                         if (mail != email):
-                            messages.error(request, "el mail ingresado no pertenece a un usuario Paciente")
+                            messages.error(request, "El mail ingresado es incorrecto")
                             return render(request, "main/recuperar-codigo.html")
 
                     except ObjectDoesNotExist:
-                        messages.error(request, "el dni ingresado no se esta asociado a un usuario del sistema")
+                        messages.error(request, "El dni ingresado no se esta asociado a un usuario del sistema")
                         return render(request, "main/recuperar-codigo.html", {})
 
 
         else:
 
-            messages.error(request, "el dni debe ser un numero")
+            messages.error(request, "El dni debe ser un numero")
             return render(request, "main/recuperar-codigo.html")
 
 
@@ -2225,7 +2224,7 @@ def reset_pass(request):
                 dni = usuario.administrador_dni
                 ## si los mails no coinciden , se recarga la pagina y se informa la razon
                 if (mail != email):
-                    messages.error(request, "el mail ingresado no pertenece a un usuario Administrador")
+                    messages.error(request, "El mail ingresado es incorrecto")
                     return render(request, "main/recuperar-contraseña.html")
 
 
@@ -2235,7 +2234,7 @@ def reset_pass(request):
                     email= usuario.vacunador_email
                     dni = usuario.vacunador_dni
                     if (mail != email):
-                        messages.error(request, "el mail ingresado no pertenece a un usuario Vacunador")
+                        messages.error(request, "El mail ingresado es incorrecto")
                         return render(request, "main/recuperar-contraseña.html")
 
                 except ObjectDoesNotExist:
@@ -2244,11 +2243,11 @@ def reset_pass(request):
                         email= usuario.paciente_email
                         dni = usuario.paciente_dni
                         if (mail != email):
-                            messages.error(request, "el mail ingresado no pertenece a un usuario Paciente")
+                            messages.error(request, "El mail ingresado es incorrecto")
                             return render(request, "main/recuperar-contraseña.html")
 
                     except ObjectDoesNotExist:
-                        messages.error(request, "el dni ingresado no se esta asociado a un usuario del sistema")
+                        messages.error(request, "El dni ingresado no se esta asociado a un usuario del sistema")
                         return render(request, "main/recuperar-contraseña.html", {})
 
 
@@ -2341,9 +2340,14 @@ def validarDni(request):
 
                 if Logeado.objects.filter(numId = 3).exists():
                     try:
-                        paciente = Paciente.objects.get(paciente_dni = dni)
-                        messages.error(request, "El Dni ya está registrado")
-                        return render(request, "main/validar-dni.html", contexto)
+                        if Paciente.objects.filter(paciente_dni = dni).exists():
+                            paciente = Paciente.objects.get(paciente_dni = dni)
+                            messages.error(request, "El Dni ya está registrado")
+                            return render(request, "main/validar-dni.html", contexto)
+                        if Paciente_ST.objects.filter(pacienteST_dni = dni).exists() :
+                            print ("entré al if del paciente")
+                            messages.error(request, "El Dni ya inició el pre registro")
+                            return render(request, "main/validar-dni.html", contexto)
                     except ObjectDoesNotExist:
                        log = Dni.objects.get(num_dni = dni)
                        resultado = (datetime.now().date() + relativedelta(years=-18))
@@ -2367,6 +2371,9 @@ def validarDni(request):
                             print ("entré al else del paciente")
                             messages.error(request, "El Dni ya está registrado")
                             return render(request, "main/validar-dni.html", contexto)
+                        # else: 
+                        #     messages.error(request, "El Dni es incorrecto")
+                        #     return render(request, "main/validar-dni.html", contexto)
 
                     log = Dni.objects.get(num_dni = dni)
                     resultado = (datetime.now().date() + relativedelta(years=-18))
@@ -2462,7 +2469,6 @@ def reg_asistencia (request):
     pacientes_fa = []
     print(pacientes_del_dia)
     for p in pacientes_del_dia:
-        print(p.vac_Gripe_turno.date())
         print(fecha)
         if p.vac_Gripe_turno != None and p.paciente_zona == zona and p.vac_Gripe_turno.date() == fecha :
             print("entró al if gripe")
@@ -2485,9 +2491,9 @@ def reg_asistencia (request):
     return render (request, "main/registrar_asistencia.html", contexto)
 
 def asistencia(request,id, res, vac):
-
+    
     admin=Paciente.objects.get(paciente_dni =id)
-
+    
     if vac == "Gripe":
         vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
         if res == 1:
@@ -2543,12 +2549,12 @@ def ver_turnos_v (request):
     log = Logeado.objects.all()
     zona = Vacunador.objects.get(vacunador_dni = str(log[0].usuarioLogeado)).vacunador_zona
     pacientes_del_dia = Paciente.objects.filter(paciente_zona = zona)
-
+    
     pacientes_gripe = []
     pacientes_fa = []
     pacientes_covid_1 = []
     pacientes_covid_2 = []
-
+    
     print(pacientes_del_dia)
     for p in pacientes_del_dia:
         if p.vac_Gripe_turno != None and (p.vac_Gripe_turno.date() == fecha or p.vac_Gripe_turno.date() > fecha):
@@ -2569,13 +2575,16 @@ def ver_turnos_v (request):
 
 def ver_turnos_admin(request):
     fecha = datetime.now().date()
-    pacientes_del_dia = Paciente.objects.all()
-
+    log = Logeado.objects.all()
+    zona = Vacunador.objects.get(vacunador_dni = str(log[0].usuarioLogeado)).vacunador_zona
+    pacientes_del_dia = Paciente.objects.filter(paciente_zona = zona)
+    
+    
     pacientes_gripe = []
     pacientes_fa = []
     pacientes_covid_1 = []
     pacientes_covid_2 = []
-
+    
     print(pacientes_del_dia)
     for p in pacientes_del_dia:
         if p.vac_Gripe_turno != None and (p.vac_Gripe_turno.date() == fecha or p.vac_Gripe_turno.date() > fecha):
@@ -2596,3 +2605,7 @@ def ver_turnos_admin(request):
 
 def reg_exitoso (request):
     return render (request, 'main/registro-exitoso.html')
+
+def recu_exitoso (request):
+    return render (request, 'main/recupero-contra-exitoso.html')
+

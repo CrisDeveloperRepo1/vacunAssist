@@ -136,74 +136,73 @@ input[type=number] { -moz-appearance:textfield; }
                     </select>
                   </div>
                   <div class="form-group">
-                    <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
-                    <select id= "opcVacunaCovidP1" class="browser-default" onchange="activarcaja2()"  name="opcVacunaCovidP1" required>
-                      {% if vac_covid1  == 1 %}
-                      <option value=1 selected >Si</option>
-                      {% else %}
-                      <option value="" disabled selected>Elija una opción </option>
-                      <option value=2>No</option>
-                      <option value=1>Si</option>
-                      {% endif %}
-                    </select>
-
-                     <input input type="text" id="c2"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
-
-                    <input input type="date" id="caja2" value=2 name="fechaesperada" max="{{fecha_actual}}" disabled=""  required>
-                    <script type="text/javascript">
-                        function activarcaja2(){
-                          if(opcVacunaCovidP1.value==1){
-                            document.getElementById('caja2').disabled=false
-                            document.getElementById('c2').disabled=false
-
-
+                    <div class="form-group">
+                      <label >  <span class="black-text text-darken-2"> ¿Ya tiene la 1ra dosis de la vacuna contra el covid?  </span></label>
+                      <select id= "opcVacunaCovidP1" class="browser-default" onchange="activarcaja2()"  name="opcVacunaCovidP1" required>
+                        {% if vac_covid1  == 1 %}
+                        <option value=1 selected >Si</option>
+                        {% else %}
+                        <option value="" disabled selected>Elija una opción </option>
+                        <option value=2>No</option>
+                        <option value=1>Si</option>
+                        {% endif %}
+                      </select>
+  
+                       <input input type="text" id="c2"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
+  
+                      <input input type="date" culture="es-ES" id="caja2" name="fechacovid1" min="{{fecha_min}}" max="{{fecha_actual}}" disabled="" >
+                      <div class="form-group" >
+                        <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label>
+                         <select  id= "opcVacunaCovidP2" disabled class="browser-default" onchange="activarcaja3()"  name="opcVacunaCovidP2" required>
+                           {% if vac_covid2  == 1 %}
+                           <option value=1 selected >Si</option>
+                           {% else %}
+                           <option value="" disabled selected>Elija una opción </option>
+                           <option value=2>No</option>
+                           <option value=1>Si</option>
+                           {% endif %}
+                         </select>
+     
+     
+                                        <input input type="text" id="c3"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
+     
+                                       <input input type="date" culture="es-ES" id="caja3" name="fechacovid2" max="{{fecha_actual}}" disabled="" >
+                                       <script type="text/javascript">
+                                           function activarcaja3(){
+                                             if(opcVacunaCovidP2.value==1){
+                                               document.getElementById('caja3').disabled=false
+                                               document.getElementById('c3').disabled=false
+     
+                                             }
+                                             if(opcVacunaCovidP2.value==2){
+                                               document.getElementById('caja3').disabled=true
+                                               document.getElementById('c3').disabled=true
+                                             }
+     
+                                           }
+     
+                                       </script>
+     
+                       </div>
+                      <script type="text/javascript">
+                          function activarcaja2(){
+                            if(opcVacunaCovidP1.value==1){
+                              document.getElementById('caja2').disabled=false
+                              document.getElementById('c2').disabled=false
+                              document.getElementById('opcVacunaCovidP2').disabled=false
+  
+                            }
+                            if(opcVacunaCovidP1.value==2){
+                              document.getElementById('caja2').disabled=true
+                              document.getElementById('c2').disabled=true
+                              document.getElementById('opcVacunaCovidP2').disabled=true
+                            }
+  
                           }
-                          if(opcVacunaCovidP1.value==2){
-                            document.getElementById('caja2').disabled=true
-                            document.getElementById('c2').disabled=true
-
-                          }
-
-                        }
-
-                    </script>
+  
+                      </script>
+                    </div>
                   </div>
-                  <div class="form-group">
-                   <label >  <span class="black-text text-darken-2">¿Ya tiene la 2da dosis de la vacuna contra el covid? </span> </label>
-                    <select  id= "opcVacunaCovidP2" class="browser-default" onchange="activarcaja3()"  name="opcVacunaCovidP2" required>
-                      {% if vac_covid2  == 1 %}
-                      <option value=1 selected >Si</option>
-                      {% else %}
-                      <option value="" disabled selected>Elija una opción </option>
-                      <option value=2>No</option>
-                      <option value=1>Si</option>
-                      {% endif %}
-                    </select>
-
-
-                                   <input input type="text" id="c3"  value="Fecha de Aplicacion" name="f" disabled="" readonly >
-
-                                  <input input type="date" id="caja3" name="caja3" max="{{fecha_actual}}" disabled="" >
-                                  <script type="text/javascript">
-                                      function activarcaja3(){
-                                        if(opcVacunaCovidP2.value==1){
-                                          document.getElementById('caja3').disabled=false
-                                          document.getElementById('c3').disabled=false
-
-
-                                        }
-                                        if(opcVacunaCovidP2.value==2){
-                                          document.getElementById('caja3').disabled=true
-                                          document.getElementById('c3').disabled=true
-
-                                        }
-
-                                      }
-
-                                  </script>
-
-                  </div>
-                </div>
          <!--       <div class="input-field col s12 m4" >
                   <h3> Enfermedades </h3>
                   <div class="Form-group">

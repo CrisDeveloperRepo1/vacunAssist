@@ -27,6 +27,7 @@ urlpatterns = [
     path('asistencia/<int:id>/<int:res>/<str:vac>',views.asistencia),
     path('ver_turnos_v/',views.ver_turnos_v),
     path('ver_turnos_admin/',views.ver_turnos_admin),
+    path('recupero-exitoso/',views.recu_exitoso),
 
 
     path('login_request/', views.login_request,name= 'login_request'),
