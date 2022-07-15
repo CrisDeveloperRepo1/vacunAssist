@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView,PasswordResetDoneView
 from django.urls import path, re_path, include, reverse_lazy
-from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,Dni,editarPerfilAdmin,SaleInvoicePdfView,accionEditarPerfil,accionEditarPerfilPaciente,editarPerfilPaciente,pantallaInicioPaciente
+from .views import eliminar_Admin ,editarStockVacunatorio,cancelarTurno,eliminarSolicitud,empezarAsignacionTurno,AsignarTurno,registrarVacunador,accionDeEdicionStock,Dni,editarPerfilAdmin,SaleInvoicePdfView,accionEditarPerfil,accionEditarPerfilPaciente,editarPerfilPaciente,pantallaInicioPaciente,cancelarTurnoFA
 
 
 app_name= 'main'
@@ -36,6 +36,8 @@ urlpatterns = [
     path('accionEditarPerfil/', views.accionEditarPerfil,name= 'accionEditarPerfil'),
     path('SaleInvoicePdfView/', SaleInvoicePdfView.as_view(),name= 'sale_invoice_pdf'),
     # path('notificacion/', views.notificacion,name= 'notificacion'),
+
+    path('cancelarTurnoFA/', views.cancelarTurnoFA,name= 'cancelarTurnoFA'),
 
     path('cancelarTurno/', views.cancelarTurno,name= 'cancelarTurno'),
     #path('compararCodigoPaciente/', views.compararCodigoPaciente,name= 'compararCodigoPaciente'),

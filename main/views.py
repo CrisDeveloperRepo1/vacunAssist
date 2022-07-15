@@ -93,6 +93,12 @@ from django.contrib.auth.decorators import login_required
 #
 #
 #     return render(request, "main/inicio_admin.html", data)
+
+def cancelarTurnoFA(request):
+
+
+
+    return redirect('/pantallaInicioPaciente/')
 def pantallaInicioPaciente(request):
     one = Logeado.objects.get(numId=3)
     one = Logeado.objects.get(numId=3)
@@ -386,7 +392,7 @@ def accionEditarPerfilPaciente (request):
     # p=request.POST['apellido']
     z=request.POST['zona']
     e=request.POST['e']
-    ca=request.POST["cactual"]
+    ca=request.POST["actual"]
     c1=request.POST['c1']
     c2=request.POST['c2']
     v1=False
@@ -609,7 +615,7 @@ def inicioPaciente(request):
 
     one_entry = Paciente.objects.get(paciente_dni=one.usuarioLogeado)
     today = date.today()
-<<<<<<< HEAD
+
     estG=0
     estC=0
     estFA=0
@@ -619,19 +625,17 @@ def inicioPaciente(request):
         estC=1
         if (one_entry.vac_Gripe_aplicada == 1):
             estG=1 ### mostrar usted ya tiene la vacuna de la gripe por este año
-=======
+
     valorCov = 0
     age = today.year - one_entry.paciente_fechaNac.year - ((today.month, today.day) < (one_entry.paciente_fechaNac.month, one_entry.paciente_fechaNac.day))
     print(age)
     if (age >= 60):
         return render(request, "main/inicioPaciente.html",{"valorcovid": valorCov, "valor":3, "p":one_entry})
->>>>>>> 41a105a1504fa2e076a3d2e1b91803326dc2fbea
-
-            tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
-            if (tiempo >= 1):
+        tiempo = today.year - one_entry.vac_Gripe_turno.year - ((today.month, today.day) < (one_entry.vac_Gripe_turno.month, one_entry.vac_Gripe_turno.day))
+        if (tiempo >= 1):
                 estG2 =2 ### mostrar el turno de la gripe con la opcion de cancelar
 
-<<<<<<< HEAD
+
                 inicio = datetime(2022, 6, 30)
                 final =  datetime(2022, 9, 28)
                     # random_date = inicio + (final - inicio) * random.random()
@@ -821,15 +825,15 @@ def inicioPaciente(request):
 #
 #
 #             return render(request, "main/inicioPaciente.html",{"valor":2,"p":one_entry})
-=======
+
 ###########################################
         try:
-           
+
             one1 = SolicitudTurnoFA.objects.get(dni=one_entry.paciente_dni)
 
 
             return render(request, "main/inicioPaciente.html",{"valorcovid": valorCov, "valor":1, "p":one_entry})
-        
+
 
                 # dni=models.IntegerField()
                 # numId=models.IntegerField()
@@ -840,12 +844,12 @@ def inicioPaciente(request):
                 print("entró al if menor de 188888")
                 one_entry.vac_Covid_turno1 = None
                 one_entry.save()
-                return render(request, "main/inicioPaciente.html",{"valor":2, 
+                return render(request, "main/inicioPaciente.html",{"valor":2,
                                                                    "p":one_entry,
                                                                    "valorcovid": valorCov})
 
             return render(request, "main/inicioPaciente.html",{"valorcovid": valorCov, "valor":2,"p":one_entry})
->>>>>>> 41a105a1504fa2e076a3d2e1b91803326dc2fbea
+
 ###############################################
 
 ############ REGISTRO DE PACIENTE ##########################################################
@@ -990,14 +994,14 @@ def registroPaciente(request):
     opCoviP1=request.POST['opcVacunaCovidP1']
     opCoviP2=request.POST['opcVacunaCovidP2']
     Contraseña=request.POST['Contraseña']
-<<<<<<< HEAD
+
     dni=request.POST['dni']
     inicio = datetime(2022, 7, 15)
-=======
+
     print("holaaa jdnenewl")
     print(request.POST)
     inicio = datetime(2022, 6, 30)
->>>>>>> 41a105a1504fa2e076a3d2e1b91803326dc2fbea
+
     final =  datetime(2022, 9, 28)
     one = Logeado.objects.get(numId=3)
     today = date.today()
@@ -2392,9 +2396,9 @@ def reg_asistencia (request):
     return render (request, "main/registrar_asistencia.html", contexto)
 
 def asistencia(request,id, res, vac):
-    
+
     admin=Paciente.objects.get(paciente_dni =id)
-    
+
     if vac == "Gripe":
         vacunatorio = Vacunatorio.objects.get(vacunatorio_zona = admin.paciente_zona)
         if res == 1:
@@ -2450,12 +2454,12 @@ def ver_turnos_v (request):
     log = Logeado.objects.all()
     zona = Vacunador.objects.get(vacunador_dni = str(log[0].usuarioLogeado)).vacunador_zona
     pacientes_del_dia = Paciente.objects.filter(paciente_zona = zona)
-    
+
     pacientes_gripe = []
     pacientes_fa = []
     pacientes_covid_1 = []
     pacientes_covid_2 = []
-    
+
     print(pacientes_del_dia)
     for p in pacientes_del_dia:
         if p.vac_Gripe_turno != None and (p.vac_Gripe_turno.date() == fecha or p.vac_Gripe_turno.date() > fecha):
@@ -2477,12 +2481,12 @@ def ver_turnos_v (request):
 def ver_turnos_admin(request):
     fecha = datetime.now().date()
     pacientes_del_dia = Paciente.objects.all()
-    
+
     pacientes_gripe = []
     pacientes_fa = []
     pacientes_covid_1 = []
     pacientes_covid_2 = []
-    
+
     print(pacientes_del_dia)
     for p in pacientes_del_dia:
         if p.vac_Gripe_turno != None and (p.vac_Gripe_turno.date() == fecha or p.vac_Gripe_turno.date() > fecha):

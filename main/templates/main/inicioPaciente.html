@@ -1,7 +1,4 @@
 
-{{context.edad}}
-{{context}}
-
 
 <!DOCTYPE html>
 {% load static %}
@@ -42,7 +39,7 @@
 
       <!-- STATICFILES_DIRS = (os.path.join(BASE_DIR, 'main/static'),)  light-green-->
 
-<<<<<<< HEAD
+
   </head>
   <!-- bgcolor="#8bc34a" -->
   <body>
@@ -77,7 +74,7 @@
 
 
                   {% endif %}
-=======
+
       <body>
 
 <div class="container">
@@ -150,12 +147,12 @@
                 {% else %}
                    <p>Usted todavía no solicitó un turno   </p>
                 {% endif%}
->>>>>>> 41a105a1504fa2e076a3d2e1b91803326dc2fbea
 
 
 
 
-<<<<<<< HEAD
+
+
                 </div>
                 <div class="card-action">
                   {% if estG == 2  or estG == 1 %}
@@ -168,7 +165,6 @@
               </div>
 
 
-=======
 
               {% endif %}
 
@@ -181,9 +177,9 @@
                 {% else %}
                    <h7><a href="/solicitarTurnoFA/">Solicitar turno</a> </h7>
                 {% endif %}
-                
+
               {% endif %}
->>>>>>> 41a105a1504fa2e076a3d2e1b91803326dc2fbea
+
 
             </div>
 
@@ -242,9 +238,10 @@
 
 </div>
 </div>
+{% endif %}
  <!-- fin cards paciente >60 -->
 
- {% elif edad >= 18 and edad < 60 %}
+ {% if edad >= 18 and edad < 60 %}
        <div class="container">
          <div class="row">
            <div class="col s12 m4">
@@ -401,7 +398,7 @@
 <!-- fin cards mayores de 18 pero menores de 60 -->
 </div>
 </div>
-
+{% endif %}
  <!-- fin cards mayores de 18 pero menores de 60 -->
 
  {% elif edad < 18 %}
@@ -494,7 +491,7 @@
 
         <p> usted esta vacunado contra la fiebre amarilla
         </p>
-      
+
 
 
 
@@ -521,10 +518,10 @@
     <div class="card-action">
 
       {% if estFA == 4 %}
-         <h7><a href="/cancelarTurno/"> solictar turno </a> </h7>
+         <h7><a href="/cancelarTurnoFA/"> solictar turno </a> </h7>
 
       {% elif estFA == 2 %}
-            <h7><a href="/cancelarTurno/"> cancelar Turno </a> </h7>
+            <h7><a href="//"> cancelar Turno </a> </h7>
 
 
       {% endif %}
@@ -542,7 +539,11 @@
 <!-- fin cards menores de 18  -->
 </div>
 </div>
+<div class="input-field col s12" style="margin:2px">
+  <th colspan="2"> </th><td><a href="/editarPerfilPaciente/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> editarPefil </a></td>
+  <th colspan="2"> </th><td><a href="/SaleInvoicePdfView/" class="waves-effect waves-light btn-large" style="background:#72BC53; margin: 10px"> comprobante </a></td>
 
+</div>
 
 {% endif %}
 
