@@ -74,7 +74,13 @@
 
                              </tr>
                            </thead>
+
                            <tbody>
+
+
+
+
+
                              {% for c in turnos %}
                              <tr>
 
@@ -96,6 +102,9 @@
 
 
                          </table>
+                         {% if vacio == 1 %}
+                         <p>LISTADO VACIO </p>
+                         {% endif %}
 
 
 

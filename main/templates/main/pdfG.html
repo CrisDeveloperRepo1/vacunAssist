@@ -27,7 +27,7 @@
            <th>nombre</th>
            <th>apellido</th>
            <th>vacuna</th>
-           <th> dosis </th>
+
            <th>fecha de aplicacion</th>
            <th>lugar de aplicacion</th>
          </thead>
@@ -40,10 +40,10 @@
                         <td>{{nombre}}</td>
                         <td>{{apellido}}</td>
 
-                        <td>Covid 19</td>
-                        <td>Primera</td>
+                        <td>gripe</td>
+
                         <!-- <td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
-                        <td>{{turnoC1}}</td>
+                        <td>{{turnoG}}</td>
                         <!-- </td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
                         <td>{{zona}}</td>
              <!-- <td><a href="/eliminar_Admin/{{c.vacunador_dni}}" class="btn btn-block btn-danger">Eliminar</a></td> -->
@@ -58,41 +58,6 @@
        </table>
 
 
-</div>
-&nbsp;&nbsp;&nbsp;&nbsp;
-<div class="row">
-  <table cellspacing="2" cellpadding="2" border="1">
-     {% if asistC2 == 1 %}
-         <thead>
-           <th>nombre</th>
-           <th>apellido</th>
-           <th>vacuna</th>
-           <th> dosis </th>
-           <th>fecha de aplicacion</th>
-           <th>lugar de aplicacion</th>
-         </thead>
-
-         <tbody>
-
-
-
-           <td>{{nombre}}</td>
-           <td>{{apellido}}</td>
-
-           <td>Covid 19</td>
-           <td>Primera</td>
-           <!-- <td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
-           <td>{{turnoC1}}</td>
-           <!-- </td><a href="edicionVacunadores/{{"vfa"}}" class="btn btn-block btn-info">Editarw</a></td> -->
-           <td>{{zona}}</td>
-
-           </tr>
-
-
-         </tbody>
-
-  {% endif %}
-       </table>
 </div>
 
 
